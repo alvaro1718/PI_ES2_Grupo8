@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8
 {
@@ -33,6 +35,9 @@ namespace PI_ES2_Grupo8
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<UtenteDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("UtenteDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +61,9 @@ namespace PI_ES2_Grupo8
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                 //   template: "{controller=Home}/{action=Index}/{id?}");
+               template: "{controller=Utentes}/{action=Index}/{id?}");
+        });
         }
     }
 }
