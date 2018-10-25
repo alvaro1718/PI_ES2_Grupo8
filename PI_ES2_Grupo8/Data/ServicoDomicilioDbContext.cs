@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Models
 {
@@ -14,5 +15,7 @@ namespace PI_ES2_Grupo8.Models
         }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Enfermeiros> Enfermeiros { get; set; }
     }
 }
