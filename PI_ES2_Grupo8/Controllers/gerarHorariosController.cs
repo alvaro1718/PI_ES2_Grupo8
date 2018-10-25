@@ -9,7 +9,7 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class gerarHorariosController : Controller
+    public class gerarHorariosController : Controller 
     {
         private readonly ServicoDomicilioDbContext _context;
 
