@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PI_ES2_Grupo8.Models.gerarHorarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enfermeiros)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Utente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tratamento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enfermeiros)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tratamento)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.gerarHorariosId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.gerarHorariosId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.gerarHorariosId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

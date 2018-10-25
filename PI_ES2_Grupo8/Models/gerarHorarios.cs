@@ -7,7 +7,7 @@ namespace PI_ES2_Grupo8.Models
 {
     public class gerarHorarios
     {
-        public int horariosID { get; set; }
+        public int gerarHorariosId { get; set; }
         public string Data { get; set; }
 
         public string Hora { get; set; }
