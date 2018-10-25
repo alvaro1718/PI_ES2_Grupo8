@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using PI_ES2_Grupo8.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8
 {
@@ -41,6 +42,11 @@ namespace PI_ES2_Grupo8
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<ServicoDomicilioDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ServicoDomicilioDbContext")));
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
