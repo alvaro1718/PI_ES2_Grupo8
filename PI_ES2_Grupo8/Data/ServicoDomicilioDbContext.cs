@@ -15,7 +15,5 @@ namespace PI_ES2_Grupo8.Models
         }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
-
-        public DbSet<PI_ES2_Grupo8.Models.gerarHorarios> gerarHorarios { get; set; }
     }
 }
