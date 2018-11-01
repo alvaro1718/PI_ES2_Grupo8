@@ -9,22 +9,22 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class gerarHorariosController : Controller 
+    public class GHorariosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public gerarHorariosController(ServicoDomicilioDbContext context)
+        public GHorariosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: gerarHorarios
+        // GET: GHorarios
         public async Task<IActionResult> Index()
         {
             return View(await _context.gerarHorarios.ToListAsync());
         }
 
-        // GET: gerarHorarios/Details/5
+        // GET: GHorarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,18 +42,18 @@ namespace PI_ES2_Grupo8.Controllers
             return View(gerarHorarios);
         }
 
-        // GET: gerarHorarios/Create
+        // GET: GHorarios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: gerarHorarios/Create
+        // POST: GHorarios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Create([Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente")] gerarHorarios gerarHorarios)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(gerarHorarios);
         }
 
-        // GET: gerarHorarios/Edit/5
+        // GET: GHorarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,12 +80,12 @@ namespace PI_ES2_Grupo8.Controllers
             return View(gerarHorarios);
         }
 
-        // POST: gerarHorarios/Edit/5
+        // POST: GHorarios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Edit(int id, [Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente")] gerarHorarios gerarHorarios)
         {
             if (id != gerarHorarios.gerarHorariosId)
             {
@@ -115,7 +115,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(gerarHorarios);
         }
 
-        // GET: gerarHorarios/Delete/5
+        // GET: GHorarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +133,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(gerarHorarios);
         }
 
-        // POST: gerarHorarios/Delete/5
+        // POST: GHorarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

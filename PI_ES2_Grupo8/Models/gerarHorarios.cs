@@ -16,6 +16,5 @@ namespace PI_ES2_Grupo8.Models
 
         public string Utente { get; set; }
 
-        public string Tratamento { get; set; }
     }
 }
