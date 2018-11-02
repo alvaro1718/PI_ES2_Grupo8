@@ -12,7 +12,7 @@ namespace PI_ES2_Grupo8.Models
 
         public int Hora { get; set; }
 
-        public Enfermeiros Enfermeiros { get; set; }
+        public Enfermeiros Enfermeiros { get; set; } 
 
         public ICollection <Utente> Utente { get; set; }
 
