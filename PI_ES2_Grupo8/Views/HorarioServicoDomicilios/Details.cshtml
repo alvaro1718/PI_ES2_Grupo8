@@ -1,4 +1,4 @@
-﻿@model PI_ES2_Grupo8.Models.gerarHorarios
+﻿@model PI_ES2_Grupo8.Models.HorarioServicoDomicilio
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>gerarHorarios</h4>
+    <h4>HorarioServicoDomicilio</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -34,9 +34,15 @@
         <dd>
             @Html.DisplayFor(model => model.Utente)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tratamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tratamento)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.gerarHorariosId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.HorarioServicoDomicilioId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
