@@ -9,22 +9,22 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class gerarHorariosController : Controller 
+    public class HorarioServicoDomiciliosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public gerarHorariosController(ServicoDomicilioDbContext context)
+        public HorarioServicoDomiciliosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: gerarHorarios
+        // GET: HorarioServicoDomicilios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.gerarHorarios.ToListAsync());
+            return View(await _context.HorarioServicoDomicilio.ToListAsync());
         }
 
-        // GET: gerarHorarios/Details/5
+        // GET: HorarioServicoDomicilios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios
-                .FirstOrDefaultAsync(m => m.gerarHorariosId == id);
-            if (gerarHorarios == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio
+                .FirstOrDefaultAsync(m => m.HorarioServicoDomicilioId == id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
 
-            return View(gerarHorarios);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: gerarHorarios/Create
+        // GET: HorarioServicoDomicilios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: gerarHorarios/Create
+        // POST: HorarioServicoDomicilios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Create([Bind("HorarioServicoDomicilioId,Data,Hora")] HorarioServicoDomicilio horarioServicoDomicilio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(gerarHorarios);
+                _context.Add(horarioServicoDomicilio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(gerarHorarios);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: gerarHorarios/Edit/5
+        // GET: HorarioServicoDomicilios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios.FindAsync(id);
-            if (gerarHorarios == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio.FindAsync(id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
-            return View(gerarHorarios);
+            return View(horarioServicoDomicilio);
         }
 
-        // POST: gerarHorarios/Edit/5
+        // POST: HorarioServicoDomicilios/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Edit(int id, [Bind("HorarioServicoDomicilioId,Data,Hora")] HorarioServicoDomicilio horarioServicoDomicilio)
         {
-            if (id != gerarHorarios.gerarHorariosId)
+            if (id != horarioServicoDomicilio.HorarioServicoDomicilioId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(gerarHorarios);
+                    _context.Update(horarioServicoDomicilio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!gerarHorariosExists(gerarHorarios.gerarHorariosId))
+                    if (!HorarioServicoDomicilioExists(horarioServicoDomicilio.HorarioServicoDomicilioId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(gerarHorarios);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: gerarHorarios/Delete/5
+        // GET: HorarioServicoDomicilios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios
-                .FirstOrDefaultAsync(m => m.gerarHorariosId == id);
-            if (gerarHorarios == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio
+                .FirstOrDefaultAsync(m => m.HorarioServicoDomicilioId == id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
 
-            return View(gerarHorarios);
+            return View(horarioServicoDomicilio);
         }
 
-        // POST: gerarHorarios/Delete/5
+        // POST: HorarioServicoDomicilios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gerarHorarios = await _context.gerarHorarios.FindAsync(id);
-            _context.gerarHorarios.Remove(gerarHorarios);
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio.FindAsync(id);
+            _context.HorarioServicoDomicilio.Remove(horarioServicoDomicilio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool gerarHorariosExists(int id)
+        private bool HorarioServicoDomicilioExists(int id)
         {
-            return _context.gerarHorarios.Any(e => e.gerarHorariosId == id);
+            return _context.HorarioServicoDomicilio.Any(e => e.HorarioServicoDomicilioId == id);
         }
     }
 }
