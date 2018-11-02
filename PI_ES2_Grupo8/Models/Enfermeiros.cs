@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,5 +27,9 @@ namespace PI_ES2_Grupo8.Models
 
         [Required(ErrorMessage = "Por favor insira a sua profissao ou especializao")]
         public string Especializacao { get; set; }
+
+        public ICollection<Troca> Trocas { get; set; }
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
     }
 }
