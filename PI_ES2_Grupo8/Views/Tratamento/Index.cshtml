@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PI_ES2_Grupo8.Models.Tratamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Discricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enfermeiros)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enfermeiros.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TratamentoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TratamentoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TratamentoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

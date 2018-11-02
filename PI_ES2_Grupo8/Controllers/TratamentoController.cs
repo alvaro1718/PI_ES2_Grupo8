@@ -9,22 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class gerarHorariosController : Controller 
+    public class TratamentoController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public gerarHorariosController(ServicoDomicilioDbContext context)
+        public TratamentoController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: gerarHorarios
+        // GET: Tratamento
         public async Task<IActionResult> Index()
         {
-            return View(await _context.gerarHorarios.ToListAsync());
+            var servicoDomicilioDbContext = _context.Tratamento.Include(t => t.Enfermeiros);
+            return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: gerarHorarios/Details/5
+        // GET: Tratamento/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,42 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios
-                .FirstOrDefaultAsync(m => m.gerarHorariosId == id);
-            if (gerarHorarios == null)
+            var tratamento = await _context.Tratamento
+                .Include(t => t.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.TratamentoId == id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
 
-            return View(gerarHorarios);
+            return View(tratamento);
         }
 
-        // GET: gerarHorarios/Create
+        // GET: Tratamento/Create
         public IActionResult Create()
         {
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             return View();
         }
 
-        // POST: gerarHorarios/Create
+        // POST: Tratamento/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Create([Bind("Discricao,TratamentoId,EnfermeirosId")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(gerarHorarios);
+                _context.Add(tratamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(gerarHorarios);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            return View(tratamento);
         }
 
-        // GET: gerarHorarios/Edit/5
+        // GET: Tratamento/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +76,23 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios.FindAsync(id);
-            if (gerarHorarios == null)
+            var tratamento = await _context.Tratamento.FindAsync(id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
-            return View(gerarHorarios);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            return View(tratamento);
         }
 
-        // POST: gerarHorarios/Edit/5
+        // POST: Tratamento/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("gerarHorariosId,Data,Hora,Enfermeiros,Utente,Tratamento")] gerarHorarios gerarHorarios)
+        public async Task<IActionResult> Edit(int id, [Bind("Discricao,TratamentoId,EnfermeirosId")] Tratamento tratamento)
         {
-            if (id != gerarHorarios.gerarHorariosId)
+            if (id != tratamento.TratamentoId)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(gerarHorarios);
+                    _context.Update(tratamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!gerarHorariosExists(gerarHorarios.gerarHorariosId))
+                    if (!TratamentoExists(tratamento.TratamentoId))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,11 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(gerarHorarios);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            return View(tratamento);
         }
 
-        // GET: gerarHorarios/Delete/5
+        // GET: Tratamento/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +129,31 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var gerarHorarios = await _context.gerarHorarios
-                .FirstOrDefaultAsync(m => m.gerarHorariosId == id);
-            if (gerarHorarios == null)
+            var tratamento = await _context.Tratamento
+                .Include(t => t.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.TratamentoId == id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
 
-            return View(gerarHorarios);
+            return View(tratamento);
         }
 
-        // POST: gerarHorarios/Delete/5
+        // POST: Tratamento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gerarHorarios = await _context.gerarHorarios.FindAsync(id);
-            _context.gerarHorarios.Remove(gerarHorarios);
+            var tratamento = await _context.Tratamento.FindAsync(id);
+            _context.Tratamento.Remove(tratamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool gerarHorariosExists(int id)
+        private bool TratamentoExists(int id)
         {
-            return _context.gerarHorarios.Any(e => e.gerarHorariosId == id);
+            return _context.Tratamento.Any(e => e.TratamentoId == id);
         }
     }
 }
