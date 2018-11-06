@@ -12,6 +12,7 @@ namespace PI_ES2_Grupo8.Models
         public ServicoDomicilioDbContext (DbContextOptions<ServicoDomicilioDbContext> options)
             : base(options)
         {
+
         }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
