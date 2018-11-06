@@ -7,6 +7,9 @@ namespace PI_ES2_Grupo8.Models
 {
     public class Tratamento
     {
+
+        
+
         //public int ServicoId { get; set; }
         //public int MaterialId { get; set;}
         public String Discricao { get; set;}
@@ -18,6 +21,7 @@ namespace PI_ES2_Grupo8.Models
         public ICollection<Utente> Utentes { get; set; }
         public ICollection<Servicos> Servicos { get; set; }
         public ICollection<Material> Materials { get; set; }
+
 
     }
 }

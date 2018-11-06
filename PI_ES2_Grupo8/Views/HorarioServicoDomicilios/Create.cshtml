@@ -1,4 +1,4 @@
-﻿@model PI_ES2_Grupo8.Models.gerarHorarios
+﻿@model PI_ES2_Grupo8.Models.HorarioServicoDomicilio
 
 @{
     ViewData["Title"] = "Create";
@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-<h4>gerarHorarios</h4>
+<h4>HorarioServicoDomicilio</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,21 +21,6 @@
                 <label asp-for="Hora" class="control-label"></label>
                 <input asp-for="Hora" class="form-control" />
                 <span asp-validation-for="Hora" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Enfermeiros" class="control-label"></label>
-                <input asp-for="Enfermeiros" class="form-control" />
-                <span asp-validation-for="Enfermeiros" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Utente" class="control-label"></label>
-                <input asp-for="Utente" class="form-control" />
-                <span asp-validation-for="Utente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tratamento" class="control-label"></label>
-                <input asp-for="Tratamento" class="form-control" />
-                <span asp-validation-for="Tratamento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
