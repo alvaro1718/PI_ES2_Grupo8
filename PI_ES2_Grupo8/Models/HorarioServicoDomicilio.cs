@@ -14,7 +14,7 @@ namespace PI_ES2_Grupo8.Models
 
         public Enfermeiros Enfermeiros { get; set; } 
 
-        public ICollection <Utente> Utente { get; set; } 
+        public ICollection <Utente> Utente { get; set; }
 
         public ICollection<Tratamento> Tratamentos { get; set; }
     }
