@@ -21,7 +21,8 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Enfermeiros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiros.ToListAsync());
+            var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.HorarioServicoDomicilio);
+            return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
         // GET: Enfermeiros/Details/5
@@ -33,6 +34,7 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var enfermeiros = await _context.Enfermeiros
+                .Include(e => e.HorarioServicoDomicilio)
                 .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
             if (enfermeiros == null)
             {
@@ -45,6 +47,7 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Enfermeiros/Create
         public IActionResult Create()
         {
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao,HorarioServicoDomicilioId")] Enfermeiros enfermeiros)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace PI_ES2_Grupo8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
             return View(enfermeiros);
         }
 
@@ -77,6 +81,7 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 return NotFound();
             }
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
             return View(enfermeiros);
         }
 
@@ -85,7 +90,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao,HorarioServicoDomicilioId")] Enfermeiros enfermeiros)
         {
             if (id != enfermeiros.EnfermeirosId)
             {
@@ -112,6 +117,7 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
             return View(enfermeiros);
         }
 
@@ -124,6 +130,7 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var enfermeiros = await _context.Enfermeiros
+                .Include(e => e.HorarioServicoDomicilio)
                 .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
             if (enfermeiros == null)
             {

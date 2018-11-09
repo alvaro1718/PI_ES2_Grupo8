@@ -50,7 +50,7 @@ namespace PI_ES2_Grupo8.Controllers
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId");
-            return View();
+           return View();
         }
 
         // POST: Tratamentos/Create

@@ -16,9 +16,13 @@ namespace PI_ES2_Grupo8.Models
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
 
-        public DbSet<PI_ES2_Grupo8.Models.Enfermeiros> Enfermeiros { get; set; }
+        
         public DbSet<PI_ES2_Grupo8.Models.Tratamento> Tratamento { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.HorarioServicoDomicilio> HorarioServicoDomicilio { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Troca> Troca { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Enfermeiros> Enfermeiros { get; set; }
     }
 }
