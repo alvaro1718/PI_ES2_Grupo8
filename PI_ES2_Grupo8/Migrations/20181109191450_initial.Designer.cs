@@ -10,8 +10,8 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181109105021_test2")]
-    partial class test2
+    [Migration("20181109191450_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,11 +108,15 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<int?>("HorarioServicoDomicilioId");
 
+                    b.Property<int>("UtenteId");
+
                     b.HasKey("TratamentoId");
 
                     b.HasIndex("EnfermeirosId");
 
                     b.HasIndex("HorarioServicoDomicilioId");
+
+                    b.HasIndex("UtenteId");
 
                     b.ToTable("Tratamento");
                 });
@@ -125,23 +129,19 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Email");
+
                     b.Property<int?>("HorarioServicoDomicilioId");
 
                     b.Property<string>("Morada");
 
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Sexo");
+                    b.Property<string>("Nome");
 
                     b.Property<string>("Telefone");
-
-                    b.Property<int?>("TratamentoId");
 
                     b.HasKey("UtenteId");
 
                     b.HasIndex("HorarioServicoDomicilioId");
-
-                    b.HasIndex("TratamentoId");
 
                     b.ToTable("Utente");
                 });
@@ -177,6 +177,11 @@ namespace PI_ES2_Grupo8.Migrations
                     b.HasOne("PI_ES2_Grupo8.Models.HorarioServicoDomicilio")
                         .WithMany("Tratamentos")
                         .HasForeignKey("HorarioServicoDomicilioId");
+
+                    b.HasOne("PI_ES2_Grupo8.Models.Utente", "utente")
+                        .WithMany()
+                        .HasForeignKey("UtenteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Utente", b =>
@@ -184,10 +189,6 @@ namespace PI_ES2_Grupo8.Migrations
                     b.HasOne("PI_ES2_Grupo8.Models.HorarioServicoDomicilio")
                         .WithMany("Utente")
                         .HasForeignKey("HorarioServicoDomicilioId");
-
-                    b.HasOne("PI_ES2_Grupo8.Models.Tratamento")
-                        .WithMany("Utentes")
-                        .HasForeignKey("TratamentoId");
                 });
 #pragma warning restore 612, 618
         }

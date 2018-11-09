@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PI_ES2_Grupo8.Migrations
 {
-    public partial class test : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,30 @@ namespace PI_ES2_Grupo8.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Utente",
+                columns: table => new
+                {
+                    UtenteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(nullable: true),
+                    Morada = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    HorarioServicoDomicilioId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Utente", x => x.UtenteId);
+                    table.ForeignKey(
+                        name: "FK_Utente_HorarioServicoDomicilio_HorarioServicoDomicilioId",
+                        column: x => x.HorarioServicoDomicilioId,
+                        principalTable: "HorarioServicoDomicilio",
+                        principalColumn: "HorarioServicoDomicilioId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tratamento",
                 columns: table => new
                 {
@@ -53,6 +77,7 @@ namespace PI_ES2_Grupo8.Migrations
                     TratamentoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EnfermeirosId = table.Column<int>(nullable: false),
+                    UtenteId = table.Column<int>(nullable: false),
                     HorarioServicoDomicilioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -70,6 +95,12 @@ namespace PI_ES2_Grupo8.Migrations
                         principalTable: "HorarioServicoDomicilio",
                         principalColumn: "HorarioServicoDomicilioId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tratamento_Utente_UtenteId",
+                        column: x => x.UtenteId,
+                        principalTable: "Utente",
+                        principalColumn: "UtenteId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,37 +141,6 @@ namespace PI_ES2_Grupo8.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Utente",
-                columns: table => new
-                {
-                    UtenteId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Sexo = table.Column<string>(nullable: true),
-                    Morada = table.Column<string>(nullable: true),
-                    TipodeTratamento = table.Column<string>(nullable: true),
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: true),
-                    TratamentoId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Utente", x => x.UtenteId);
-                    table.ForeignKey(
-                        name: "FK_Utente_HorarioServicoDomicilio_HorarioServicoDomicilioId",
-                        column: x => x.HorarioServicoDomicilioId,
-                        principalTable: "HorarioServicoDomicilio",
-                        principalColumn: "HorarioServicoDomicilioId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Utente_Tratamento_TratamentoId",
-                        column: x => x.TratamentoId,
-                        principalTable: "Tratamento",
-                        principalColumn: "TratamentoId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_HorarioServicoDomicilio_EnfermeirosId",
                 table: "HorarioServicoDomicilio",
@@ -167,14 +167,14 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "HorarioServicoDomicilioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tratamento_UtenteId",
+                table: "Tratamento",
+                column: "UtenteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Utente_HorarioServicoDomicilioId",
                 table: "Utente",
                 column: "HorarioServicoDomicilioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Utente_TratamentoId",
-                table: "Utente",
-                column: "TratamentoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -186,10 +186,10 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "Servicos");
 
             migrationBuilder.DropTable(
-                name: "Utente");
+                name: "Tratamento");
 
             migrationBuilder.DropTable(
-                name: "Tratamento");
+                name: "Utente");
 
             migrationBuilder.DropTable(
                 name: "HorarioServicoDomicilio");

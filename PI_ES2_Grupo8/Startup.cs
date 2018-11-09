@@ -75,6 +75,8 @@ namespace PI_ES2_Grupo8
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SeedData.Populate(app.ApplicationServices);
         }
     }
 }
