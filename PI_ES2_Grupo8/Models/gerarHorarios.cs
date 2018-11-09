@@ -10,7 +10,7 @@ namespace PI_ES2_Grupo8.Models
         public int gerarHorariosId { get; set; }
         public string Data { get; set; }
 
-        public string Hora { get; set; }
+        public string Hora { get; set; } 
 
         public string Enfermeiros { get; set; }
 
