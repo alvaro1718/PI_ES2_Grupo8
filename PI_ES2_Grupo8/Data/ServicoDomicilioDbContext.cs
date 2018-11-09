@@ -15,6 +15,17 @@ namespace PI_ES2_Grupo8.Models
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Troca>()
+                .HasOne(b => b.Enfermeiros)
+                .WithMany(a => a.Trocas)
+                .HasForeignKey(b => b.EnfermeirosId)
+                .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.Enfermeiros> Enfermeiros { get; set; }
