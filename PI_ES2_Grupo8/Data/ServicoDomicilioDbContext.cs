@@ -21,7 +21,7 @@ namespace PI_ES2_Grupo8.Models
                 .HasOne(b => b.Enfermeiros)
                 .WithMany(a => a.Trocas)
                 .HasForeignKey(b => b.EnfermeirosId)
-                .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
+                .OnDelete(DeleteBehavior.ClientSetNull); //delete
 
             base.OnModelCreating(modelBuilder);
         }
