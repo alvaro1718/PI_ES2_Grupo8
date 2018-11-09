@@ -9,23 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class TratamentoController : Controller
+    public class TratamentosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public TratamentoController(ServicoDomicilioDbContext context)
+        public TratamentosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tratamento
+        // GET: Tratamentos
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Tratamento.Include(t => t.Enfermeiros);
+            var servicoDomicilioDbContext = _context.Tratamento.Include(t => t.Enfermeiros).Include(t => t.utente);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: Tratamento/Details/5
+        // GET: Tratamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,6 +35,7 @@ namespace PI_ES2_Grupo8.Controllers
 
             var tratamento = await _context.Tratamento
                 .Include(t => t.Enfermeiros)
+                .Include(t => t.utente)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
@@ -44,19 +45,20 @@ namespace PI_ES2_Grupo8.Controllers
             return View(tratamento);
         }
 
-        // GET: Tratamento/Create
+        // GET: Tratamentos/Create
         public IActionResult Create()
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId");
             return View();
         }
 
-        // POST: Tratamento/Create
+        // POST: Tratamentos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Discricao,TratamentoId,EnfermeirosId")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("Discricao,TratamentoId,EnfermeirosId,UtenteId")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
             {
@@ -65,10 +67,11 @@ namespace PI_ES2_Grupo8.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
 
-        // GET: Tratamento/Edit/5
+        // GET: Tratamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,15 +85,16 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
 
-        // POST: Tratamento/Edit/5
+        // POST: Tratamentos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Discricao,TratamentoId,EnfermeirosId")] Tratamento tratamento)
+        public async Task<IActionResult> Edit(int id, [Bind("Discricao,TratamentoId,EnfermeirosId,UtenteId")] Tratamento tratamento)
         {
             if (id != tratamento.TratamentoId)
             {
@@ -118,10 +122,11 @@ namespace PI_ES2_Grupo8.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
 
-        // GET: Tratamento/Delete/5
+        // GET: Tratamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,6 +136,7 @@ namespace PI_ES2_Grupo8.Controllers
 
             var tratamento = await _context.Tratamento
                 .Include(t => t.Enfermeiros)
+                .Include(t => t.utente)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
@@ -140,7 +146,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(tratamento);
         }
 
-        // POST: Tratamento/Delete/5
+        // POST: Tratamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -18,7 +18,10 @@ namespace PI_ES2_Grupo8.Models
         public Enfermeiros Enfermeiros { get; set; }
         public int EnfermeirosId { get; set; }
 
-        public ICollection<Utente> Utentes { get; set; }
+        public Utente utente { get; set; }
+        public int UtenteId { get; set; }
+
+        //public ICollection<Utente> Utentes { get; set; }
         public ICollection<Servicos> Servicos { get; set; }
         public ICollection<Material> Materials { get; set; }
 
