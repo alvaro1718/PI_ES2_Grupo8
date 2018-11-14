@@ -9,22 +9,22 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class TratamentosController : Controller
+    public class MaterialsController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public TratamentosController(ServicoDomicilioDbContext context)
+        public MaterialsController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tratamentos
+        // GET: Materials
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tratamento.ToListAsync());
+            return View(await _context.Material.ToListAsync());
         }
 
-        // GET: Tratamentos/Details/5
+        // GET: Materials/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
-                .FirstOrDefaultAsync(m => m.TratamentoId == id);
-            if (tratamento == null)
+            var material = await _context.Material
+                .FirstOrDefaultAsync(m => m.MaterialId == id);
+            if (material == null)
             {
                 return NotFound();
             }
 
-            return View(tratamento);
+            return View(material);
         }
 
-        // GET: Tratamentos/Create
+        // GET: Materials/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tratamentos/Create
+        // POST: Materials/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("MaterialId")] Material material)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
+                _context.Add(material);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tratamento);
+            return View(material);
         }
 
-        // GET: Tratamentos/Edit/5
+        // GET: Materials/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento.FindAsync(id);
-            if (tratamento == null)
+            var material = await _context.Material.FindAsync(id);
+            if (material == null)
             {
                 return NotFound();
             }
-            return View(tratamento);
+            return View(material);
         }
 
-        // POST: Tratamentos/Edit/5
+        // POST: Materials/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
+        public async Task<IActionResult> Edit(int id, [Bind("MaterialId")] Material material)
         {
-            if (id != tratamento.TratamentoId)
+            if (id != material.MaterialId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(tratamento);
+                    _context.Update(material);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TratamentoExists(tratamento.TratamentoId))
+                    if (!MaterialExists(material.MaterialId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tratamento);
+            return View(material);
         }
 
-        // GET: Tratamentos/Delete/5
+        // GET: Materials/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
-                .FirstOrDefaultAsync(m => m.TratamentoId == id);
-            if (tratamento == null)
+            var material = await _context.Material
+                .FirstOrDefaultAsync(m => m.MaterialId == id);
+            if (material == null)
             {
                 return NotFound();
             }
 
-            return View(tratamento);
+            return View(material);
         }
 
-        // POST: Tratamentos/Delete/5
+        // POST: Materials/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tratamento = await _context.Tratamento.FindAsync(id);
-            _context.Tratamento.Remove(tratamento);
+            var material = await _context.Material.FindAsync(id);
+            _context.Material.Remove(material);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TratamentoExists(int id)
+        private bool MaterialExists(int id)
         {
-            return _context.Tratamento.Any(e => e.TratamentoId == id);
+            return _context.Material.Any(e => e.MaterialId == id);
         }
     }
 }

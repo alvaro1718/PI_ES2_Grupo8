@@ -9,7 +9,17 @@ namespace PI_ES2_Grupo8.Data
 {
     public class SeedData
     {
-        public static void Populate(IServiceProvider applicationServices)
+        internal static void Populate(IServiceProvider applicationServices)
+        {
+           
+        }
+    }
+}
+
+
+
+
+/* public static void Populate(IServiceProvider applicationServices)
         {
             using (var serviceScope = applicationServices.CreateScope())
             {
@@ -27,6 +37,4 @@ namespace PI_ES2_Grupo8.Data
 
                 db.SaveChanges();
             }
-        }
-    }
-}
+        }*/

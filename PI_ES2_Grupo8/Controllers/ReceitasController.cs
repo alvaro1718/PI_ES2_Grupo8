@@ -9,22 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class TratamentosController : Controller
+    public class ReceitasController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public TratamentosController(ServicoDomicilioDbContext context)
+        public ReceitasController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tratamentos
+        // GET: Receitas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tratamento.ToListAsync());
+            var servicoDomicilioDbContext = _context.Receita.Include(r => r.medico).Include(r => r.utente);
+            return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: Tratamentos/Details/5
+        // GET: Receitas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,45 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
-                .FirstOrDefaultAsync(m => m.TratamentoId == id);
-            if (tratamento == null)
+            var receita = await _context.Receita
+                .Include(r => r.medico)
+                .Include(r => r.utente)
+                .FirstOrDefaultAsync(m => m.ReceitaId == id);
+            if (receita == null)
             {
                 return NotFound();
             }
 
-            return View(tratamento);
+            return View(receita);
         }
 
-        // GET: Tratamentos/Create
+        // GET: Receitas/Create
         public IActionResult Create()
         {
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId");
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId");
             return View();
         }
 
-        // POST: Tratamentos/Create
+        // POST: Receitas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("ReceitaId,MedicoId,UtenteId,date")] Receita receita)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
+                _context.Add(receita);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tratamento);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            return View(receita);
         }
 
-        // GET: Tratamentos/Edit/5
+        // GET: Receitas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +79,24 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento.FindAsync(id);
-            if (tratamento == null)
+            var receita = await _context.Receita.FindAsync(id);
+            if (receita == null)
             {
                 return NotFound();
             }
-            return View(tratamento);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            return View(receita);
         }
 
-        // POST: Tratamentos/Edit/5
+        // POST: Receitas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
+        public async Task<IActionResult> Edit(int id, [Bind("ReceitaId,MedicoId,UtenteId,date")] Receita receita)
         {
-            if (id != tratamento.TratamentoId)
+            if (id != receita.ReceitaId)
             {
                 return NotFound();
             }
@@ -96,12 +105,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(tratamento);
+                    _context.Update(receita);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TratamentoExists(tratamento.TratamentoId))
+                    if (!ReceitaExists(receita.ReceitaId))
                     {
                         return NotFound();
                     }
@@ -112,10 +121,12 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tratamento);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            return View(receita);
         }
 
-        // GET: Tratamentos/Delete/5
+        // GET: Receitas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +134,32 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
-                .FirstOrDefaultAsync(m => m.TratamentoId == id);
-            if (tratamento == null)
+            var receita = await _context.Receita
+                .Include(r => r.medico)
+                .Include(r => r.utente)
+                .FirstOrDefaultAsync(m => m.ReceitaId == id);
+            if (receita == null)
             {
                 return NotFound();
             }
 
-            return View(tratamento);
+            return View(receita);
         }
 
-        // POST: Tratamentos/Delete/5
+        // POST: Receitas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tratamento = await _context.Tratamento.FindAsync(id);
-            _context.Tratamento.Remove(tratamento);
+            var receita = await _context.Receita.FindAsync(id);
+            _context.Receita.Remove(receita);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TratamentoExists(int id)
+        private bool ReceitaExists(int id)
         {
-            return _context.Tratamento.Any(e => e.TratamentoId == id);
+            return _context.Receita.Any(e => e.ReceitaId == id);
         }
     }
 }

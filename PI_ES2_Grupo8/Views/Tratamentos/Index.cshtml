@@ -1,25 +1,19 @@
 ﻿@model IEnumerable<PI_ES2_Grupo8.Models.Tratamento>
 
 @{
-    ViewData["Title"] = "Lista Tratamento";
+    ViewData["Title"] = "Index";
 }
 
-<h2>Lista Tratamento</h2>
+<h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Criar Tratamento</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Discricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enfermeiros)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.utente)
+                @Html.DisplayNameFor(model => model.TipodeTratamento)
             </th>
             <th></th>
         </tr>
@@ -28,13 +22,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Discricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiros.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.utente.UtenteId)
+                @Html.DisplayFor(modelItem => item.TipodeTratamento)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TratamentoId">Edit</a> |

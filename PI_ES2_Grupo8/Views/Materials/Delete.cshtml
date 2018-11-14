@@ -1,4 +1,4 @@
-﻿@model PI_ES2_Grupo8.Models.Tratamento
+﻿@model PI_ES2_Grupo8.Models.Material
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,19 +8,13 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Tratamento</h4>
+    <h4>Material</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TipodeTratamento)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TipodeTratamento)
-        </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="TratamentoId" />
+        <input type="hidden" asp-for="MaterialId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

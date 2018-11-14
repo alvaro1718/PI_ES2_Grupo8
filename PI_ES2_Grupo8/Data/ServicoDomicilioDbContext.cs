@@ -12,6 +12,40 @@ namespace PI_ES2_Grupo8.Models
         public ServicoDomicilioDbContext (DbContextOptions<ServicoDomicilioDbContext> options)
             : base(options)
         {
+
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            modelBuilder.Entity<ReceitarTratamento>()
+                .HasKey(o => new { o.ReceitaId, o.TratamentoId });
+
+          
+            modelBuilder.Entity<ReceitarTratamento>()
+                .HasOne(bc => bc.receita)
+                .WithMany(b => b.receitarTratamentos)
+                .HasForeignKey(bc => bc.ReceitaId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ReceitarTratamento>()
+                .HasOne(bc => bc.tratamento)
+                .WithMany(c => c.receitarTratamentos)
+                .HasForeignKey(bc => bc.TratamentoId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Receita>()
+                .HasOne(b => b.medico)
+                .WithMany(a => a.receitas)
+                .HasForeignKey(b => b.MedicoId)
+                .OnDelete(DeleteBehavior.ClientSetNull); 
+
+            modelBuilder.Entity<Receita>()
+               .HasOne(b => b.utente)
+               .WithMany(a => a.receitas)
+               .HasForeignKey(b => b.UtenteId)
+               .OnDelete(DeleteBehavior.ClientSetNull); 
+
+           base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
@@ -20,5 +54,13 @@ namespace PI_ES2_Grupo8.Models
         public DbSet<PI_ES2_Grupo8.Models.Tratamento> Tratamento { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.HorarioServicoDomicilio> HorarioServicoDomicilio { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Medico> Medico { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Receita> Receita { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.ReceitarTratamento> ReceitarTratamento { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Material> Material { get; set; }
     }
 }
