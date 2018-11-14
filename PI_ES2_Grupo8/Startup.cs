@@ -50,8 +50,9 @@ namespace PI_ES2_Grupo8
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ServicoDomicilioDbContext db)
         {
+            SeedData.Populate(db);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,7 +77,7 @@ namespace PI_ES2_Grupo8
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            SeedData.Populate(app.ApplicationServices);
+            
         }
     }
 }
