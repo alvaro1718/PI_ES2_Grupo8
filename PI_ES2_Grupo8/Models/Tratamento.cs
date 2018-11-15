@@ -23,7 +23,7 @@ namespace PI_ES2_Grupo8.Models
 
         //public ICollection<Utente> Utentes { get; set; }
         public ICollection<Servicos> Servicos { get; set; }
-        public ICollection<Material> Materials { get; set; }
+        
 
 
     }

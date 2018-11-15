@@ -9,23 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class EnfermeirosController : Controller
+    public class TrocasController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public EnfermeirosController(ServicoDomicilioDbContext context)
+        public TrocasController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enfermeiros
+        // GET: Trocas
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.HorarioServicoDomicilio);
+            var servicoDomicilioDbContext = _context.Troca.Include(t => t.Enfermeiros).Include(t => t.HorarioServicoDomicilio);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: Enfermeiros/Details/5
+        // GET: Trocas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,45 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.HorarioServicoDomicilio)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var troca = await _context.Troca
+                .Include(t => t.Enfermeiros)
+                .Include(t => t.HorarioServicoDomicilio)
+                .FirstOrDefaultAsync(m => m.TrocaId == id);
+            if (troca == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(troca);
         }
 
-        // GET: Enfermeiros/Create
+        // GET: Trocas/Create
         public IActionResult Create()
         {
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId");
             return View();
         }
 
-        // POST: Enfermeiros/Create
+        // POST: Trocas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao,HorarioServicoDomicilioId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Create([Bind("TrocaId,justificacao,EnfermeirosId,HorarioServicoDomicilioId")] Troca troca)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
+                _context.Add(troca);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
+            return View(troca);
         }
 
-        // GET: Enfermeiros/Edit/5
+        // GET: Trocas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +79,24 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            if (enfermeiros == null)
+            var troca = await _context.Troca.FindAsync(id);
+            if (troca == null)
             {
                 return NotFound();
             }
-            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
+            return View(troca);
         }
 
-        // POST: Enfermeiros/Edit/5
+        // POST: Trocas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,Especializacao,HorarioServicoDomicilioId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,justificacao,EnfermeirosId,HorarioServicoDomicilioId")] Troca troca)
         {
-            if (id != enfermeiros.EnfermeirosId)
+            if (id != troca.TrocaId)
             {
                 return NotFound();
             }
@@ -101,12 +105,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiros);
+                    _context.Update(troca);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeirosId))
+                    if (!TrocaExists(troca.TrocaId))
                     {
                         return NotFound();
                     }
@@ -117,11 +121,12 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", enfermeiros.HorarioServicoDomicilioId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
+            return View(troca);
         }
 
-        // GET: Enfermeiros/Delete/5
+        // GET: Trocas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +134,32 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.HorarioServicoDomicilio)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var troca = await _context.Troca
+                .Include(t => t.Enfermeiros)
+                .Include(t => t.HorarioServicoDomicilio)
+                .FirstOrDefaultAsync(m => m.TrocaId == id);
+            if (troca == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(troca);
         }
 
-        // POST: Enfermeiros/Delete/5
+        // POST: Trocas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiros);
+            var troca = await _context.Troca.FindAsync(id);
+            _context.Troca.Remove(troca);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeirosExists(int id)
+        private bool TrocaExists(int id)
         {
-            return _context.Enfermeiros.Any(e => e.EnfermeirosId == id);
+            return _context.Troca.Any(e => e.TrocaId == id);
         }
     }
 }

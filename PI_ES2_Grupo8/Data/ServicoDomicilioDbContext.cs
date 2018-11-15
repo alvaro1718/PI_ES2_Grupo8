@@ -13,6 +13,18 @@ namespace PI_ES2_Grupo8.Models
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+
+            modelBuilder.Entity<Troca>()
+                .HasOne(b => b.HorarioServicoDomicilio)
+                .WithMany(a => a.Troca)
+                .HasForeignKey(b => b.HorarioServicoDomicilioId)
+                .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }
 
@@ -20,5 +32,7 @@ namespace PI_ES2_Grupo8.Models
         public DbSet<PI_ES2_Grupo8.Models.Tratamento> Tratamento { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.HorarioServicoDomicilio> HorarioServicoDomicilio { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Troca> Troca { get; set; }
     }
 }

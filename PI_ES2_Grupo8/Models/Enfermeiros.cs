@@ -15,7 +15,6 @@ namespace PI_ES2_Grupo8.Models
 
         [Required(ErrorMessage = "Por favor insira o seu numero de telefone")]
         [RegularExpression(@"(9\d{8})", ErrorMessage = "Numero invalido.")]
-        [EmailAddress(ErrorMessage = "Numero Invalido.")]
         public string Telefone { get; set; }
 
         [RegularExpression(@"(\w+(\.\w+)*@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Invalid email.")]
@@ -27,5 +26,13 @@ namespace PI_ES2_Grupo8.Models
 
         [Required(ErrorMessage = "Por favor insira a sua profissao ou especializao")]
         public string Especializacao { get; set; }
+
+        public HorarioServicoDomicilio HorarioServicoDomicilio { get; set; }
+
+        public int HorarioServicoDomicilioId { get; set; }
+
+        public ICollection<Troca> Trocas { get; set; }
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
     }
 }
