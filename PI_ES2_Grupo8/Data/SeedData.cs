@@ -27,19 +27,7 @@ namespace PI_ES2_Grupo8.Data
 
                 db.SaveChanges();
 
-                /*if (db.Enfermeiros.Any()) return;
-
-                db.Enfermeiros.AddRange(
-                new Enfermeiros { Nome = "Paulo", Telefone = "927405851", Email = "paulo@gmail.com", Morada = "Rua Mota joao",  Especializacao = "Nenhum" },
-                new Enfermeiros { Nome = "Alvaro", Telefone = "922076352", Email = "alvaro555@gmail.com", Morada = "Rua da Morte", Especializacao = "Pediatria" },
-                new Enfermeiros { Nome = "João", Telefone = "921855352", Email = "joao12@gmail.com", Morada = "Rua Martinho da Rocha", Especializacao = "Enfermagem de Saúde Materna e obstetrícia" },
-                new Enfermeiros { Nome = "Maria", Telefone = "921876398", Email = "maria24@gmail.com", Morada = "Rua da Boa Esperança", Especializacao = "Nenhum" },
-                new Enfermeiros { Nome = "Joana", Telefone = "921876352", Email = "joana10@gmail.com", Morada = "Rua da Neves e Ceita", Especializacao = "Enfermagem de Saúde Mental e Psquiatria" }
-
-                );
-
-
-                db.SaveChanges();*/
+           
             }
         }
     }
