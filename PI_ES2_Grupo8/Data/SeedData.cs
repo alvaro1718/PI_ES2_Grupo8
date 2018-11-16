@@ -11,14 +11,66 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-            SeedMedico(db);
-            seedUtente(db);
-            //seedTratamento(db);
-            // seedReceita(db);
+           // SeedMedico(db);
+          //  seedUtente(db);
+          //  seedTratamento(db);
+          //  seedReceita(db);
             // SeedReceitaTratamento(db);
         }
 
+     /*   private static void seedReceita(ServicoDomicilioDbContext db)
+        {
+            Medico medico = GetMedicoCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades","921876352","pedro12@gmail.com");
+            //CreateBookIfDoesNotExist(db, "Foundation", author);
+            //CreateBookIfDoesNotExist(db, "I, Robot", author);
+        }
 
+        private static Medico GetMedicoCreatingIfNeed(ServicoDomicilioDbContext db, string nome, string morada,string telefone,string email)
+        {
+            Medico medico = db.Medico.SingleOrDefault(a => a.Nome == nome);
+
+            if (medico == null)
+            {
+                medico = new Medico { Nome = nome, Morada = morada, Telefone = telefone, Email =email };
+                db.Add(medico);
+                db.SaveChanges();
+            }
+
+            return medico;
+        }
+
+        private static Utente GetUtenteCreatingIfNeed(ServicoDomicilioDbContext db, string nome, string morada, string telefone, string email,string discricao)
+        {
+            Utente utente = db.Utente.SingleOrDefault(a => a.Nome == nome);
+
+            if (utente == null)
+            {
+               // utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Discricao=discricao };
+                db.Add(utente);
+                db.SaveChanges();
+            }
+
+            return utente;
+        }
+
+    
+
+        private static void seedTratamento(ServicoDomicilioDbContext db)
+        {
+            if (db.Tratamento.Any()) return;
+
+            db.Tratamento.AddRange(
+                new Tratamento { TipodeTratamento = "Vacinar" },
+                new Tratamento { TipodeTratamento = "Medicar" },
+                new Tratamento { TipodeTratamento = "Alimentar" },
+                new Tratamento { TipodeTratamento = "Higienizar" },
+                new Tratamento { TipodeTratamento = "Ajudar na Locomoção" }
+
+
+            );
+
+            db.SaveChanges();
+        }
 
         private static void seedUtente(ServicoDomicilioDbContext db)
         {
@@ -49,6 +101,7 @@ namespace PI_ES2_Grupo8.Data
 
             db.SaveChanges();
         }
+        */
     }
 }
 
