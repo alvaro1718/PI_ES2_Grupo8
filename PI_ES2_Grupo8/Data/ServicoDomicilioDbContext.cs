@@ -34,5 +34,7 @@ namespace PI_ES2_Grupo8.Models
         public DbSet<PI_ES2_Grupo8.Models.HorarioServicoDomicilio> HorarioServicoDomicilio { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.Troca> Troca { get; set; }
+
+        public DbSet<PI_ES2_Grupo8.Models.Especialização> Especialização { get; set; }
     }
 }

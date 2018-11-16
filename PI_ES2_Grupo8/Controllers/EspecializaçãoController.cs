@@ -9,23 +9,22 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class EnfermeirosController : Controller
+    public class EspecializaçãoController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public EnfermeirosController(ServicoDomicilioDbContext context)
+        public EspecializaçãoController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enfermeiros
+        // GET: Especialização
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.Especialização);
-            return View(await servicoDomicilioDbContext.ToListAsync());
+            return View(await _context.Especialização.ToListAsync());
         }
 
-        // GET: Enfermeiros/Details/5
+        // GET: Especialização/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.Especialização)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var especialização = await _context.Especialização
+                .FirstOrDefaultAsync(m => m.EspecializaçãoId == id);
+            if (especialização == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(especialização);
         }
 
-        // GET: Enfermeiros/Create
+        // GET: Especialização/Create
         public IActionResult Create()
         {
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Set<Especialização>(), "EspecializaçãoId", "Nome");
             return View();
         }
 
-        // POST: Enfermeiros/Create
+        // POST: Especialização/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Create([Bind("EspecializaçãoId,Nome")] Especialização especialização)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
+                _context.Add(especialização);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Set<Especialização>(), "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            return View(especialização);
         }
 
-        // GET: Enfermeiros/Edit/5
+        // GET: Especialização/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            if (enfermeiros == null)
+            var especialização = await _context.Especialização.FindAsync(id);
+            if (especialização == null)
             {
                 return NotFound();
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Set<Especialização>(), "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            return View(especialização);
         }
 
-        // POST: Enfermeiros/Edit/5
+        // POST: Especialização/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("EspecializaçãoId,Nome")] Especialização especialização)
         {
-            if (id != enfermeiros.EnfermeirosId)
+            if (id != especialização.EspecializaçãoId)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiros);
+                    _context.Update(especialização);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeirosId))
+                    if (!EspecializaçãoExists(especialização.EspecializaçãoId))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Set<Especialização>(), "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            return View(especialização);
         }
 
-        // GET: Enfermeiros/Delete/5
+        // GET: Especialização/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +123,30 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.Especialização)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var especialização = await _context.Especialização
+                .FirstOrDefaultAsync(m => m.EspecializaçãoId == id);
+            if (especialização == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(especialização);
         }
 
-        // POST: Enfermeiros/Delete/5
+        // POST: Especialização/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiros);
+            var especialização = await _context.Especialização.FindAsync(id);
+            _context.Especialização.Remove(especialização);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeirosExists(int id)
+        private bool EspecializaçãoExists(int id)
         {
-            return _context.Enfermeiros.Any(e => e.EnfermeirosId == id);
+            return _context.Especialização.Any(e => e.EspecializaçãoId == id);
         }
     }
 }

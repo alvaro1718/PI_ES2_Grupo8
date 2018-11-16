@@ -33,13 +33,8 @@
                 <span asp-validation-for="Morada" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Especializacao" class="control-label"></label>
-                <input asp-for="Especializacao" class="form-control" />
-                <span asp-validation-for="Especializacao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HorarioServicoDomicilioId" class="control-label"></label>
-                <select asp-for="HorarioServicoDomicilioId" class ="form-control" asp-items="ViewBag.HorarioServicoDomicilioId"></select>
+                <label asp-for="EspecializaçãoId" class="control-label"></label>
+                <select asp-for="EspecializaçãoId" class ="form-control" asp-items="ViewBag.EspecializaçãoId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

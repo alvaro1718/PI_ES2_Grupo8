@@ -24,12 +24,9 @@ namespace PI_ES2_Grupo8.Models
         [Required(ErrorMessage = "Por favor insira o sua morada")]
         public string Morada { get; set; }
 
-        [Required(ErrorMessage = "Por favor insira a sua profissao ou especializao")]
-        public string Especializacao { get; set; }
+        public Especialização Especialização { get; set; }
 
-        public HorarioServicoDomicilio HorarioServicoDomicilio { get; set; }
-
-        public int HorarioServicoDomicilioId { get; set; }
+        public int EspecializaçãoId { get; set; }
 
         public ICollection<Troca> Trocas { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,15 +10,23 @@ namespace PI_ES2_Grupo8.Models
     {
         public int TrocaId { get; set; }
 
-        public string justificacao { get; set; }
+        [Required(ErrorMessage = "Por favor insira a justificação")]
+        public string justificação { get; set; }
 
         public Enfermeiros Enfermeiros { get; set; }
 
-        public int EnfermeirosId { get; set; }
+        public int EnfermeiroId { get; set; }
+
+        ///public int EnfermeiroEscolhidoId { get; set; }
+
+        [RegularExpression(@"((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d{2})", ErrorMessage = "Invalid email.")]
+        public string Data { get; set; }
 
         public HorarioServicoDomicilio HorarioServicoDomicilio { get; set; }
 
         public int HorarioServicoDomicilioId { get; set; }
+
+
 
     }
 }

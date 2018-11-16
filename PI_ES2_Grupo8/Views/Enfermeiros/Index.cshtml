@@ -25,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.Morada)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Especializacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HorarioServicoDomicilio)
+                @Html.DisplayNameFor(model => model.Especialização)
             </th>
             <th></th>
         </tr>
@@ -49,10 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Morada)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Especializacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioServicoDomicilio.HorarioServicoDomicilioId)
+                @Html.DisplayFor(modelItem => item.Especialização.Nome)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EnfermeirosId">Edit</a> |
