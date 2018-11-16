@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PI_ES2_Grupo8.Migrations
@@ -25,6 +26,34 @@ namespace PI_ES2_Grupo8.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Material",
+                columns: table => new
+                {
+                    MaterialId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Material", x => x.MaterialId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medico",
+                columns: table => new
+                {
+                    MedicoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(nullable: true),
+                    Morada = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medico", x => x.MedicoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HorarioServicoDomicilio",
                 columns: table => new
                 {
@@ -42,6 +71,26 @@ namespace PI_ES2_Grupo8.Migrations
                         column: x => x.EnfermeirosId,
                         principalTable: "Enfermeiros",
                         principalColumn: "EnfermeirosId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tratamento",
+                columns: table => new
+                {
+                    TratamentoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TipodeTratamento = table.Column<string>(nullable: true),
+                    HorarioServicoDomicilioId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tratamento", x => x.TratamentoId);
+                    table.ForeignKey(
+                        name: "FK_Tratamento_HorarioServicoDomicilio_HorarioServicoDomicilioId",
+                        column: x => x.HorarioServicoDomicilioId,
+                        principalTable: "HorarioServicoDomicilio",
+                        principalColumn: "HorarioServicoDomicilioId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -70,71 +119,51 @@ namespace PI_ES2_Grupo8.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tratamento",
+                name: "Receita",
                 columns: table => new
                 {
-                    Discricao = table.Column<string>(nullable: true),
-                    TratamentoId = table.Column<int>(nullable: false)
+                    ReceitaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EnfermeirosId = table.Column<int>(nullable: false),
+                    MedicoId = table.Column<int>(nullable: false),
                     UtenteId = table.Column<int>(nullable: false),
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: true)
+                    date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tratamento", x => x.TratamentoId);
+                    table.PrimaryKey("PK_Receita", x => x.ReceitaId);
                     table.ForeignKey(
-                        name: "FK_Tratamento_Enfermeiros_EnfermeirosId",
-                        column: x => x.EnfermeirosId,
-                        principalTable: "Enfermeiros",
-                        principalColumn: "EnfermeirosId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tratamento_HorarioServicoDomicilio_HorarioServicoDomicilioId",
-                        column: x => x.HorarioServicoDomicilioId,
-                        principalTable: "HorarioServicoDomicilio",
-                        principalColumn: "HorarioServicoDomicilioId",
+                        name: "FK_Receita_Medico_MedicoId",
+                        column: x => x.MedicoId,
+                        principalTable: "Medico",
+                        principalColumn: "MedicoId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Tratamento_Utente_UtenteId",
+                        name: "FK_Receita_Utente_UtenteId",
                         column: x => x.UtenteId,
                         principalTable: "Utente",
                         principalColumn: "UtenteId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Material",
-                columns: table => new
-                {
-                    MaterialId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TratamentoId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Material", x => x.MaterialId);
-                    table.ForeignKey(
-                        name: "FK_Material_Tratamento_TratamentoId",
-                        column: x => x.TratamentoId,
-                        principalTable: "Tratamento",
-                        principalColumn: "TratamentoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Servicos",
+                name: "ReceitarTratamento",
                 columns: table => new
                 {
-                    ServicosId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TratamentoId = table.Column<int>(nullable: true)
+                    ReceitarTratamentoId = table.Column<int>(nullable: false),
+                    ReceitaId = table.Column<int>(nullable: false),
+                    TratamentoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Servicos", x => x.ServicosId);
+                    table.PrimaryKey("PK_ReceitarTratamento", x => new { x.ReceitaId, x.TratamentoId });
                     table.ForeignKey(
-                        name: "FK_Servicos_Tratamento_TratamentoId",
+                        name: "FK_ReceitarTratamento_Receita_ReceitaId",
+                        column: x => x.ReceitaId,
+                        principalTable: "Receita",
+                        principalColumn: "ReceitaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReceitarTratamento_Tratamento_TratamentoId",
                         column: x => x.TratamentoId,
                         principalTable: "Tratamento",
                         principalColumn: "TratamentoId",
@@ -147,29 +176,24 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "EnfermeirosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Material_TratamentoId",
-                table: "Material",
-                column: "TratamentoId");
+                name: "IX_Receita_MedicoId",
+                table: "Receita",
+                column: "MedicoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Servicos_TratamentoId",
-                table: "Servicos",
-                column: "TratamentoId");
+                name: "IX_Receita_UtenteId",
+                table: "Receita",
+                column: "UtenteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tratamento_EnfermeirosId",
-                table: "Tratamento",
-                column: "EnfermeirosId");
+                name: "IX_ReceitarTratamento_TratamentoId",
+                table: "ReceitarTratamento",
+                column: "TratamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tratamento_HorarioServicoDomicilioId",
                 table: "Tratamento",
                 column: "HorarioServicoDomicilioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tratamento_UtenteId",
-                table: "Tratamento",
-                column: "UtenteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Utente_HorarioServicoDomicilioId",
@@ -183,10 +207,16 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "Material");
 
             migrationBuilder.DropTable(
-                name: "Servicos");
+                name: "ReceitarTratamento");
+
+            migrationBuilder.DropTable(
+                name: "Receita");
 
             migrationBuilder.DropTable(
                 name: "Tratamento");
+
+            migrationBuilder.DropTable(
+                name: "Medico");
 
             migrationBuilder.DropTable(
                 name: "Utente");

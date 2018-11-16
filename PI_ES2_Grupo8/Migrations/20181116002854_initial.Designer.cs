@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181109191450_initial")]
+    [Migration("20181116002854_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,28 +72,64 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("TratamentoId");
-
                     b.HasKey("MaterialId");
-
-                    b.HasIndex("TratamentoId");
 
                     b.ToTable("Material");
                 });
 
-            modelBuilder.Entity("PI_ES2_Grupo8.Models.Servicos", b =>
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.Medico", b =>
                 {
-                    b.Property<int>("ServicosId")
+                    b.Property<int>("MedicoId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("TratamentoId");
+                    b.Property<string>("Email");
 
-                    b.HasKey("ServicosId");
+                    b.Property<string>("Morada");
+
+                    b.Property<string>("Nome");
+
+                    b.Property<string>("Telefone");
+
+                    b.HasKey("MedicoId");
+
+                    b.ToTable("Medico");
+                });
+
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.Receita", b =>
+                {
+                    b.Property<int>("ReceitaId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MedicoId");
+
+                    b.Property<int>("UtenteId");
+
+                    b.Property<DateTime>("date");
+
+                    b.HasKey("ReceitaId");
+
+                    b.HasIndex("MedicoId");
+
+                    b.HasIndex("UtenteId");
+
+                    b.ToTable("Receita");
+                });
+
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.ReceitarTratamento", b =>
+                {
+                    b.Property<int>("ReceitaId");
+
+                    b.Property<int>("TratamentoId");
+
+                    b.Property<int>("ReceitarTratamentoId");
+
+                    b.HasKey("ReceitaId", "TratamentoId");
 
                     b.HasIndex("TratamentoId");
 
-                    b.ToTable("Servicos");
+                    b.ToTable("ReceitarTratamento");
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Tratamento", b =>
@@ -102,21 +138,13 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Discricao");
-
-                    b.Property<int>("EnfermeirosId");
-
                     b.Property<int?>("HorarioServicoDomicilioId");
 
-                    b.Property<int>("UtenteId");
+                    b.Property<string>("TipodeTratamento");
 
                     b.HasKey("TratamentoId");
 
-                    b.HasIndex("EnfermeirosId");
-
                     b.HasIndex("HorarioServicoDomicilioId");
-
-                    b.HasIndex("UtenteId");
 
                     b.ToTable("Tratamento");
                 });
@@ -153,35 +181,34 @@ namespace PI_ES2_Grupo8.Migrations
                         .HasForeignKey("EnfermeirosId");
                 });
 
-            modelBuilder.Entity("PI_ES2_Grupo8.Models.Material", b =>
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.Receita", b =>
                 {
-                    b.HasOne("PI_ES2_Grupo8.Models.Tratamento")
-                        .WithMany("Materials")
-                        .HasForeignKey("TratamentoId");
+                    b.HasOne("PI_ES2_Grupo8.Models.Medico", "medico")
+                        .WithMany("receitas")
+                        .HasForeignKey("MedicoId");
+
+                    b.HasOne("PI_ES2_Grupo8.Models.Utente", "utente")
+                        .WithMany("receitas")
+                        .HasForeignKey("UtenteId");
                 });
 
-            modelBuilder.Entity("PI_ES2_Grupo8.Models.Servicos", b =>
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.ReceitarTratamento", b =>
                 {
-                    b.HasOne("PI_ES2_Grupo8.Models.Tratamento")
-                        .WithMany("Servicos")
+                    b.HasOne("PI_ES2_Grupo8.Models.Receita", "receita")
+                        .WithMany("receitarTratamentos")
+                        .HasForeignKey("ReceitaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PI_ES2_Grupo8.Models.Tratamento", "tratamento")
+                        .WithMany("receitarTratamentos")
                         .HasForeignKey("TratamentoId");
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Tratamento", b =>
                 {
-                    b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "Enfermeiros")
-                        .WithMany()
-                        .HasForeignKey("EnfermeirosId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("PI_ES2_Grupo8.Models.HorarioServicoDomicilio")
                         .WithMany("Tratamentos")
                         .HasForeignKey("HorarioServicoDomicilioId");
-
-                    b.HasOne("PI_ES2_Grupo8.Models.Utente", "utente")
-                        .WithMany()
-                        .HasForeignKey("UtenteId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Utente", b =>

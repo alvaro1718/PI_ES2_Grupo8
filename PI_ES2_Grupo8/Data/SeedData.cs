@@ -13,25 +13,12 @@ namespace PI_ES2_Grupo8.Data
         {
             SeedMedico(db);
             seedUtente(db);
-            seedTratamento(db);
-            seedReceita(db);
-            SeedReceitaTratamento(db);
+            //seedTratamento(db);
+            // seedReceita(db);
+            // SeedReceitaTratamento(db);
         }
 
-        private static void seedReceita(ServicoDomicilioDbContext db)
-        {
-            throw new NotImplementedException();
-        }
 
-        private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void seedTratamento(ServicoDomicilioDbContext db)
-        {
-            throw new NotImplementedException();
-        }
 
         private static void seedUtente(ServicoDomicilioDbContext db)
         {
