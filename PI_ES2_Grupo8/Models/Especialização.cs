@@ -13,5 +13,7 @@ namespace PI_ES2_Grupo8.Models
         [Required(ErrorMessage = "Por favor insira a Especialização")]
         public string Nome { get; set; }
 
+        public ICollection<Enfermeiros> Enfermeiros { get; set; }
+
     }
 }
