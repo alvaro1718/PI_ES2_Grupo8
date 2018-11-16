@@ -43,10 +43,10 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     MedicoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Morada = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(nullable: false),
+                    Morada = table.Column<string>(nullable: false),
+                    Telefone = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,7 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     TratamentoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TipodeTratamento = table.Column<string>(nullable: true),
+                    TipodeTratamento = table.Column<string>(nullable: false),
                     HorarioServicoDomicilioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -100,11 +100,11 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     UtenteId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Morada = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: false),
+                    Morada = table.Column<string>(nullable: false),
+                    Telefone = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Descricao = table.Column<string>(nullable: true),
                     HorarioServicoDomicilioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

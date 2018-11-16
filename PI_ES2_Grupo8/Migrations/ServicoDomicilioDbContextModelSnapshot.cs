@@ -81,13 +81,17 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
-                    b.Property<string>("Morada");
+                    b.Property<string>("Morada")
+                        .IsRequired();
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .IsRequired();
 
-                    b.Property<string>("Telefone");
+                    b.Property<string>("Telefone")
+                        .IsRequired();
 
                     b.HasKey("MedicoId");
 
@@ -138,7 +142,8 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<int?>("HorarioServicoDomicilioId");
 
-                    b.Property<string>("TipodeTratamento");
+                    b.Property<string>("TipodeTratamento")
+                        .IsRequired();
 
                     b.HasKey("TratamentoId");
 
@@ -153,17 +158,21 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Descricao");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<int?>("HorarioServicoDomicilioId");
 
-                    b.Property<string>("Morada");
+                    b.Property<string>("Morada")
+                        .IsRequired();
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .IsRequired();
 
-                    b.Property<string>("Telefone");
+                    b.Property<string>("Telefone")
+                        .IsRequired();
 
                     b.HasKey("UtenteId");
 

@@ -11,18 +11,48 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-           // SeedMedico(db);
-          //  seedUtente(db);
-          //  seedTratamento(db);
-          //  seedReceita(db);
-            // SeedReceitaTratamento(db);
+           SeedMedico(db);
+           seedUtente(db);
+           seedTratamento(db);
+           seedReceita(db);
+           SeedReceitaTratamento(db);
         }
 
-     /*   private static void seedReceita(ServicoDomicilioDbContext db)
+        private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
         {
-            Medico medico = GetMedicoCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades","921876352","pedro12@gmail.com");
-            //CreateBookIfDoesNotExist(db, "Foundation", author);
-            //CreateBookIfDoesNotExist(db, "I, Robot", author);
+            if (db.ReceitarTratamento.Any()) return;
+            Tratamento tratamento = GetTratamentoCreatingIfNeed(db, "Ajudar na Locomoção");
+
+            Medico medico = GetMedicoCreatingIfNeed(db, "Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
+
+            Utente utente=GetUtenteCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades", "962276352", "pedro12@gmail.com", "Difilculdades Locumoção");
+            Receita receita =CreateReceitaIfDoesNotExist(db, medico, utente);//db.Receita.SingleOrDefault(b => b.MedicoId == medico.MedicoId);
+            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = 1,TratamentoId = tratamento.TratamentoId});
+
+            tratamento = GetTratamentoCreatingIfNeed(db, "Vacinar");
+            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = 1, TratamentoId = tratamento.TratamentoId });
+            db.SaveChanges();
+        }
+
+        private static void seedReceita(ServicoDomicilioDbContext db)
+        {
+            Medico medico = GetMedicoCreatingIfNeed(db,"Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
+            Utente utente= GetUtenteCreatingIfNeed(db, "Rui Martins",  "Rua Rampa das Necesidades",  "962276352", "pedro12@gmail.com","Difilculdades Locumoção");
+           
+            DateTime date =DateTime.Now;
+             CreateReceitaIfDoesNotExist(db,medico,utente);
+            
+        }
+
+        private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente)
+        {
+            Receita receita = db.Receita.SingleOrDefault(b => b.MedicoId == medico.MedicoId);
+            if (receita == null)
+            {
+                db.Receita.Add(new Receita { MedicoId = medico.MedicoId, UtenteId=utente.UtenteId});
+            }
+
+            return receita;
         }
 
         private static Medico GetMedicoCreatingIfNeed(ServicoDomicilioDbContext db, string nome, string morada,string telefone,string email)
@@ -45,7 +75,7 @@ namespace PI_ES2_Grupo8.Data
 
             if (utente == null)
             {
-               // utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Discricao=discricao };
+               utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Descricao=discricao };
                 db.Add(utente);
                 db.SaveChanges();
             }
@@ -71,17 +101,29 @@ namespace PI_ES2_Grupo8.Data
 
             db.SaveChanges();
         }
+        private static Tratamento GetTratamentoCreatingIfNeed(ServicoDomicilioDbContext db, string tipotratamento)
+        {
+            Tratamento tratamento = db.Tratamento.SingleOrDefault(t => t.TipodeTratamento == tipotratamento);
 
+            if (tratamento == null)
+            {
+                tratamento = new Tratamento { TipodeTratamento = tipotratamento };
+                db.Add(tratamento);
+                db.SaveChanges();
+            }
+
+            return tratamento;
+        }
         private static void seedUtente(ServicoDomicilioDbContext db)
         {
             if (db.Utente.Any()) return;
 
             db.Utente.AddRange(
-            new Utente { Nome = "Rui Martins", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Description = "Difilculdades Locumoção" },
-            new Utente { Nome = "Pedro Lua", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "Lua@gmail.com", Description = "Problemas de Visão" },
-            new Utente { Nome = "Afonso Pires", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "r_afonso@gmail.com", Description = "Problemas de Visão" },
-            new Utente { Nome = "MafaldaCunha", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "ana_salg@gmail.com", Description = "Difilculdades Locumoção" },
-            new Utente { Nome = "Marcela Bernardo", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Description = "Problemas de Visão" }
+            new Utente { Nome = "Rui Martins", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Descricao = "Difilculdades Locomoção" },
+            new Utente { Nome = "Pedro Lua", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "LuaP@gmail.com", Descricao = "Problemas de Visão" },
+            new Utente { Nome = "Afonso Pires", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "p_afonso@gmail.com", Descricao = "Problemas de Visão" },
+            new Utente { Nome = "Mafalda Cunha", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "maf_cunha@gmail.com", Descricao = "Difilculdades Locomoção" },
+            new Utente { Nome = "Marcela Bernardo", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Descricao = "Problemas de Visão" }
             );
 
             db.SaveChanges();
@@ -92,16 +134,16 @@ namespace PI_ES2_Grupo8.Data
             if (db.Utente.Any()) return;
 
             db.Medico.AddRange(
-            new Medico { Nome = "Pedro Martins", Morada = "Rua Rampa das Necesidades", Telefone = "921876352", Email = "pedro12@gmail.com"},
-            new Medico{ Nome = "João Lua", Morada = "Rua Santo Antônio", Telefone = "961234098", Email = "Lua@gmail.com"},
-            new Medico { Nome = "Rui Afonso", Morada = "Rua Tiradentes", Telefone = "911210983", Email = "r_afonso@gmail.com"},
-            new Medico { Nome = "Ana Salgado", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "ana_salg@gmail.com"},
-            new Medico { Nome = "Marta Camões", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com"}
+            new Medico { Nome = "Pedro Martins", Morada = "Rua dos Silva", Telefone = "921876352", Email = "Martins122@gmail.com" },
+            new Medico{ Nome = "João Lua", Morada = "Rua Nova da Estação", Telefone = "961234098", Email = "Lua@gmail.com"},
+            new Medico { Nome = "Rui Afonso", Morada = "Rua São Vicente", Telefone = "916710983", Email = "r_afonso@gmail.com"},
+            new Medico { Nome = "Ana Salgado", Morada = "Rua Santa Madalena", Telefone = "933124559", Email = "ana_salg@gmail.com"},
+            new Medico { Nome = "Marta Camões", Morada = "Rua Pires de Lima", Telefone = "916653312", Email = "marta2_cam@gmail.com"}
             );
 
             db.SaveChanges();
         }
-        */
+        
     }
 }
 

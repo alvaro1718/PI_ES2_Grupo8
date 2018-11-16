@@ -43,9 +43,10 @@ namespace PI_ES2_Grupo8.Models
                .HasOne(b => b.utente)
                .WithMany(a => a.receitas)
                .HasForeignKey(b => b.UtenteId)
-               .OnDelete(DeleteBehavior.ClientSetNull); 
+               .OnDelete(DeleteBehavior.ClientSetNull);
 
-           base.OnModelCreating(modelBuilder);
+           //modelBuilder.Entity<Receita>().HasMany<DateTime>(DateTime da);
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<PI_ES2_Grupo8.Models.Utente> Utente { get; set; }

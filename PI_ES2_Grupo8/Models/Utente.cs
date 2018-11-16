@@ -28,7 +28,7 @@ namespace PI_ES2_Grupo8.Models
         public String Email { get; set; }
 
         
-        public string Descric { get; set; }
+        public string Descricao { get; set; }
 
         public ICollection<Receita> receitas {get; set;}
     }
