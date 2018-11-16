@@ -36,7 +36,7 @@ namespace PI_ES2_Grupo8.Controllers
             var receitarTratamento = await _context.ReceitarTratamento
                 .Include(r => r.receita)
                 .Include(r => r.tratamento)
-                .FirstOrDefaultAsync(m => m.ReceitarTratamentoId == id);
+                .FirstOrDefaultAsync(m => m.ReceitaId == id);
             if (receitarTratamento == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace PI_ES2_Grupo8.Controllers
         public IActionResult Create()
         {
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId");
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TratamentoId");
+            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento");
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace PI_ES2_Grupo8.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId", receitarTratamento.ReceitaId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TratamentoId", receitarTratamento.TratamentoId);
+            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);
             return View(receitarTratamento);
         }
 
@@ -85,7 +85,7 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId", receitarTratamento.ReceitaId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TratamentoId", receitarTratamento.TratamentoId);
+            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);
             return View(receitarTratamento);
         }
 
@@ -96,7 +96,7 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ReceitarTratamentoId,ReceitaId,TratamentoId")] ReceitarTratamento receitarTratamento)
         {
-            if (id != receitarTratamento.ReceitarTratamentoId)
+            if (id != receitarTratamento.ReceitaId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReceitarTratamentoExists(receitarTratamento.ReceitarTratamentoId))
+                    if (!ReceitarTratamentoExists(receitarTratamento.ReceitaId))
                     {
                         return NotFound();
                     }
@@ -122,7 +122,7 @@ namespace PI_ES2_Grupo8.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId", receitarTratamento.ReceitaId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TratamentoId", receitarTratamento.TratamentoId);
+            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);
             return View(receitarTratamento);
         }
 
@@ -137,7 +137,7 @@ namespace PI_ES2_Grupo8.Controllers
             var receitarTratamento = await _context.ReceitarTratamento
                 .Include(r => r.receita)
                 .Include(r => r.tratamento)
-                .FirstOrDefaultAsync(m => m.ReceitarTratamentoId == id);
+                .FirstOrDefaultAsync(m => m.ReceitaId == id);
             if (receitarTratamento == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace PI_ES2_Grupo8.Controllers
 
         private bool ReceitarTratamentoExists(int id)
         {
-            return _context.ReceitarTratamento.Any(e => e.ReceitarTratamentoId == id);
+            return _context.ReceitarTratamento.Any(e => e.ReceitaId == id);
         }
     }
 }

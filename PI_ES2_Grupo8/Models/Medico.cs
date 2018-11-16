@@ -20,7 +20,7 @@ namespace PI_ES2_Grupo8.Models
 
 
         [Required(ErrorMessage = "Please enter your phone number")]
-        [RegularExpression(@"(9[1236)/d{7})", ErrorMessage = "Invalid number.")]
+        [RegularExpression(@"(9[1236])\d{7})", ErrorMessage = "Invalid number.")]
         public String Telefone { get; set; }
 
         [Required(ErrorMessage = "Please enter your email")]

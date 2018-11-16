@@ -4,14 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Lista ReceitarTratamento</h2>
+<h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Receitar Tratamento</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceitarTratamentoId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.receita)
             </th>
@@ -25,15 +28,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.ReceitarTratamentoId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.receita.ReceitaId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.tratamento.TratamentoId)
+                @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ReceitarTratamentoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReceitarTratamentoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReceitarTratamentoId">Delete</a>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

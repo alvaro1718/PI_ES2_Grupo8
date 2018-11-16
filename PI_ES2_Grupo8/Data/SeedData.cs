@@ -11,11 +11,11 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-          // SeedMedico(db);
-          // seedUtente(db);
-          // seedTratamento(db);
-          // seedReceita(db);
-         //  SeedReceitaTratamento(db);
+          SeedMedico(db);
+          seedUtente(db);
+          seedTratamento(db);
+          seedReceita(db);
+          SeedReceitaTratamento(db);
         }
 
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
