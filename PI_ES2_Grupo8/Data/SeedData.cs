@@ -17,39 +17,45 @@ namespace PI_ES2_Grupo8.Data
           seedReceita(db);
           SeedReceitaTratamento(db);
         }
-
+        public static int nreceita = 1;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
         {
+         
             if (db.ReceitarTratamento.Any()) return;
+
             Tratamento tratamento = GetTratamentoCreatingIfNeed(db, "Ajudar na Locomoção");
 
-            Medico medico = GetMedicoCreatingIfNeed(db, "Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
+           // Medico medico = GetMedicoCreatingIfNeed(db, "Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
 
-            Utente utente=GetUtenteCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades", "962276352", "pedro12@gmail.com", "Difilculdades Locumoção");
-            Receita receita =CreateReceitaIfDoesNotExist(db, medico, utente);//db.Receita.SingleOrDefault(b => b.MedicoId == medico.MedicoId);
-            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = 1,TratamentoId = tratamento.TratamentoId});
+            //Utente utente=GetUtenteCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades", "962276352", "pedro12@gmail.com", "Difilculdades Locumoção");
+            Receita receita =db.Receita.SingleOrDefault(b => b.Nreceita == 0);//CreateReceitaIfDoesNotExist(db, medico, utente,nreceia);
+            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receita.ReceitaId,TratamentoId = tratamento.TratamentoId});
 
             tratamento = GetTratamentoCreatingIfNeed(db, "Vacinar");
-            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = 1, TratamentoId = tratamento.TratamentoId });
+            db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receita.ReceitaId, TratamentoId = tratamento.TratamentoId });
             db.SaveChanges();
         }
-
+   
         private static void seedReceita(ServicoDomicilioDbContext db)
         {
             Medico medico = GetMedicoCreatingIfNeed(db,"Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
             Utente utente= GetUtenteCreatingIfNeed(db, "Rui Martins",  "Rua Rampa das Necesidades",  "962276352", "pedro12@gmail.com","Difilculdades Locumoção");
-           
-            DateTime date =DateTime.Now;
-             CreateReceitaIfDoesNotExist(db,medico,utente);
+
+            // DateTime date =DateTime.Now.Date;
+           // nreceia++;
+            CreateReceitaIfDoesNotExist(db,medico,utente,nreceita);
             
         }
 
-        private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente)
+        private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente,int Nreceita)
         {
-            Receita receita = db.Receita.SingleOrDefault(b => b.MedicoId == medico.MedicoId);
+            DateTime Date = DateTime.Today;
+            Receita receita = db.Receita.SingleOrDefault(b => b.Nreceita ==Nreceita);
             if (receita == null)
             {
-                db.Receita.Add(new Receita { MedicoId = medico.MedicoId, UtenteId=utente.UtenteId});
+                Nreceita++;
+                db.Receita.Add(new Receita { MedicoId = medico.MedicoId, UtenteId=utente.UtenteId,Date=Date,Nreceita=Nreceita});
+                db.SaveChanges();
             }
 
             return receita;

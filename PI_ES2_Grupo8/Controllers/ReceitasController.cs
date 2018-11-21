@@ -48,8 +48,8 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Receitas/Create
         public IActionResult Create()
         {
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId");
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId");
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome");
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReceitaId,MedicoId,UtenteId,date")] Receita receita)
+        public async Task<IActionResult> Create([Bind("ReceitaId,MedicoId,UtenteId,Date,Nreceita")] Receita receita)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace PI_ES2_Grupo8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);
             return View(receita);
         }
 
@@ -84,8 +84,8 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);
             return View(receita);
         }
 
@@ -94,7 +94,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReceitaId,MedicoId,UtenteId,date")] Receita receita)
+        public async Task<IActionResult> Edit(int id, [Bind("ReceitaId,MedicoId,UtenteId,Date,Nreceita")] Receita receita)
         {
             if (id != receita.ReceitaId)
             {
@@ -121,8 +121,8 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", receita.MedicoId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", receita.UtenteId);
+            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome", receita.MedicoId);
+            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);
             return View(receita);
         }
 

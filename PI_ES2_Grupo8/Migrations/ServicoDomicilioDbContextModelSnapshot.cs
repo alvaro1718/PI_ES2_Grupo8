@@ -104,11 +104,13 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<int>("MedicoId");
 
-                    b.Property<int>("UtenteId");
+                    b.Property<int>("Nreceita");
 
-                    b.Property<DateTime>("date");
+                    b.Property<int>("UtenteId");
 
                     b.HasKey("ReceitaId");
 

@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181116113707_initial")]
+    [Migration("20181121102836_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,11 +106,13 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<int>("MedicoId");
 
-                    b.Property<int>("UtenteId");
+                    b.Property<int>("Nreceita");
 
-                    b.Property<DateTime>("date");
+                    b.Property<int>("UtenteId");
 
                     b.HasKey("ReceitaId");
 

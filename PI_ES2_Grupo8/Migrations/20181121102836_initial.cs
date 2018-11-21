@@ -126,7 +126,8 @@ namespace PI_ES2_Grupo8.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     MedicoId = table.Column<int>(nullable: false),
                     UtenteId = table.Column<int>(nullable: false),
-                    date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    Nreceita = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
