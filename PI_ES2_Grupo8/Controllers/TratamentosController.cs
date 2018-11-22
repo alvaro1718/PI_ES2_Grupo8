@@ -57,13 +57,22 @@ namespace PI_ES2_Grupo8.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                verificarTratamento = _context.Tratamento.SingleOrDefault(p => p.TipodeTratamento == tratamento.TipodeTratamento);
+                //  if (tratamento.TipodeTratamento==_context.Tratamento.(p =>p.TipodeTratamento.Contains(tratamento.TipodeTratamento)) ) { }
+                if (verificarTratamento == null)
+                {
+                    _context.Add(tratamento);
+                    await _context.SaveChangesAsync();
+                    return View("TratamentoCriado", tratamento);//RedirectToAction(nameof(Index));
+                }
+                else {
+                         ViewBag.Message = "Tratamento já existente.";
+                    return View("Create");
+                }
             }
             return View(tratamento);
         }
-
+        public static String TratamentoSelecionado;
         // GET: Tratamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -73,44 +82,61 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var tratamento = await _context.Tratamento.FindAsync(id);
+            TratamentoSelecionado = tratamento.TipodeTratamento;
             if (tratamento == null)
             {
                 return NotFound();
             }
             return View(tratamento);
         }
-
+        Tratamento verificarTratamento2,verificarTratamento;
         // POST: Tratamentos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+            
         public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
         {
-            if (id != tratamento.TratamentoId)
+            verificarTratamento = _context.Tratamento.SingleOrDefault(p => p.TipodeTratamento == tratamento.TipodeTratamento);
+           // verificarTratamento2 = await _context.Tratamento.SingleOrDefaultAsync(p => p.TratamentoId == tratamento.TratamentoId);
+          /*  if (id != tratamento.TratamentoId)
             {
                 return NotFound();
-            }
+            }*/
+            
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tratamento);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TratamentoExists(tratamento.TratamentoId))
+                // if (verificarTratamento2.TipodeTratamento==tratamento.TipodeTratamento)
+                if (tratamento.TipodeTratamento == TratamentoSelecionado) {
+                    ViewBag.Message = "editarOP";
+                    return View("TratamentoCriado", tratamento);
+                } if(verificarTratamento==null) 
+                  {
+                    try
                     {
-                        return NotFound();
+                        _context.Update(tratamento);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!TratamentoExists(tratamento.TratamentoId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    ViewBag.Message = "editarOP";
+                     return View("TratamentoCriado", tratamento);
                 }
-                return RedirectToAction(nameof(Index));
+                else {
+                    ViewBag.Message = "Tratamento já existente.";
+                    return View("Edit");
+                }
             }
             return View(tratamento);
         }
@@ -138,10 +164,13 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             var tratamento = await _context.Tratamento.FindAsync(id);
+          //  var tratamento1 = await _context.Tratamento.FindAsync(id);
+            
             _context.Tratamento.Remove(tratamento);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+             await _context.SaveChangesAsync();
+            return View("TratamentoApagado",tratamento);//RedirectToAction(nameof(Index));
         }
 
         private bool TratamentoExists(int id)

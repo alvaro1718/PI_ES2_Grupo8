@@ -7,8 +7,9 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar novo</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -28,26 +29,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.medico.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.utente.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nreceita)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReceitaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReceitaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReceitaId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.medico.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.utente.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nreceita)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReceitaId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReceitaId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReceitaId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -10,21 +10,21 @@ namespace PI_ES2_Grupo8.Models
     {
         public int UtenteId { get; set; }
 
-        [Required(ErrorMessage = "Please enter your name")]
+        [Required(ErrorMessage = "Por favor introduza o seu nome")]
         public string Nome { get; set; }
 
 
 
         //public String Sexo { get; set; }
-        [Required(ErrorMessage = "Please enter your address")]
+        [Required(ErrorMessage = "Por favor introduza o seu endereço")]
         public String Morada { get; set; }
 
 
-        [Required(ErrorMessage = "Please enter your phone number")]
-        [RegularExpression(@"(9[1236])\d{7})", ErrorMessage = "Invalid number.")]
+        [Required(ErrorMessage = "Por favor introduza o seu número de telemóvel")]
+        [RegularExpression(@"9[1236])\d{7}", ErrorMessage = "Número inválido.")]
         public String Telefone { get; set; }
 
-        [Required(ErrorMessage = "Please enter your email")]
+        [Required(ErrorMessage = "Por favor introduza o seu email")]
         public String Email { get; set; }
 
         

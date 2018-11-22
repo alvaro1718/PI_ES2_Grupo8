@@ -17,7 +17,7 @@ namespace PI_ES2_Grupo8.Data
           seedReceita(db);
           SeedReceitaTratamento(db);
         }
-        public static int nreceita = 1;
+        public static int nreceita =0;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
         {
          
@@ -28,7 +28,7 @@ namespace PI_ES2_Grupo8.Data
            // Medico medico = GetMedicoCreatingIfNeed(db, "Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
 
             //Utente utente=GetUtenteCreatingIfNeed(db, "Rui Martins", "Rua Rampa das Necesidades", "962276352", "pedro12@gmail.com", "Difilculdades Locumoção");
-            Receita receita =db.Receita.SingleOrDefault(b => b.Nreceita == 0);//CreateReceitaIfDoesNotExist(db, medico, utente,nreceia);
+            Receita receita =db.Receita.SingleOrDefault(b => b.Nreceita == nreceita);//CreateReceitaIfDoesNotExist(db, medico, utente,nreceia);
             db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receita.ReceitaId,TratamentoId = tratamento.TratamentoId});
 
             tratamento = GetTratamentoCreatingIfNeed(db, "Vacinar");
@@ -43,18 +43,19 @@ namespace PI_ES2_Grupo8.Data
 
             // DateTime date =DateTime.Now.Date;
            // nreceia++;
-            CreateReceitaIfDoesNotExist(db,medico,utente,nreceita);
+            CreateReceitaIfDoesNotExist(db,medico,utente);
             
         }
 
-        private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente,int Nreceita)
+        private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente)
         {
             DateTime Date = DateTime.Today;
-            Receita receita = db.Receita.SingleOrDefault(b => b.Nreceita ==Nreceita);
+            Receita receita = db.Receita.SingleOrDefault(b => b.Nreceita ==nreceita);
             if (receita == null)
             {
-                Nreceita++;
-                db.Receita.Add(new Receita { MedicoId = medico.MedicoId, UtenteId=utente.UtenteId,Date=Date,Nreceita=Nreceita});
+                
+                nreceita++;
+                db.Receita.Add(new Receita { MedicoId = medico.MedicoId, UtenteId=utente.UtenteId,Date=Date,Nreceita=nreceita});
                 db.SaveChanges();
             }
 
