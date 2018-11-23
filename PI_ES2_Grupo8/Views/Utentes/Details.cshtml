@@ -23,6 +23,12 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
+            <p>Nº Utente Saúde</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.N_Utente_Saude)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Morada)
         </dt>
         <dd>
@@ -53,9 +59,10 @@
     {
         <a asp-action="Index">Lista Utente</a>
     }
-    else {
-    <a asp-action="Edit" asp-route-id="@Model.UtenteId"><input type="button" value="Editar" class="btn btn-default" /></a> 
-    <a asp-action="Index">Lista Utente</a>
+    else
+    {
+        <a asp-action="Edit" asp-route-id="@Model.UtenteId"><input type="button" value="Editar" class="btn btn-default" /></a>
+        <a asp-action="Index">Lista Utente</a>
 
     }
 </div>

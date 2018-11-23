@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Lista Utente";
 }
-
 <h4>Lista Utente</h4>
-
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
@@ -14,6 +12,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                <p>Nº Utente Saúde</p>
             </th>
             
             <th>
@@ -29,10 +30,14 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.N_Utente_Saude)
             </td>
            
             <td>
@@ -50,6 +55,6 @@
                 <a asp-action="Delete" asp-route-id="@item.UtenteId">Apagar</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

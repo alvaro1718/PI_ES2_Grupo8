@@ -101,6 +101,7 @@ namespace PI_ES2_Grupo8.Migrations
                     UtenteId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: false),
+                    N_Utente_Saude = table.Column<string>(nullable: false),
                     Morada = table.Column<string>(nullable: false),
                     Telefone = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),

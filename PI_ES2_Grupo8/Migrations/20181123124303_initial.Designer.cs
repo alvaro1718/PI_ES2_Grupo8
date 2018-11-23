@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181123081730_initial")]
+    [Migration("20181123124303_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,6 +168,9 @@ namespace PI_ES2_Grupo8.Migrations
                     b.Property<int?>("HorarioServicoDomicilioId");
 
                     b.Property<string>("Morada")
+                        .IsRequired();
+
+                    b.Property<string>("N_Utente_Saude")
                         .IsRequired();
 
                     b.Property<string>("Nome")

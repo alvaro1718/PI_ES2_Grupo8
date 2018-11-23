@@ -13,8 +13,9 @@ namespace PI_ES2_Grupo8.Models
         [Required(ErrorMessage = "Por favor introduza o seu nome")]
         public string Nome { get; set; }
 
-
-
+        [Required(ErrorMessage = "Por favor introduza o seu número do utente de saúde")]
+        [RegularExpression(@"[0-9]+$", ErrorMessage = "Número inválido.")]
+        public string N_Utente_Saude { get; set; }
         //public String Sexo { get; set; }
         [Required(ErrorMessage = "Por favor introduza o seu endereço")]
         public String Morada { get; set; }

@@ -53,11 +53,13 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UtenteId,Nome,Morada,Telefone,Email,Problemas")] Utente utente)
+        public async Task<IActionResult> Create([Bind("UtenteId,Nome,N_Utente_Saude,Morada,Telefone,Email,Problemas")] Utente utente)
         {
+           
             if (ModelState.IsValid)
             {
-                Utente verificarUtente = _context.Utente.SingleOrDefault(p => p.Telefone == utente.Telefone&& (p.Nome==utente.Nome));
+                Utente verificarUtente = _context.Utente.SingleOrDefault(p => p.N_Utente_Saude == utente.N_Utente_Saude);
+
                 if (verificarUtente == null)
                 {
                     _context.Add(utente);
@@ -65,8 +67,8 @@ namespace PI_ES2_Grupo8.Controllers
                     ViewBag.Message = "UtenteCriado";
                     return View("Details", utente);//return RedirectToAction(nameof(Index));
                 }
-                else {
-
+                else
+                {
                     ViewBag.Message = "Utente já existente.";
                     return View("Create");
                 }
@@ -95,7 +97,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,Morada,Telefone,Email,Problemas")] Utente utente)
+        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,N_Utente_Saude,Morada,Telefone,Email,Problemas")] Utente utente)
         {
             if (id != utente.UtenteId)
             {

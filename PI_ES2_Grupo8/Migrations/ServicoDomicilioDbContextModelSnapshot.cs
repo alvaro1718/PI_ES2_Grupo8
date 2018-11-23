@@ -168,6 +168,9 @@ namespace PI_ES2_Grupo8.Migrations
                     b.Property<string>("Morada")
                         .IsRequired();
 
+                    b.Property<string>("N_Utente_Saude")
+                        .IsRequired();
+
                     b.Property<string>("Nome")
                         .IsRequired();
 

@@ -11,13 +11,13 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-            SeedMedico(db);
-            seedUtente(db);
+           // SeedMedico(db);
+          seedUtente(db);
          // seedTratamento(db);
          // seedReceita(db);
          // SeedReceitaTratamento(db);
         }
-        public static int nreceita =0;
+       public static int nreceita =0;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
         {
          
@@ -39,7 +39,7 @@ namespace PI_ES2_Grupo8.Data
         private static void seedReceita(ServicoDomicilioDbContext db)
         {
             Medico medico = GetMedicoCreatingIfNeed(db,"Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");
-            Utente utente= GetUtenteCreatingIfNeed(db, "Rui Martins",  "Rua Rampa das Necesidades",  "962276352", "pedro12@gmail.com","Difilculdades Locumoção");
+            Utente utente= GetUtenteCreatingIfNeed(db, "Rui Martins", "53423234", "Rua Rampa das Necesidades",  "962276352", "pedro12@gmail.com","Difilculdades Locumoção");
 
             // DateTime date =DateTime.Now.Date;
            // nreceia++;
@@ -76,13 +76,13 @@ namespace PI_ES2_Grupo8.Data
             return medico;
         }
 
-        private static Utente GetUtenteCreatingIfNeed(ServicoDomicilioDbContext db, string nome, string morada, string telefone, string email,string discricao)
+        private static Utente GetUtenteCreatingIfNeed(ServicoDomicilioDbContext db, string nome,string NutenteSaude, string morada, string telefone, string email,string discricao)
         {
             Utente utente = db.Utente.SingleOrDefault(a => a.Nome == nome);
 
             if (utente == null)
             {
-               utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Problemas=discricao };
+               utente = new Utente { Nome = nome,N_Utente_Saude=NutenteSaude, Morada = morada, Telefone = telefone, Email = email, Problemas=discricao };
                 db.Add(utente);
                 db.SaveChanges();
             }
@@ -126,11 +126,11 @@ namespace PI_ES2_Grupo8.Data
             if (db.Utente.Any()) return;
 
             db.Utente.AddRange(
-            new Utente { Nome = "Rui Martins", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Problemas = "Difilculdades Locomoção" },
-            new Utente { Nome = "Pedro Lua", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "LuaP@gmail.com", Problemas = "Problemas de Visão" },
-            new Utente { Nome = "Afonso Pires", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "p_afonso@gmail.com", Problemas = "Problemas de Visão" },
-            new Utente { Nome = "Mafalda Cunha", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "maf_cunha@gmail.com", Problemas = "Difilculdades Locomoção" },
-            new Utente { Nome = "Marcela Bernardo", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Problemas = "Problemas de Visão" }
+            new Utente { Nome = "Rui Martins",N_Utente_Saude="53423234", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Problemas = "Difilculdades Locomoção" },
+            new Utente { Nome = "Pedro Lua", N_Utente_Saude = "234342323", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "LuaP@gmail.com", Problemas = "Problemas de Visão" },
+            new Utente { Nome = "Afonso Pires", N_Utente_Saude = "76289634", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "p_afonso@gmail.com", Problemas = "Problemas de Visão" },
+            new Utente { Nome = "Mafalda Cunha", N_Utente_Saude = "53090034", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "maf_cunha@gmail.com", Problemas = "Difilculdades Locomoção" },
+            new Utente { Nome = "Marcela Bernardo", N_Utente_Saude = "534354545", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Problemas = "Problemas de Visão" }
             );
 
             db.SaveChanges();
