@@ -57,9 +57,19 @@ namespace PI_ES2_Grupo8.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(utente);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Utente verificarUtente = _context.Utente.SingleOrDefault(p => p.Telefone == utente.Telefone&& (p.Nome==utente.Nome));
+                if (verificarUtente == null)
+                {
+                    _context.Add(utente);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message = "UtenteCriado";
+                    return View("Details", utente);//return RedirectToAction(nameof(Index));
+                }
+                else {
+
+                    ViewBag.Message = "Utente já existente.";
+                    return View("Create");
+                }
             }
             return View(utente);
         }

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<PI_ES2_Grupo8.Models.Utente>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista Utente";
 }
 
-<h2>Index</h2>
+<h4>Lista Utente</h4>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar Novo</a>
 </p>
 <table class="table">
     <thead>
@@ -15,9 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Morada)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
@@ -36,9 +34,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
@@ -49,9 +45,9 @@
                 @Html.DisplayFor(modelItem => item.Problemas)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UtenteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UtenteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UtenteId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.UtenteId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.UtenteId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.UtenteId">Apagar</a>
             </td>
         </tr>
 }

@@ -1,13 +1,19 @@
 ﻿@model PI_ES2_Grupo8.Models.Utente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>Utente</h4>
+    @if (ViewBag.Message == "UtenteCriado")
+    {
+        <h4>Utente criado com sucesso. </h4>
+    }
+    else
+    {
+        <h4>Detalhes Utente</h4>
+    }
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -43,6 +49,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.UtenteId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (ViewBag.Message == "UtenteCriado")
+    {
+        <a asp-action="Index">Lista Utente</a>
+    }
+    else {
+    <a asp-action="Edit" asp-route-id="@Model.UtenteId"><input type="button" value="Editar" class="btn btn-default" /></a> 
+    <a asp-action="Index">Lista Utente</a>
+
+    }
 </div>
