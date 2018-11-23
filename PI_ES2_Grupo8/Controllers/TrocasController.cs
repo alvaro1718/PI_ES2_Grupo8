@@ -60,7 +60,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TrocaId,justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
+        public async Task<IActionResult> Create([Bind("TrocaId,Justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
+        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,Justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
         {
             if (id != troca.TrocaId)
             {
