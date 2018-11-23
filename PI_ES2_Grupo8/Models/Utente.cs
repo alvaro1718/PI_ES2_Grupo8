@@ -21,7 +21,7 @@ namespace PI_ES2_Grupo8.Models
 
 
         [Required(ErrorMessage = "Por favor introduza o seu número de telemóvel")]
-        [RegularExpression(@"9[1236])\d{7}", ErrorMessage = "Número inválido.")]
+        [RegularExpression(@"9[1236]\d{7}", ErrorMessage = "Número inválido.")]
         public String Telefone { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza o seu email")]
