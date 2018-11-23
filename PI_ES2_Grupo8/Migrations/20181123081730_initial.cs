@@ -104,7 +104,7 @@ namespace PI_ES2_Grupo8.Migrations
                     Morada = table.Column<string>(nullable: false),
                     Telefone = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Descricao = table.Column<string>(nullable: true),
+                    Problemas = table.Column<string>(nullable: true),
                     HorarioServicoDomicilioId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

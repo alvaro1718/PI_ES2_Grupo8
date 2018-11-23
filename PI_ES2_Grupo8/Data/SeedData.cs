@@ -11,8 +11,8 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-          //SeedMedico(db);
-          seedUtente(db);
+            SeedMedico(db);
+            seedUtente(db);
          // seedTratamento(db);
          // seedReceita(db);
          // SeedReceitaTratamento(db);
@@ -82,7 +82,7 @@ namespace PI_ES2_Grupo8.Data
 
             if (utente == null)
             {
-               utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Descricao=discricao };
+               utente = new Utente { Nome = nome, Morada = morada, Telefone = telefone, Email = email, Problemas=discricao };
                 db.Add(utente);
                 db.SaveChanges();
             }
@@ -126,11 +126,11 @@ namespace PI_ES2_Grupo8.Data
             if (db.Utente.Any()) return;
 
             db.Utente.AddRange(
-            new Utente { Nome = "Rui Martins", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Descricao = "Difilculdades Locomoção" },
-            new Utente { Nome = "Pedro Lua", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "LuaP@gmail.com", Descricao = "Problemas de Visão" },
-            new Utente { Nome = "Afonso Pires", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "p_afonso@gmail.com", Descricao = "Problemas de Visão" },
-            new Utente { Nome = "Mafalda Cunha", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "maf_cunha@gmail.com", Descricao = "Difilculdades Locomoção" },
-            new Utente { Nome = "Marcela Bernardo", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Descricao = "Problemas de Visão" }
+            new Utente { Nome = "Rui Martins", Morada = "Rua Rampa das Necesidades", Telefone = "962276352", Email = "pedro12@gmail.com", Problemas = "Difilculdades Locomoção" },
+            new Utente { Nome = "Pedro Lua", Morada = "Rua Santo Antônio", Telefone = "923234098", Email = "LuaP@gmail.com", Problemas = "Problemas de Visão" },
+            new Utente { Nome = "Afonso Pires", Morada = "Rua Tiradentes", Telefone = "911210322", Email = "p_afonso@gmail.com", Problemas = "Problemas de Visão" },
+            new Utente { Nome = "Mafalda Cunha", Morada = "Rua Santa Luzia", Telefone = "933121099", Email = "maf_cunha@gmail.com", Problemas = "Difilculdades Locomoção" },
+            new Utente { Nome = "Marcela Bernardo", Morada = "Rua Duque De Caxias", Telefone = "910993312", Email = "marta2_cam@gmail.com", Problemas = "Problemas de Visão" }
             );
 
             db.SaveChanges();
@@ -157,7 +157,7 @@ namespace PI_ES2_Grupo8.Data
 
 
 
-/* public static void Populate(IServiceProvider applicationServices)
+/*public static void Populate(IServiceProvider applicationServices)
         {
             using (var serviceScope = applicationServices.CreateScope())
             {
@@ -175,4 +175,5 @@ namespace PI_ES2_Grupo8.Data
 
                 db.SaveChanges();
             }
-        }*/
+        }
+        */

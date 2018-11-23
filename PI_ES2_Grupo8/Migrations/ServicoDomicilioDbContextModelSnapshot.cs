@@ -160,8 +160,6 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descricao");
-
                     b.Property<string>("Email")
                         .IsRequired();
 
@@ -172,6 +170,8 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired();
+
+                    b.Property<string>("Problemas");
 
                     b.Property<string>("Telefone")
                         .IsRequired();

@@ -53,7 +53,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UtenteId,Nome,Morada,Telefone,Email,Descricao")] Utente utente)
+        public async Task<IActionResult> Create([Bind("UtenteId,Nome,Morada,Telefone,Email,Problemas")] Utente utente)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,Morada,Telefone,Email,Descricao")] Utente utente)
+        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,Morada,Telefone,Email,Problemas")] Utente utente)
         {
             if (id != utente.UtenteId)
             {

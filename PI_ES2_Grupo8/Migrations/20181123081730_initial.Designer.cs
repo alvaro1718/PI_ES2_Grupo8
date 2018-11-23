@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181123074704_initial")]
+    [Migration("20181123081730_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,8 +162,6 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descricao");
-
                     b.Property<string>("Email")
                         .IsRequired();
 
@@ -174,6 +172,8 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired();
+
+                    b.Property<string>("Problemas");
 
                     b.Property<string>("Telefone")
                         .IsRequired();

@@ -9,21 +9,23 @@ namespace PI_ES2_Grupo8.Models
     public class Medico
     {
         public int MedicoId { get; set; }
-        [Required(ErrorMessage = "Please enter your name")]
+        [Required(ErrorMessage = "Por favor introduza o seu nome")]
         public string Nome { get; set; }
 
 
 
-        
-        [Required(ErrorMessage = "Please enter your address")]
+
+        [Required(ErrorMessage = "Por favor introduza o seu endereço")]
         public String Morada { get; set; }
 
 
-        [Required(ErrorMessage = "Please enter your phone number")]
-        [RegularExpression(@"(9[1236])\d{7})", ErrorMessage = "Invalid number.")]
+        [Required(ErrorMessage = "Por favor introduza o seu número de telemóvel")]
+        [RegularExpression(@"9[1236]\d{7}", ErrorMessage = "Número inválido.")]
         public String Telefone { get; set; }
 
-        [Required(ErrorMessage = "Please enter your email")]
+        [Required(ErrorMessage = "Por favor introduza o seu email")]
+        //[RegularExpression(@"(\w+(\.\w+)*@[a-zA-Z_]+?\.[a-zA-Z]{2,6})",ErrorMessage = "email inválido.")]
+        [EmailAddress(ErrorMessage = "email inválido.")]
         public String Email { get; set; }
         public ICollection<Receita> receitas { get; set; }
 
