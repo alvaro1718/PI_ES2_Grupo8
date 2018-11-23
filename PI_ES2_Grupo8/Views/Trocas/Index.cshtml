@@ -16,7 +16,10 @@
                 @Html.DisplayNameFor(model => model.justificação)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnfermeiroId)
+                @Html.DisplayNameFor(model => model.EnfermeiroRequerente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnfermeiroEscolhido)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
@@ -34,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.justificação)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EnfermeiroId)
+                @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.EnfermeiroRequerenteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.EnfermeiroEscolhidoId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)

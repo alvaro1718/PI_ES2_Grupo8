@@ -10,8 +10,8 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181109205900_initial")]
-    partial class initial
+    [Migration("20181120111207_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,10 +30,7 @@ namespace PI_ES2_Grupo8.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Especializacao")
-                        .IsRequired();
-
-                    b.Property<int>("HorarioServicoDomicilioId");
+                    b.Property<int>("EspecializaçãoId");
 
                     b.Property<string>("Morada")
                         .IsRequired();
@@ -46,10 +43,23 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.HasKey("EnfermeirosId");
 
-                    b.HasIndex("HorarioServicoDomicilioId")
-                        .IsUnique();
+                    b.HasIndex("EspecializaçãoId");
 
                     b.ToTable("Enfermeiros");
+                });
+
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.Especialização", b =>
+                {
+                    b.Property<int>("EspecializaçãoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.HasKey("EspecializaçãoId");
+
+                    b.ToTable("Especialização");
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.HorarioServicoDomicilio", b =>
@@ -60,9 +70,13 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<int>("Data");
 
+                    b.Property<int?>("EnfermeirosId");
+
                     b.Property<int>("Hora");
 
                     b.HasKey("HorarioServicoDomicilioId");
+
+                    b.HasIndex("EnfermeirosId");
 
                     b.ToTable("HorarioServicoDomicilio");
                 });
@@ -113,11 +127,16 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EnfermeirosId");
+                    b.Property<string>("Data");
+
+                    b.Property<int>("EnfermeiroId");
+
+                    b.Property<int?>("EnfermeirosId");
 
                     b.Property<int>("HorarioServicoDomicilioId");
 
-                    b.Property<string>("justificacao");
+                    b.Property<string>("justificação")
+                        .IsRequired();
 
                     b.HasKey("TrocaId");
 
@@ -155,10 +174,17 @@ namespace PI_ES2_Grupo8.Migrations
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Enfermeiros", b =>
                 {
-                    b.HasOne("PI_ES2_Grupo8.Models.HorarioServicoDomicilio", "HorarioServicoDomicilio")
-                        .WithOne("Enfermeiros")
-                        .HasForeignKey("PI_ES2_Grupo8.Models.Enfermeiros", "HorarioServicoDomicilioId")
+                    b.HasOne("PI_ES2_Grupo8.Models.Especialização", "Especialização")
+                        .WithMany("Enfermeiros")
+                        .HasForeignKey("EspecializaçãoId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PI_ES2_Grupo8.Models.HorarioServicoDomicilio", b =>
+                {
+                    b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "Enfermeiros")
+                        .WithMany()
+                        .HasForeignKey("EnfermeirosId");
                 });
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Servicos", b =>
@@ -189,8 +215,7 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "Enfermeiros")
                         .WithMany("Trocas")
-                        .HasForeignKey("EnfermeirosId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EnfermeirosId");
 
                     b.HasOne("PI_ES2_Grupo8.Models.HorarioServicoDomicilio", "HorarioServicoDomicilio")
                         .WithMany("Troca")

@@ -17,10 +17,16 @@
             @Html.DisplayFor(model => model.justificação)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnfermeiroId)
+            @Html.DisplayNameFor(model => model.EnfermeiroRequerente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EnfermeiroId)
+            @Html.DisplayFor(model => model.EnfermeiroRequerente.EnfermeiroRequerenteId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroEscolhido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroEscolhido.EnfermeiroEscolhidoId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Data)

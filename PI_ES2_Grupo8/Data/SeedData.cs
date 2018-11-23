@@ -15,10 +15,29 @@ namespace PI_ES2_Grupo8.Data
             SeedEnfermeiros(db);
             SeedTroca(db);
             SeedEspecialização(db);
-
+            SeedEnfermeiroRequerente(db);
+            SeedEnfermeiroEscolhido(db);
 
 
         }
+
+        private static void SeedEnfermeiroRequerente(ServicoDomicilioDbContext db)
+        {
+            
+        }
+
+        private static void SeedEnfermeiroEscolhido(ServicoDomicilioDbContext db)
+        {
+            if (db.EnfermeiroEscolhido.Any()) return;
+
+            Enfermeiros enfermeiros = db.Enfermeiros.SingleOrDefault(b => b.Nome == "Paulo");
+            db.EnfermeiroEscolhido.Add(new EnfermeiroEscolhido { EnfermeirosId = enfermeiros.EnfermeirosId });
+
+            db.Enfermeiros.SingleOrDefault(b => b.Nome == "Alvaro");
+            db.EnfermeiroEscolhido.Add(new EnfermeiroEscolhido { EnfermeirosId = enfermeiros.EnfermeirosId });
+        }
+
+       
 
         
 
@@ -43,7 +62,7 @@ namespace PI_ES2_Grupo8.Data
             CreateEnfermeirosIfDoesNotExist(db, "Alvaro", "922076352", "alvaro555@gmail.com", "Rua da Liberdade", especialização);
 
             especialização = GetEspecializaçãoCreatingIfNeed(db, "Enfermagem de Saúde Mental e Psquiatria");
-            CreateEnfermeirosIfDoesNotExist(db, "Paulo", "927405851", "paulo@gmail.com", "Rua Mota joao", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "João", "921402734", "joao@gmail.com", "Rua Madre de Deus", especialização);
             CreateEnfermeirosIfDoesNotExist(db, "Maria", "921876398", "maria24@gmail.com", "Rua da Boa Esperança", especialização);
 
             db.SaveChanges();
@@ -73,7 +92,7 @@ namespace PI_ES2_Grupo8.Data
             db.Especialização.AddRange(
                 new Especialização { Nome = "Pediatria" },
                 new Especialização { Nome = "Enfermagem de Saúde Materna e obstetrícia" },
-                new Especialização { Nome = "Enfermagem de Saúde Mental e Psquiatria" }   
+                new Especialização { Nome = "Psquiatria" }   
             );
 
             db.SaveChanges();
@@ -81,7 +100,7 @@ namespace PI_ES2_Grupo8.Data
 
         private static void SeedTroca(ServicoDomicilioDbContext db)
         {
-            throw new NotImplementedException();
+            
         }
 
        

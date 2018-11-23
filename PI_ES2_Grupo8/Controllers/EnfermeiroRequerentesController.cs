@@ -9,23 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class EnfermeirosController : Controller
+    public class EnfermeiroRequerentesController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public EnfermeirosController(ServicoDomicilioDbContext context)
+        public EnfermeiroRequerentesController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enfermeiros
+        // GET: EnfermeiroRequerentes
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.Especialização);
+            var servicoDomicilioDbContext = _context.EnfermeiroRequerente.Include(e => e.Enfermeiros);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: Enfermeiros/Details/5
+        // GET: EnfermeiroRequerentes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.Especialização)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var enfermeiroRequerente = await _context.EnfermeiroRequerente
+                .Include(e => e.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.EnfermeiroRequerenteId == id);
+            if (enfermeiroRequerente == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(enfermeiroRequerente);
         }
 
-        // GET: Enfermeiros/Create
+        // GET: EnfermeiroRequerentes/Create
         public IActionResult Create()
         {
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome");
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             return View();
         }
 
-        // POST: Enfermeiros/Create
+        // POST: EnfermeiroRequerentes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Create([Bind("EnfermeiroRequerenteId,EnfermeirosId")] EnfermeiroRequerente enfermeiroRequerente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
+                _context.Add(enfermeiroRequerente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            return View(enfermeiroRequerente);
         }
 
-        // GET: Enfermeiros/Edit/5
+        // GET: EnfermeiroRequerentes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +76,23 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            if (enfermeiros == null)
+            var enfermeiroRequerente = await _context.EnfermeiroRequerente.FindAsync(id);
+            if (enfermeiroRequerente == null)
             {
                 return NotFound();
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            return View(enfermeiroRequerente);
         }
 
-        // POST: Enfermeiros/Edit/5
+        // POST: EnfermeiroRequerentes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroRequerenteId,EnfermeirosId")] EnfermeiroRequerente enfermeiroRequerente)
         {
-            if (id != enfermeiros.EnfermeirosId)
+            if (id != enfermeiroRequerente.EnfermeiroRequerenteId)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiros);
+                    _context.Update(enfermeiroRequerente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeirosId))
+                    if (!EnfermeiroRequerenteExists(enfermeiroRequerente.EnfermeiroRequerenteId))
                     {
                         return NotFound();
                     }
@@ -117,11 +117,11 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
-            return View(enfermeiros);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            return View(enfermeiroRequerente);
         }
 
-        // GET: Enfermeiros/Delete/5
+        // GET: EnfermeiroRequerentes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +129,31 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
-                .Include(e => e.Especialização)
-                .FirstOrDefaultAsync(m => m.EnfermeirosId == id);
-            if (enfermeiros == null)
+            var enfermeiroRequerente = await _context.EnfermeiroRequerente
+                .Include(e => e.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.EnfermeiroRequerenteId == id);
+            if (enfermeiroRequerente == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(enfermeiroRequerente);
         }
 
-        // POST: Enfermeiros/Delete/5
+        // POST: EnfermeiroRequerentes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiros);
+            var enfermeiroRequerente = await _context.EnfermeiroRequerente.FindAsync(id);
+            _context.EnfermeiroRequerente.Remove(enfermeiroRequerente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeirosExists(int id)
+        private bool EnfermeiroRequerenteExists(int id)
         {
-            return _context.Enfermeiros.Any(e => e.EnfermeirosId == id);
+            return _context.EnfermeiroRequerente.Any(e => e.EnfermeiroRequerenteId == id);
         }
     }
 }

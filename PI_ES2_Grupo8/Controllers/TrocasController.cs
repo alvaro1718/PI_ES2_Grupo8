@@ -21,7 +21,7 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Trocas
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Troca.Include(t => t.HorarioServicoDomicilio);
+            var servicoDomicilioDbContext = _context.Troca.Include(t => t.EnfermeiroEscolhido).Include(t => t.EnfermeiroRequerente).Include(t => t.HorarioServicoDomicilio);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
@@ -34,6 +34,8 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var troca = await _context.Troca
+                .Include(t => t.EnfermeiroEscolhido)
+                .Include(t => t.EnfermeiroRequerente)
                 .Include(t => t.HorarioServicoDomicilio)
                 .FirstOrDefaultAsync(m => m.TrocaId == id);
             if (troca == null)
@@ -47,6 +49,8 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Trocas/Create
         public IActionResult Create()
         {
+            ViewData["EnfermeiroEscolhidoId"] = new SelectList(_context.EnfermeiroEscolhido, "EnfermeiroEscolhidoId", "EnfermeiroEscolhidoId");
+            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.EnfermeiroRequerente, "EnfermeiroRequerenteId", "EnfermeiroRequerenteId");
             ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId");
             return View();
         }
@@ -56,7 +60,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TrocaId,justificação,EnfermeiroId,Data,HorarioServicoDomicilioId")] Troca troca)
+        public async Task<IActionResult> Create([Bind("TrocaId,justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +68,8 @@ namespace PI_ES2_Grupo8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EnfermeiroEscolhidoId"] = new SelectList(_context.EnfermeiroEscolhido, "EnfermeiroEscolhidoId", "EnfermeiroEscolhidoId", troca.EnfermeiroEscolhidoId);
+            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.EnfermeiroRequerente, "EnfermeiroRequerenteId", "EnfermeiroRequerenteId", troca.EnfermeiroRequerenteId);
             ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
             return View(troca);
         }
@@ -81,6 +87,8 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 return NotFound();
             }
+            ViewData["EnfermeiroEscolhidoId"] = new SelectList(_context.EnfermeiroEscolhido, "EnfermeiroEscolhidoId", "EnfermeiroEscolhidoId", troca.EnfermeiroEscolhidoId);
+            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.EnfermeiroRequerente, "EnfermeiroRequerenteId", "EnfermeiroRequerenteId", troca.EnfermeiroRequerenteId);
             ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
             return View(troca);
         }
@@ -90,7 +98,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,justificação,EnfermeiroId,Data,HorarioServicoDomicilioId")] Troca troca)
+        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,justificação,EnfermeiroRequerenteId,EnfermeiroEscolhidoId,Data,HorarioServicoDomicilioId")] Troca troca)
         {
             if (id != troca.TrocaId)
             {
@@ -117,6 +125,8 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EnfermeiroEscolhidoId"] = new SelectList(_context.EnfermeiroEscolhido, "EnfermeiroEscolhidoId", "EnfermeiroEscolhidoId", troca.EnfermeiroEscolhidoId);
+            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.EnfermeiroRequerente, "EnfermeiroRequerenteId", "EnfermeiroRequerenteId", troca.EnfermeiroRequerenteId);
             ViewData["HorarioServicoDomicilioId"] = new SelectList(_context.HorarioServicoDomicilio, "HorarioServicoDomicilioId", "HorarioServicoDomicilioId", troca.HorarioServicoDomicilioId);
             return View(troca);
         }
@@ -130,6 +140,8 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var troca = await _context.Troca
+                .Include(t => t.EnfermeiroEscolhido)
+                .Include(t => t.EnfermeiroRequerente)
                 .Include(t => t.HorarioServicoDomicilio)
                 .FirstOrDefaultAsync(m => m.TrocaId == id);
             if (troca == null)
