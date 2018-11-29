@@ -36,7 +36,7 @@ namespace PI_ES2_Grupo8.Controllers
             var receitarTratamento = await _context.ReceitarTratamento
                 .Include(r => r.receita)
                 .Include(r => r.tratamento)
-                .FirstOrDefaultAsync(m => m.ReceitaId == id);
+                .FirstOrDefaultAsync(m => m.ReceitarTratamentoId == id);
             if (receitarTratamento == null)
             {
                 return NotFound();
@@ -96,7 +96,7 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ReceitarTratamentoId,ReceitaId,TratamentoId")] ReceitarTratamento receitarTratamento)
         {
-            if (id != receitarTratamento.ReceitaId)
+            if (id != receitarTratamento.ReceitarTratamentoId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReceitarTratamentoExists(receitarTratamento.ReceitaId))
+                    if (!ReceitarTratamentoExists(receitarTratamento.ReceitarTratamentoId))
                     {
                         return NotFound();
                     }
@@ -137,7 +137,7 @@ namespace PI_ES2_Grupo8.Controllers
             var receitarTratamento = await _context.ReceitarTratamento
                 .Include(r => r.receita)
                 .Include(r => r.tratamento)
-                .FirstOrDefaultAsync(m => m.ReceitaId == id);
+                .FirstOrDefaultAsync(m => m.ReceitarTratamentoId == id);
             if (receitarTratamento == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace PI_ES2_Grupo8.Controllers
 
         private bool ReceitarTratamentoExists(int id)
         {
-            return _context.ReceitarTratamento.Any(e => e.ReceitaId == id);
+            return _context.ReceitarTratamento.Any(e => e.ReceitarTratamentoId == id);
         }
     }
 }

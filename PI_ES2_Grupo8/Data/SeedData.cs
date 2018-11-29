@@ -11,11 +11,11 @@ namespace PI_ES2_Grupo8.Data
     {
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-           // SeedMedico(db);
+          SeedMedico(db);
           seedUtente(db);
-         // seedTratamento(db);
-         // seedReceita(db);
-         // SeedReceitaTratamento(db);
+          seedTratamento(db);
+          seedReceita(db);
+          SeedReceitaTratamento(db);
         }
        public static int nreceita =0;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
@@ -49,7 +49,7 @@ namespace PI_ES2_Grupo8.Data
 
         private static Receita CreateReceitaIfDoesNotExist(ServicoDomicilioDbContext db,  Medico medico,Utente utente)
         {
-            DateTime Date = DateTime.Today;
+            DateTime Date = DateTime.Now;
             Receita receita = db.Receita.SingleOrDefault(b => b.Nreceita ==nreceita);
             if (receita == null)
             {

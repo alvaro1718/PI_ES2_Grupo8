@@ -17,10 +17,10 @@ namespace PI_ES2_Grupo8.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-            modelBuilder.Entity<ReceitarTratamento>()
-                .HasKey(o => new { o.ReceitaId, o.TratamentoId });
+            modelBuilder.Entity<ReceitarTratamento>().HasKey(o => new { o.ReceitarTratamentoId});
+            //.HasKey(o => new { o.ReceitaId, o.TratamentoId });
 
-          
+
             modelBuilder.Entity<ReceitarTratamento>()
                 .HasOne(bc => bc.receita)
                 .WithMany(b => b.receitarTratamentos)

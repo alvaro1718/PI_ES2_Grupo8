@@ -151,13 +151,14 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "ReceitarTratamento",
                 columns: table => new
                 {
-                    ReceitarTratamentoId = table.Column<int>(nullable: false),
+                    ReceitarTratamentoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ReceitaId = table.Column<int>(nullable: false),
                     TratamentoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReceitarTratamento", x => new { x.ReceitaId, x.TratamentoId });
+                    table.PrimaryKey("PK_ReceitarTratamento", x => x.ReceitarTratamentoId);
                     table.ForeignKey(
                         name: "FK_ReceitarTratamento_Receita_ReceitaId",
                         column: x => x.ReceitaId,
@@ -186,6 +187,11 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "IX_Receita_UtenteId",
                 table: "Receita",
                 column: "UtenteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceitarTratamento_ReceitaId",
+                table: "ReceitarTratamento",
+                column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReceitarTratamento_TratamentoId",

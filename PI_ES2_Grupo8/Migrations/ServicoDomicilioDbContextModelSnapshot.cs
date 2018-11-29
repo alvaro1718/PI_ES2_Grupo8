@@ -123,13 +123,17 @@ namespace PI_ES2_Grupo8.Migrations
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.ReceitarTratamento", b =>
                 {
+                    b.Property<int>("ReceitarTratamentoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("ReceitaId");
 
                     b.Property<int>("TratamentoId");
 
-                    b.Property<int>("ReceitarTratamentoId");
+                    b.HasKey("ReceitarTratamentoId");
 
-                    b.HasKey("ReceitaId", "TratamentoId");
+                    b.HasIndex("ReceitaId");
 
                     b.HasIndex("TratamentoId");
 
