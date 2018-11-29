@@ -60,8 +60,12 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReceitaId,MedicoId,UtenteId,Date,Nreceita")] Receita receita)
         {
+            DateTime date = DateTime.Now;
             if (ModelState.IsValid)
             {
+                receita.Date = date;
+                int ultimareceita = _context.Receita.Max(p=>p.ReceitaId);
+                receita.Nreceita = ultimareceita+1;
                 _context.Add(receita);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
