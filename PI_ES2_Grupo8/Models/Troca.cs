@@ -21,7 +21,7 @@ namespace PI_ES2_Grupo8.Models
 
         public int EnfermeiroEscolhidoId { get; set; }  
 
-        [RegularExpression(@"((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d{2})", ErrorMessage = "Data Invalida.")]
+        //[RegularExpression(@"((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d{2})", ErrorMessage = "Data Invalida.")]
         public DateTime Data { get; set; }
 
         public HorarioServicoDomicilio HorarioServicoDomicilio { get; set; }

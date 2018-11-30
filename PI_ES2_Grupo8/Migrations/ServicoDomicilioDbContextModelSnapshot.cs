@@ -96,13 +96,13 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Data");
+                    b.Property<DateTime>("Data");
 
                     b.Property<int>("EnfermeirosId");
 
-                    b.Property<int>("HoraFim");
+                    b.Property<string>("HoraFim");
 
-                    b.Property<int>("HoraInicio");
+                    b.Property<string>("HoraInicio");
 
                     b.HasKey("HorarioServicoDomicilioId");
 

@@ -88,9 +88,9 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     HorarioServicoDomicilioId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<int>(nullable: false),
-                    HoraInicio = table.Column<int>(nullable: false),
-                    HoraFim = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    HoraInicio = table.Column<string>(nullable: true),
+                    HoraFim = table.Column<string>(nullable: true),
                     EnfermeirosId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
