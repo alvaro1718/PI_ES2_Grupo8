@@ -68,7 +68,7 @@ namespace PI_ES2_Grupo8.Controllers
                 receita.Nreceita = ultimareceita+1;
                 _context.Add(receita);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "ReceitarTratamentos",receita);//RedirectToAction(nameof(Index));
             }
             ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome", receita.MedicoId);
             ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);

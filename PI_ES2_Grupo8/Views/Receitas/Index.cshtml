@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<PI_ES2_Grupo8.Models.Receita>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista Receitas";
 }
 
-<h2>Index</h2>
+<h2>Lista Receitas</h2>
 
 <p>
     <a asp-action="Create">Criar novo</a>
@@ -45,9 +45,9 @@
                     @Html.DisplayFor(modelItem => item.Nreceita)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ReceitaId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ReceitaId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ReceitaId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ReceitaId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReceitaId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReceitaId">Apagar</a>
                 </td>
             </tr>
         }
