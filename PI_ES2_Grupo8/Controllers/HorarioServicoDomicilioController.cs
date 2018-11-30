@@ -9,23 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class EnfermeiroRequerentesController : Controller
+    public class HorarioServicoDomicilioController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public EnfermeiroRequerentesController(ServicoDomicilioDbContext context)
+        public HorarioServicoDomicilioController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: EnfermeiroRequerentes
+        // GET: HorarioServicoDomicilio
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.EnfermeiroRequerente.Include(e => e.Enfermeiros);
+            var servicoDomicilioDbContext = _context.HorarioServicoDomicilio.Include(h => h.Enfermeiros);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: EnfermeiroRequerentes/Details/5
+        // GET: HorarioServicoDomicilio/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiroRequerente = await _context.EnfermeiroRequerente
-                .Include(e => e.Enfermeiros)
-                .FirstOrDefaultAsync(m => m.EnfermeiroRequerenteId == id);
-            if (enfermeiroRequerente == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio
+                .Include(h => h.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.HorarioServicoDomicilioId == id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiroRequerente);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: EnfermeiroRequerentes/Create
+        // GET: HorarioServicoDomicilio/Create
         public IActionResult Create()
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             return View();
         }
 
-        // POST: EnfermeiroRequerentes/Create
+        // POST: HorarioServicoDomicilio/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroRequerenteId,EnfermeirosId")] EnfermeiroRequerente enfermeiroRequerente)
+        public async Task<IActionResult> Create([Bind("HorarioServicoDomicilioId,Data,HoraInicio,HoraFim,EnfermeirosId")] HorarioServicoDomicilio horarioServicoDomicilio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiroRequerente);
+                _context.Add(horarioServicoDomicilio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
-            return View(enfermeiroRequerente);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", horarioServicoDomicilio.EnfermeirosId);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: EnfermeiroRequerentes/Edit/5
+        // GET: HorarioServicoDomicilio/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +76,23 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiroRequerente = await _context.EnfermeiroRequerente.FindAsync(id);
-            if (enfermeiroRequerente == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio.FindAsync(id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
-            return View(enfermeiroRequerente);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", horarioServicoDomicilio.EnfermeirosId);
+            return View(horarioServicoDomicilio);
         }
 
-        // POST: EnfermeiroRequerentes/Edit/5
+        // POST: HorarioServicoDomicilio/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroRequerenteId,EnfermeirosId")] EnfermeiroRequerente enfermeiroRequerente)
+        public async Task<IActionResult> Edit(int id, [Bind("HorarioServicoDomicilioId,Data,HoraInicio,HoraFim,EnfermeirosId")] HorarioServicoDomicilio horarioServicoDomicilio)
         {
-            if (id != enfermeiroRequerente.EnfermeiroRequerenteId)
+            if (id != horarioServicoDomicilio.HorarioServicoDomicilioId)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiroRequerente);
+                    _context.Update(horarioServicoDomicilio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeiroRequerenteExists(enfermeiroRequerente.EnfermeiroRequerenteId))
+                    if (!HorarioServicoDomicilioExists(horarioServicoDomicilio.HorarioServicoDomicilioId))
                     {
                         return NotFound();
                     }
@@ -117,11 +117,11 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
-            return View(enfermeiroRequerente);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", horarioServicoDomicilio.EnfermeirosId);
+            return View(horarioServicoDomicilio);
         }
 
-        // GET: EnfermeiroRequerentes/Delete/5
+        // GET: HorarioServicoDomicilio/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +129,31 @@ namespace PI_ES2_Grupo8.Controllers
                 return NotFound();
             }
 
-            var enfermeiroRequerente = await _context.EnfermeiroRequerente
-                .Include(e => e.Enfermeiros)
-                .FirstOrDefaultAsync(m => m.EnfermeiroRequerenteId == id);
-            if (enfermeiroRequerente == null)
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio
+                .Include(h => h.Enfermeiros)
+                .FirstOrDefaultAsync(m => m.HorarioServicoDomicilioId == id);
+            if (horarioServicoDomicilio == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiroRequerente);
+            return View(horarioServicoDomicilio);
         }
 
-        // POST: EnfermeiroRequerentes/Delete/5
+        // POST: HorarioServicoDomicilio/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiroRequerente = await _context.EnfermeiroRequerente.FindAsync(id);
-            _context.EnfermeiroRequerente.Remove(enfermeiroRequerente);
+            var horarioServicoDomicilio = await _context.HorarioServicoDomicilio.FindAsync(id);
+            _context.HorarioServicoDomicilio.Remove(horarioServicoDomicilio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeiroRequerenteExists(int id)
+        private bool HorarioServicoDomicilioExists(int id)
         {
-            return _context.EnfermeiroRequerente.Any(e => e.EnfermeiroRequerenteId == id);
+            return _context.HorarioServicoDomicilio.Any(e => e.HorarioServicoDomicilioId == id);
         }
     }
 }

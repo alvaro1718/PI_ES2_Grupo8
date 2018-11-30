@@ -8,15 +8,20 @@ namespace PI_ES2_Grupo8.Models
     public class HorarioServicoDomicilio
     {
         public int HorarioServicoDomicilioId { get; set; }
-        public int Data { get; set; }
+        public DateTime Data { get; set; }
+ 
+        public string HoraInicio { get; set; }
 
-        public int Hora { get; set; } 
+        public string HoraFim { get; set; }
 
         public Enfermeiros Enfermeiros { get; set; } 
+
+        public int EnfermeirosId { get; set; }
 
         public ICollection <Utente> Utente { get; set; }
 
         public ICollection<Tratamento> Tratamentos { get; set; }
-        public IEnumerable<Troca> Troca { get; internal set; }
+
+        public ICollection<Troca> Troca { get; set; } 
     }
 }

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PI_ES2_Grupo8.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,6 +41,44 @@ namespace PI_ES2_Grupo8.Migrations
                         column: x => x.EspecializaçãoId,
                         principalTable: "Especialização",
                         principalColumn: "EspecializaçãoId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EnfermeiroEscolhido",
+                columns: table => new
+                {
+                    EnfermeiroEscolhidoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EnfermeirosId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnfermeiroEscolhido", x => x.EnfermeiroEscolhidoId);
+                    table.ForeignKey(
+                        name: "FK_EnfermeiroEscolhido_Enfermeiros_EnfermeirosId",
+                        column: x => x.EnfermeirosId,
+                        principalTable: "Enfermeiros",
+                        principalColumn: "EnfermeirosId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EnfermeiroRequerente",
+                columns: table => new
+                {
+                    EnfermeiroRequerenteId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EnfermeirosId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnfermeiroRequerente", x => x.EnfermeiroRequerenteId);
+                    table.ForeignKey(
+                        name: "FK_EnfermeiroRequerente_Enfermeiros_EnfermeirosId",
+                        column: x => x.EnfermeirosId,
+                        principalTable: "Enfermeiros",
+                        principalColumn: "EnfermeirosId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -50,8 +89,9 @@ namespace PI_ES2_Grupo8.Migrations
                     HorarioServicoDomicilioId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Data = table.Column<int>(nullable: false),
-                    Hora = table.Column<int>(nullable: false),
-                    EnfermeirosId = table.Column<int>(nullable: true)
+                    HoraInicio = table.Column<int>(nullable: false),
+                    HoraFim = table.Column<int>(nullable: false),
+                    EnfermeirosId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +101,7 @@ namespace PI_ES2_Grupo8.Migrations
                         column: x => x.EnfermeirosId,
                         principalTable: "Enfermeiros",
                         principalColumn: "EnfermeirosId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,20 +110,26 @@ namespace PI_ES2_Grupo8.Migrations
                 {
                     TrocaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    justificação = table.Column<string>(nullable: false),
-                    EnfermeirosId = table.Column<int>(nullable: true),
-                    EnfermeiroId = table.Column<int>(nullable: false),
-                    Data = table.Column<string>(nullable: true),
+                    Justificação = table.Column<string>(nullable: false),
+                    EnfermeiroRequerenteId = table.Column<int>(nullable: false),
+                    EnfermeiroEscolhidoId = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
                     HorarioServicoDomicilioId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Troca", x => x.TrocaId);
                     table.ForeignKey(
-                        name: "FK_Troca_Enfermeiros_EnfermeirosId",
-                        column: x => x.EnfermeirosId,
-                        principalTable: "Enfermeiros",
-                        principalColumn: "EnfermeirosId",
+                        name: "FK_Troca_EnfermeiroEscolhido_EnfermeiroEscolhidoId",
+                        column: x => x.EnfermeiroEscolhidoId,
+                        principalTable: "EnfermeiroEscolhido",
+                        principalColumn: "EnfermeiroEscolhidoId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Troca_EnfermeiroRequerente_EnfermeiroRequerenteId",
+                        column: x => x.EnfermeiroRequerenteId,
+                        principalTable: "EnfermeiroRequerente",
+                        principalColumn: "EnfermeiroRequerenteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Troca_HorarioServicoDomicilio_HorarioServicoDomicilioId",
@@ -171,6 +217,16 @@ namespace PI_ES2_Grupo8.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_EnfermeiroEscolhido_EnfermeirosId",
+                table: "EnfermeiroEscolhido",
+                column: "EnfermeirosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EnfermeiroRequerente_EnfermeirosId",
+                table: "EnfermeiroRequerente",
+                column: "EnfermeirosId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Enfermeiros_EspecializaçãoId",
                 table: "Enfermeiros",
                 column: "EspecializaçãoId");
@@ -201,9 +257,14 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "UtenteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Troca_EnfermeirosId",
+                name: "IX_Troca_EnfermeiroEscolhidoId",
                 table: "Troca",
-                column: "EnfermeirosId");
+                column: "EnfermeiroEscolhidoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Troca_EnfermeiroRequerenteId",
+                table: "Troca",
+                column: "EnfermeiroRequerenteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Troca_HorarioServicoDomicilioId",
@@ -226,6 +287,12 @@ namespace PI_ES2_Grupo8.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tratamento");
+
+            migrationBuilder.DropTable(
+                name: "EnfermeiroEscolhido");
+
+            migrationBuilder.DropTable(
+                name: "EnfermeiroRequerente");
 
             migrationBuilder.DropTable(
                 name: "Utente");

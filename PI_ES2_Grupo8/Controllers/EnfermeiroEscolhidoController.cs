@@ -9,23 +9,23 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    public class EnfermeiroEscolhidosController : Controller
+    public class EnfermeiroEscolhidoController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
 
-        public EnfermeiroEscolhidosController(ServicoDomicilioDbContext context)
+        public EnfermeiroEscolhidoController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
-        // GET: EnfermeiroEscolhidos
+        // GET: EnfermeiroEscolhido
         public async Task<IActionResult> Index()
         {
             var servicoDomicilioDbContext = _context.EnfermeiroEscolhido.Include(e => e.Enfermeiros);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
-        // GET: EnfermeiroEscolhidos/Details/5
+        // GET: EnfermeiroEscolhido/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,14 +44,14 @@ namespace PI_ES2_Grupo8.Controllers
             return View(enfermeiroEscolhido);
         }
 
-        // GET: EnfermeiroEscolhidos/Create
+        // GET: EnfermeiroEscolhido/Create
         public IActionResult Create()
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
             return View();
         }
 
-        // POST: EnfermeiroEscolhidos/Create
+        // POST: EnfermeiroEscolhido/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,7 +68,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(enfermeiroEscolhido);
         }
 
-        // GET: EnfermeiroEscolhidos/Edit/5
+        // GET: EnfermeiroEscolhido/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,7 +85,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(enfermeiroEscolhido);
         }
 
-        // POST: EnfermeiroEscolhidos/Edit/5
+        // POST: EnfermeiroEscolhido/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -121,7 +121,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(enfermeiroEscolhido);
         }
 
-        // GET: EnfermeiroEscolhidos/Delete/5
+        // GET: EnfermeiroEscolhido/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace PI_ES2_Grupo8.Controllers
             return View(enfermeiroEscolhido);
         }
 
-        // POST: EnfermeiroEscolhidos/Delete/5
+        // POST: EnfermeiroEscolhido/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

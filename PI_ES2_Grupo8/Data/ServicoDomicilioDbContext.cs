@@ -15,13 +15,36 @@ namespace PI_ES2_Grupo8.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Troca>().HasKey(o => new { o.TrocaId});
+
 
             modelBuilder.Entity<Troca>()
                 .HasOne(b => b.HorarioServicoDomicilio)
                 .WithMany(a => a.Troca)
                 .HasForeignKey(b => b.HorarioServicoDomicilioId)
                 .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
+
+
+            modelBuilder.Entity<Troca>()
+               .HasOne(tr => tr.EnfermeiroRequerente)
+               .WithMany(r=>r.Trocas)
+               .HasForeignKey(tr => tr.EnfermeiroRequerenteId)
+                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+
+            modelBuilder.Entity<Troca>()
+                 .HasOne(bc => bc.EnfermeiroEscolhido)
+                 .WithMany(c => c.Trocas)
+                 .HasForeignKey(bc => bc.EnfermeiroEscolhidoId)
+                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+         
+
+            modelBuilder.Entity<Enfermeiros>()
+               .HasOne(b => b.Especialização)
+               .WithMany(a => a.Enfermeiros)
+               .HasForeignKey(b => b.EspecializaçãoId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
 
             base.OnModelCreating(modelBuilder);
         }

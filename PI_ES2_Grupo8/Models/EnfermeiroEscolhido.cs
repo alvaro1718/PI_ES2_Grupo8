@@ -13,6 +13,7 @@ namespace PI_ES2_Grupo8.Models
         public Enfermeiros Enfermeiros { get; set; }
 
         public int EnfermeirosId { get; set; }
+        public ICollection<Troca> Trocas { get; set; }
 
 
 

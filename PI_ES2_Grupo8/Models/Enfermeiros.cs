@@ -20,7 +20,7 @@ namespace PI_ES2_Grupo8.Models
         [RegularExpression(@"(\w+(\.\w+)*@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Invalid email.")]
         [Required(ErrorMessage = "Por favor insira o seu Email")]
         public string Email { get; set; }
-
+        
         [Required(ErrorMessage = "Por favor insira o sua morada")]
         public string Morada { get; set; }
 
@@ -28,7 +28,7 @@ namespace PI_ES2_Grupo8.Models
 
         public int EspecializaçãoId { get; set; }
 
-        public ICollection<Troca> Trocas { get; set; } //
+        //public ICollection<Troca> Trocas { get; set; } //
 
         public ICollection<Tratamento> Tratamentos { get; set; }
 
