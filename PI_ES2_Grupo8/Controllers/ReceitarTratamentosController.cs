@@ -48,7 +48,7 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: ReceitarTratamentos/Create
         public IActionResult Create(Receita receita)
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId");
+         // ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId");
            
             ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento");
             return View();
@@ -59,11 +59,13 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReceitarTratamentoId,ReceitaId,TratamentoId")] ReceitarTratamento receitarTratamento,Receita receita)
+        public async Task<IActionResult> Create([Bind("ReceitarTratamentoId,ReceitaId,TratamentoId")] ReceitarTratamento receitarTratamento)
         {
             if (ModelState.IsValid)
             {
-                receitarTratamento.ReceitaId = receita.ReceitaId;
+                // receitarTratamento.ReceitaId = receita.ReceitaId;
+                int ultimareceita = _context.Receita.Max(p => p.ReceitaId);
+                receitarTratamento.ReceitaId = ultimareceita;
                 _context.Add(receitarTratamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
