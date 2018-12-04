@@ -64,10 +64,12 @@ namespace PI_ES2_Grupo8.Controllers
             if (ModelState.IsValid)
             {
                 receita.Date = date;
-                int ultimareceita = _context.Receita.Max(p=>p.ReceitaId);
+                int ultimareceita = _context.Receita.Max(p=>p.Nreceita);
                 receita.Nreceita = ultimareceita+1;
                 _context.Add(receita);
                 await _context.SaveChangesAsync();
+                //_context.Receita.Add(new Receita { MedicoId = receita.MedicoId, UtenteId = receita.UtenteId, medico = receita.medico, utente = receita.utente, Nreceita = ultimareceita + 1 });
+                //_context.SaveChanges();
                 return RedirectToAction("Create", "ReceitarTratamentos",receita);//RedirectToAction(nameof(Index));
             }
             ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "Nome", receita.MedicoId);

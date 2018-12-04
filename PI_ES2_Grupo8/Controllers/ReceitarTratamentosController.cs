@@ -72,9 +72,10 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 // receitarTratamento.ReceitaId = receita.ReceitaId;
   
-                int IDultimareceita =  _context.Receita.Max(p => p.ReceitaId);
+                int IDultimareceita ;
                 foreach (var item in selectedList)
                 {
+                    IDultimareceita = _context.Receita.Max(p => p.ReceitaId);
                     int idTratamento = Convert.ToInt32(item);
                     // Tratamento tratamento = _contex
                     receitarTratamento.TratamentoId = idTratamento;
