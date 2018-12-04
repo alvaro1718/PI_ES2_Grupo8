@@ -48,9 +48,14 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: ReceitarTratamentos/Create
         public IActionResult Create(Receita receita)
         {
-         // ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId");
-           
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento");
+            IList<Tratamento> TratamentoList = new List<Tratamento>();
+          
+            // ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId");
+            foreach (var item in _context.Tratamento) {
+                TratamentoList.Add(new Tratamento() { TratamentoId = item.TratamentoId,TipodeTratamento=item.TipodeTratamento });
+            }
+            ViewData["Tratamentos"] = TratamentoList;
+            // ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento");
             return View();
         }
 
@@ -61,14 +66,28 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReceitarTratamentoId,ReceitaId,TratamentoId")] ReceitarTratamento receitarTratamento)
         {
+            string selected = Request.Form["SelectedTratamento"].ToString();
+            string[] selectedList = selected.Split(',');
             if (ModelState.IsValid)
             {
                 // receitarTratamento.ReceitaId = receita.ReceitaId;
-                int ultimareceita = _context.Receita.Max(p => p.ReceitaId);
-                receitarTratamento.ReceitaId = ultimareceita;
-                _context.Add(receitarTratamento);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                int IDultimareceita = _context.Receita.Max(p => p.ReceitaId);
+                foreach (var item in selectedList)
+                {
+                    int idTratamento = Convert.ToInt32(item);
+                    // Tratamento tratamento = _contex
+                    receitarTratamento.TratamentoId = idTratamento;
+                    receitarTratamento.ReceitaId = IDultimareceita;
+                    _context.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receitarTratamento.ReceitaId, TratamentoId = receitarTratamento.TratamentoId });
+                   _context.SaveChanges();
+                   // _context.Add(receitarTratamento);
+                    //await _context.SaveChangesAsync();
+       
+                   
+                    //return RedirectToAction("Create", "ReceitarTratamentos");
+                }
+                // await _context.SaveChangesAsync();
+               return RedirectToAction(nameof(Index));
             }
            // ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId", receitarTratamento.ReceitaId);
             ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);

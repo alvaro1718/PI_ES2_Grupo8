@@ -12,19 +12,37 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           <!-- <div class="form-group">
-        <label asp-for="ReceitaId" class="control-label"></label>
-        <select asp-for="ReceitaId" class ="form-control" asp-items="ViewBag.ReceitaId"></select>
-    </div>-->
-           
+            <!-- <div class="form-group">
+                <label asp-for="ReceitaId" class="control-label"></label>
+                <select asp-for="ReceitaId" class ="form-control" asp-items="ViewBag.ReceitaId"></select>
+            </div>-->
+
             <div class="form-group">
-                <label asp-for="TratamentoId" class="control-label">Tratamento</label>
-                <select asp-for="TratamentoId" class="form-control" asp-items="ViewBag.TratamentoId"></select>
+                <!-- <label asp-for="TratamentoId" class="control-label">Tratamento</label>-->
+                <!--<select  asp-for="TratamentoId" class="form-control" asp-items="ViewBag.TratamentoId" ></select>-->
+                @using (Html.BeginForm("Create", "ReceitarTratamentos"))
+                {
+                    foreach (var item in ViewData["Tratamentos"] as IList<Tratamento>)
+                    {
+
+                        <div class="form-control">
+                            <label asp-for="TratamentoId">
+                                <input type="checkbox"
+                                       name="SelectedTratamento"
+                                       value="@item.TratamentoId" /> @item.TipodeTratamento
+                                </label>
+                            </div>
+
+                        }
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    }
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+     
         </form>
+
+
     </div>
 </div>
 
