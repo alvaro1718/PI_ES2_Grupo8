@@ -71,7 +71,8 @@ namespace PI_ES2_Grupo8.Controllers
             if (ModelState.IsValid)
             {
                 // receitarTratamento.ReceitaId = receita.ReceitaId;
-                int IDultimareceita = _context.Receita.Max(p => p.ReceitaId);
+  
+                int IDultimareceita =  _context.Receita.Max(p => p.ReceitaId);
                 foreach (var item in selectedList)
                 {
                     int idTratamento = Convert.ToInt32(item);

@@ -24,7 +24,7 @@ namespace PI_ES2_Grupo8.Models
         public String Telefone { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza o seu email")]
-        //[RegularExpression(@"(\w+(\.\w+)*@[a-zA-Z_]+?\.[a-zA-Z]{2,6})",ErrorMessage = "email inválido.")]
+        //[RegularExpression(@"(\w+(\.\w+)*@[populate-zA-Z_]+?\.[populate-zA-Z]{2,6})",ErrorMessage = "email inválido.")]
         [EmailAddress(ErrorMessage = "email inválido.")]
         public String Email { get; set; }
         public ICollection<Receita> receitas { get; set; }

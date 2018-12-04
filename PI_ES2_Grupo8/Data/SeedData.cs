@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace PI_ES2_Grupo8.Data
 {
+
     public class SeedData
     {
+        public static Boolean populate = false;
         internal static void Populate(ServicoDomicilioDbContext db)
         {
-          SeedMedico(db);
-          seedUtente(db);
-          seedTratamento(db);
-          seedReceita(db);
-          SeedReceitaTratamento(db);
+            if (populate ==true)
+            {
+                SeedMedico(db);
+                seedUtente(db);
+                seedTratamento(db);
+                seedReceita(db);
+                SeedReceitaTratamento(db);
+            }
         }
        public static int nreceita =0;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
