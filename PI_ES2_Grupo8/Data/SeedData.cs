@@ -10,7 +10,7 @@ namespace PI_ES2_Grupo8.Data
 
     public class SeedData
     {
-        public static Boolean populate = true;
+        public static Boolean populate = false;
         internal static void Populate(ServicoDomicilioDbContext db)
         {
             if (populate ==true)

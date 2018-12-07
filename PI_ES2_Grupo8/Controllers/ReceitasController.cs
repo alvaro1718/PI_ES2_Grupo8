@@ -28,6 +28,21 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Receitas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            // ReceitarTratamento receitarTratamento;
+            Tratamento tratamento;
+            IList<ReceitarTratamento> ReceitaTratamentoList = new List<ReceitarTratamento>();
+            // ViewData[]
+            foreach (var item in _context.ReceitarTratamento)
+            {
+                if (item.ReceitaId==id) {
+                    tratamento = _context.Tratamento.SingleOrDefault(p => p.TratamentoId == item.TratamentoId);
+                    ReceitaTratamentoList.Add(new ReceitarTratamento() {ReceitaId=item.ReceitaId, TratamentoId = item.TratamentoId,tratamento=tratamento});
+                    ViewBag.Message = ""+item.ReceitaId.ToString();
+                }
+                //receitarTratamento = _context.ReceitarTratamento.//Where(p => p.ReceitaId == id);
+
+            }
+            ViewData["ReceitaTratamentos"] = ReceitaTratamentoList;
             if (id == null)
             {
                 return NotFound();

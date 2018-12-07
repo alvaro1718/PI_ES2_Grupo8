@@ -7,20 +7,21 @@
 
 
 <div>
-    <h4>Detalhes Receita</h4>
+    <h4>Detalhes Receita @ViewBag.Message</h4>
+   
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.medico)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.medico.Email)
+            @Html.DisplayFor(model => model.medico.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.utente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.utente.Email)
+            @Html.DisplayFor(model => model.utente.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Date)
@@ -28,14 +29,50 @@
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nreceita)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nreceita)
-        </dd>
+        <!-- <dt>
+              @Html.DisplayNameFor(model => model.Nreceita)
+          </dt>
+          <dd>
+              @Html.DisplayFor(model => model.Nreceita)
+          </dd>-->
     </dl>
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               
+            </th>
+            <th>
+                Tratamento
+            </th>
+            <th>
+                Data Tratamento
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i=1;}
+        @foreach (var item in ViewData["ReceitaTratamentos"] as IList<ReceitarTratamento>)
+        {
+            <tr>
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataTratamento)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ReceitaId">Editar</a> |
     <a asp-action="Index">Voltar</a>
