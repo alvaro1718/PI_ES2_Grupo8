@@ -15,5 +15,7 @@ namespace PI_ES2_Grupo8.Models
         public int TratamentoId { get; set; }
 
         public Tratamento tratamento { get; set; }
+
+        public DateTime DataTratamento { get; set; }
     }
 }

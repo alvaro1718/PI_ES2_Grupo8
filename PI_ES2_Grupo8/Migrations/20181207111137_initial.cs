@@ -154,7 +154,8 @@ namespace PI_ES2_Grupo8.Migrations
                     ReceitarTratamentoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ReceitaId = table.Column<int>(nullable: false),
-                    TratamentoId = table.Column<int>(nullable: false)
+                    TratamentoId = table.Column<int>(nullable: false),
+                    DataTratamento = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

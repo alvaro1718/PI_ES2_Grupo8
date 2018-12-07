@@ -127,6 +127,8 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DataTratamento");
+
                     b.Property<int>("ReceitaId");
 
                     b.Property<int>("TratamentoId");
