@@ -1,14 +1,13 @@
-﻿@model PI_ES2_Grupo8.Models.HorarioServicoDomicilio
+﻿@model PI_ES2_Grupo8.Models.HorarioTrabalho
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h2>Eliminar</h2>
+<h2>Detalhes</h2>
 
-<h3>Tens certeza que queres eliminar este item?</h3>
 <div>
-    <h4>HorarioServicoDomicilio</h4>
+    <h4>Horario Trabalho</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -33,13 +32,17 @@
             @Html.DisplayNameFor(model => model.Enfermeiros)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Enfermeiros.Email)
+            @Html.DisplayFor(model => model.Enfermeiros.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Troca)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Troca)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="HorarioServicoDomicilioId" />
-        <input type="submit" value="Eliminar" class="btn btn-default" /> |
-        <a asp-action="Index">Voltar a lista</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.HorarioTrabalhoId">Editar</a> |
+    <a asp-action="Index">Voltar a lista</a>
 </div>

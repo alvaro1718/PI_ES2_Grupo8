@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar</h2>
+<h2>Edit</h2>
 
 <h4>Troca</h4>
 <hr />
@@ -19,23 +19,28 @@
                 <span asp-validation-for="Justificação" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="EnfermeirosId" class="control-label"></label>
+                <select asp-for="EnfermeirosId" class="form-control" asp-items="ViewBag.EnfermeirosId"></select>
+                <span asp-validation-for="EnfermeirosId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HorarioTrabalhoId" class="control-label"></label>
-                <select asp-for="HorarioTrabalhoId" class="form-control" asp-items="ViewBag.HorarioServicoDomicilioId"></select>
+                <select asp-for="HorarioTrabalhoId" class="form-control" asp-items="ViewBag.HorarioTrabalhoId"></select>
                 <span asp-validation-for="HorarioTrabalhoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar a lista</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 

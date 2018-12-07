@@ -47,7 +47,7 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: EnfermeiroRequerente/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace PI_ES2_Grupo8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", enfermeiroRequerente.EnfermeirosId);
             return View(enfermeiroRequerente);
         }
 
@@ -81,7 +81,7 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", enfermeiroRequerente.EnfermeirosId);
             return View(enfermeiroRequerente);
         }
 
@@ -117,7 +117,7 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", enfermeiroRequerente.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", enfermeiroRequerente.EnfermeirosId);
             return View(enfermeiroRequerente);
         }
 

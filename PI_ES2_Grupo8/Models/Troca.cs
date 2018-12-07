@@ -13,20 +13,23 @@ namespace PI_ES2_Grupo8.Models
         [Required(ErrorMessage = "Por favor insira a justificação")]
         public string Justificação { get; set; }
 
-        public EnfermeiroRequerente EnfermeiroRequerente { get; set; }
+        public Enfermeiros EnfermeiroRequerente { get; set; }
 
-        public int EnfermeiroRequerenteId { get; set; }
+        public int EnfermeirosId { get; set; }
 
-        public EnfermeiroEscolhido EnfermeiroEscolhido { get; set; }
 
-        public int EnfermeiroEscolhidoId { get; set; }  
+        //public EnfermeiroEscolhido EnfermeiroEscolhido { get; set; }
+
+        //public int EnfermeiroEscolhidoId { get; set; }  
 
         //[RegularExpression(@"((0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d{2})", ErrorMessage = "Data Invalida.")]
         public DateTime Data { get; set; }
 
-        public HorarioServicoDomicilio HorarioServicoDomicilio { get; set; }
+        public HorarioTrabalho HorarioTrabalhoNovo { get; set; }
 
-        public int HorarioServicoDomicilioId { get; set; }
+        public int HorarioTrabalhoId { get; set; }
+
+
 
 
 

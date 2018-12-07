@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace PI_ES2_Grupo8.Models
 {
-    public class HorarioServicoDomicilio
+    public class HorarioTrabalho
     {
-        public int HorarioServicoDomicilioId { get; set; }
+        public int HorarioTrabalhoId { get; set; }
         public DateTime Data { get; set; }
  
         public string HoraInicio { get; set; }
@@ -18,10 +18,13 @@ namespace PI_ES2_Grupo8.Models
 
         public int EnfermeirosId { get; set; }
 
+        public Boolean Troca { get; set; }
+
         public ICollection <Utente> Utente { get; set; }
 
         public ICollection<Tratamento> Tratamentos { get; set; }
 
-        public ICollection<Troca> Troca { get; set; } 
+        public ICollection<Troca> Trocas { get; set; } 
+
     }
 }

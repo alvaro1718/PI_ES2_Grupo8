@@ -1,10 +1,10 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.HorarioServicoDomicilio>
+﻿@model IEnumerable<PI_ES2_Grupo8.Models.HorarioTrabalho>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Horario Trabalho</h2>
+<h2>Criar Horario Trabalho</h2>
 
 <p>
     <a asp-action="Create">Criar Novo</a>
@@ -23,6 +23,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Enfermeiros)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Troca)
             </th>
             <th></th>
         </tr>
@@ -43,9 +46,12 @@
                 @Html.DisplayFor(modelItem => item.Enfermeiros.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HorarioServicoDomicilioId" class="btn btn-default">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HorarioServicoDomicilioId" class="btn btn-default">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HorarioServicoDomicilioId" class="btn btn-default">Delete</a>
+                @Html.DisplayFor(modelItem => item.Troca)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Eliminar</a>
             </td>
         </tr>
 }

@@ -13,9 +13,9 @@ namespace PI_ES2_Grupo8.Data
         {
             SeedEspecialização(db);
             SeedEnfermeiros(db);
-            SeedEnfermeiroRequerente(db);
-            SeedEnfermeiroEscolhido(db);
-            SeedTroca(db);
+            //SeedEnfermeiroRequerente(db);
+            //SeedEnfermeiroEscolhido(db);
+            //SeedTroca(db);
             SeedHorarioTrabalho(db);
           
            
@@ -25,7 +25,7 @@ namespace PI_ES2_Grupo8.Data
 
         
 
-        private static void SeedEnfermeiroRequerente(ServicoDomicilioDbContext db)
+        /*private static void SeedEnfermeiroRequerente(ServicoDomicilioDbContext db)
         {
             if (db.EnfermeiroRequerente.Any()) return;
 
@@ -72,15 +72,15 @@ namespace PI_ES2_Grupo8.Data
                 db.SaveChanges();
             }
             return enfermeiroEscolhido;
-        }
+        }*/
 
-        private static HorarioServicoDomicilio HorarioServicoDomicilioIfDoesNotExist(ServicoDomicilioDbContext db, DateTime data, string horaInicio, 
+        private static HorarioTrabalho HorarioTrabalhoIfDoesNotExist(ServicoDomicilioDbContext db, DateTime data, string horaInicio, 
             string horaFim, Enfermeiros enfermeiro)
         {
-            HorarioServicoDomicilio horarioTrabalho = new HorarioServicoDomicilio();
+            HorarioTrabalho horarioTrabalho = new HorarioTrabalho();
             if(horarioTrabalho == null)
             {
-                db.HorarioServicoDomicilio.Add(new HorarioServicoDomicilio
+                db.HorarioTrabalho.Add(new HorarioTrabalho
                 {
                     Data = data,
                     HoraInicio = horaInicio,
@@ -97,7 +97,7 @@ namespace PI_ES2_Grupo8.Data
         {
             DateTime data = DateTime.Today;
             Enfermeiros enfermeiro1 = db.Enfermeiros.SingleOrDefault(b => b.Nome == "Paulo");
-            HorarioServicoDomicilioIfDoesNotExist(db, data, "8h:00", "18h:00", enfermeiro1);
+            HorarioTrabalhoIfDoesNotExist(db, data, "8h:00", "18h:00", enfermeiro1);
 
 
 
@@ -166,7 +166,7 @@ namespace PI_ES2_Grupo8.Data
        
 
         private static Troca GetTrocaCreatingIfNeed(ServicoDomicilioDbContext db, string justificação, EnfermeiroRequerente enfermeiroRequerente,
-            EnfermeiroEscolhido enfermeiroEscolhido, DateTime data, HorarioServicoDomicilio horarioServicoDomicilio)
+            EnfermeiroEscolhido enfermeiroEscolhido, DateTime data, HorarioTrabalho horarioTrabalho)
         {
             Troca troca = db.Troca.SingleOrDefault(b => b.Justificação == justificação);
 
@@ -175,21 +175,21 @@ namespace PI_ES2_Grupo8.Data
                 db.Troca.Add(new Troca
                 {
                     Justificação = justificação,
-                    EnfermeiroRequerenteId = enfermeiroRequerente.EnfermeiroRequerenteId,
-                    EnfermeiroEscolhidoId = enfermeiroEscolhido.EnfermeiroEscolhidoId,
+                    //EnfermeiroRequerenteId = enfermeiroRequerente.EnfermeiroRequerenteId,
+                    //EnfermeiroEscolhidoId = enfermeiroEscolhido.EnfermeiroEscolhidoId,
                     Data = data,
-                    HorarioServicoDomicilioId = horarioServicoDomicilio.HorarioServicoDomicilioId
+                    //HorarioServicoDomicilioId = horarioTrabalho.HorarioTrabalhoId
                 });
                 //db.SaveChanges();
             }
             return troca;
         }
 
-        private static void SeedTroca(ServicoDomicilioDbContext db)
+        /*private static void SeedTroca(ServicoDomicilioDbContext db)
         {
             DateTime dataTroca;
-            HorarioServicoDomicilio horarioServicoDomicilio = new HorarioServicoDomicilio();
-            DateTime data = DateTime.Today;
+            HorarioTrabalho horarioTrabalho = new HorarioTrabalho();
+            DateTime data = DateTime.Now;
             dataTroca = data;
 
                 //data.ToString("dd MM YYYY");
@@ -199,11 +199,11 @@ namespace PI_ES2_Grupo8.Data
             Enfermeiros enfermeiro2 = db.Enfermeiros.SingleOrDefault(b => b.Nome == "João");
             EnfermeiroRequerente enfermeiroRequerente = CreateEnfermeiroRequerenteIfDoesNotExist(db,enfermeiro1);
             EnfermeiroEscolhido enfermeiroEscolhido = CreateEnfermeiroEscolhidoIfDoesNotExist(db,enfermeiro2);
-            GetTrocaCreatingIfNeed(db, "Doente", enfermeiroRequerente, enfermeiroEscolhido, dataTroca, horarioServicoDomicilio);
+            GetTrocaCreatingIfNeed(db, "Doente", enfermeiroRequerente, enfermeiroEscolhido, dataTroca, horarioTrabalho);
            
 
 
-        }
+        }*/
         
 
 

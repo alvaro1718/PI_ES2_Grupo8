@@ -17,22 +17,15 @@
                 <input asp-for="Justificação" class="form-control" />
                 <span asp-validation-for="Justificação" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EnfermeiroRequerenteId" class="control-label"></label>
-                <select asp-for="EnfermeiroRequerenteId" class ="form-control" asp-items="ViewBag.EnfermeiroRequerenteId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EnfermeiroEscolhidoId" class="control-label"></label>
-                <select asp-for="EnfermeiroEscolhidoId" class ="form-control" asp-items="ViewBag.EnfermeiroEscolhidoId"></select>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HorarioServicoDomicilioId" class="control-label"></label>
-                <select asp-for="HorarioServicoDomicilioId" class ="form-control" asp-items="ViewBag.HorarioServicoDomicilioId"></select>
+                <label asp-for="HorarioTrabalhoId" class="control-label"></label>
+                <select asp-for="HorarioTrabalhoId" class ="form-control" asp-items="ViewBag.HorarioServicoDomicilioId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-default" />

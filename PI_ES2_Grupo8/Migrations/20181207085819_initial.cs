@@ -83,21 +83,22 @@ namespace PI_ES2_Grupo8.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HorarioServicoDomicilio",
+                name: "HorarioTrabalho",
                 columns: table => new
                 {
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: false)
+                    HorarioTrabalhoId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Data = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<string>(nullable: true),
                     HoraFim = table.Column<string>(nullable: true),
-                    EnfermeirosId = table.Column<int>(nullable: false)
+                    EnfermeirosId = table.Column<int>(nullable: false),
+                    Troca = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HorarioServicoDomicilio", x => x.HorarioServicoDomicilioId);
+                    table.PrimaryKey("PK_HorarioTrabalho", x => x.HorarioTrabalhoId);
                     table.ForeignKey(
-                        name: "FK_HorarioServicoDomicilio_Enfermeiros_EnfermeirosId",
+                        name: "FK_HorarioTrabalho_Enfermeiros_EnfermeirosId",
                         column: x => x.EnfermeirosId,
                         principalTable: "Enfermeiros",
                         principalColumn: "EnfermeirosId",
@@ -111,10 +112,11 @@ namespace PI_ES2_Grupo8.Migrations
                     TrocaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Justificação = table.Column<string>(nullable: false),
-                    EnfermeiroRequerenteId = table.Column<int>(nullable: false),
-                    EnfermeiroEscolhidoId = table.Column<int>(nullable: false),
+                    EnfermeirosId = table.Column<int>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: false)
+                    HorarioTrabalhoId = table.Column<int>(nullable: false),
+                    EnfermeiroEscolhidoId = table.Column<int>(nullable: true),
+                    EnfermeiroRequerenteId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,10 +134,16 @@ namespace PI_ES2_Grupo8.Migrations
                         principalColumn: "EnfermeiroRequerenteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Troca_HorarioServicoDomicilio_HorarioServicoDomicilioId",
-                        column: x => x.HorarioServicoDomicilioId,
-                        principalTable: "HorarioServicoDomicilio",
-                        principalColumn: "HorarioServicoDomicilioId",
+                        name: "FK_Troca_Enfermeiros_EnfermeirosId",
+                        column: x => x.EnfermeirosId,
+                        principalTable: "Enfermeiros",
+                        principalColumn: "EnfermeirosId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Troca_HorarioTrabalho_HorarioTrabalhoId",
+                        column: x => x.HorarioTrabalhoId,
+                        principalTable: "HorarioTrabalho",
+                        principalColumn: "HorarioTrabalhoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -150,16 +158,16 @@ namespace PI_ES2_Grupo8.Migrations
                     Telefone = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: true)
+                    HorarioTrabalhoId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Utente", x => x.UtenteId);
                     table.ForeignKey(
-                        name: "FK_Utente_HorarioServicoDomicilio_HorarioServicoDomicilioId",
-                        column: x => x.HorarioServicoDomicilioId,
-                        principalTable: "HorarioServicoDomicilio",
-                        principalColumn: "HorarioServicoDomicilioId",
+                        name: "FK_Utente_HorarioTrabalho_HorarioTrabalhoId",
+                        column: x => x.HorarioTrabalhoId,
+                        principalTable: "HorarioTrabalho",
+                        principalColumn: "HorarioTrabalhoId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -172,7 +180,7 @@ namespace PI_ES2_Grupo8.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EnfermeirosId = table.Column<int>(nullable: false),
                     UtenteId = table.Column<int>(nullable: false),
-                    HorarioServicoDomicilioId = table.Column<int>(nullable: true)
+                    HorarioTrabalhoId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,10 +192,10 @@ namespace PI_ES2_Grupo8.Migrations
                         principalColumn: "EnfermeirosId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tratamento_HorarioServicoDomicilio_HorarioServicoDomicilioId",
-                        column: x => x.HorarioServicoDomicilioId,
-                        principalTable: "HorarioServicoDomicilio",
-                        principalColumn: "HorarioServicoDomicilioId",
+                        name: "FK_Tratamento_HorarioTrabalho_HorarioTrabalhoId",
+                        column: x => x.HorarioTrabalhoId,
+                        principalTable: "HorarioTrabalho",
+                        principalColumn: "HorarioTrabalhoId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tratamento_Utente_UtenteId",
@@ -232,8 +240,8 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "EspecializaçãoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HorarioServicoDomicilio_EnfermeirosId",
-                table: "HorarioServicoDomicilio",
+                name: "IX_HorarioTrabalho_EnfermeirosId",
+                table: "HorarioTrabalho",
                 column: "EnfermeirosId");
 
             migrationBuilder.CreateIndex(
@@ -247,9 +255,9 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "EnfermeirosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tratamento_HorarioServicoDomicilioId",
+                name: "IX_Tratamento_HorarioTrabalhoId",
                 table: "Tratamento",
-                column: "HorarioServicoDomicilioId");
+                column: "HorarioTrabalhoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tratamento_UtenteId",
@@ -267,14 +275,19 @@ namespace PI_ES2_Grupo8.Migrations
                 column: "EnfermeiroRequerenteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Troca_HorarioServicoDomicilioId",
+                name: "IX_Troca_EnfermeirosId",
                 table: "Troca",
-                column: "HorarioServicoDomicilioId");
+                column: "EnfermeirosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Utente_HorarioServicoDomicilioId",
+                name: "IX_Troca_HorarioTrabalhoId",
+                table: "Troca",
+                column: "HorarioTrabalhoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Utente_HorarioTrabalhoId",
                 table: "Utente",
-                column: "HorarioServicoDomicilioId");
+                column: "HorarioTrabalhoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -298,7 +311,7 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "Utente");
 
             migrationBuilder.DropTable(
-                name: "HorarioServicoDomicilio");
+                name: "HorarioTrabalho");
 
             migrationBuilder.DropTable(
                 name: "Enfermeiros");

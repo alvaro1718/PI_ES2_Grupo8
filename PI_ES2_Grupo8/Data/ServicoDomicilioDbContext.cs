@@ -19,24 +19,24 @@ namespace PI_ES2_Grupo8.Models
 
 
             modelBuilder.Entity<Troca>()
-                .HasOne(b => b.HorarioServicoDomicilio)
-                .WithMany(a => a.Troca)
-                .HasForeignKey(b => b.HorarioServicoDomicilioId)
+                .HasOne(b => b.HorarioTrabalhoNovo)
+                .WithMany(a => a.Trocas)
+                .HasForeignKey(b => b.HorarioTrabalhoId)
                 .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
 
 
-            modelBuilder.Entity<Troca>()
+           /* modelBuilder.Entity<Troca>()
                .HasOne(tr => tr.EnfermeiroRequerente)
                .WithMany(r=>r.Trocas)
                .HasForeignKey(tr => tr.EnfermeiroRequerenteId)
-                 .OnDelete(DeleteBehavior.ClientSetNull);
+                 .OnDelete(DeleteBehavior.ClientSetNull);*/
 
 
-            modelBuilder.Entity<Troca>()
+           /* modelBuilder.Entity<Troca>()
                  .HasOne(bc => bc.EnfermeiroEscolhido)
                  .WithMany(c => c.Trocas)
                  .HasForeignKey(bc => bc.EnfermeiroEscolhidoId)
-                 .OnDelete(DeleteBehavior.ClientSetNull);
+                 .OnDelete(DeleteBehavior.ClientSetNull); */
 
          
 
@@ -54,7 +54,7 @@ namespace PI_ES2_Grupo8.Models
         public DbSet<PI_ES2_Grupo8.Models.Enfermeiros> Enfermeiros { get; set; }
         public DbSet<PI_ES2_Grupo8.Models.Tratamento> Tratamento { get; set; }
 
-        public DbSet<PI_ES2_Grupo8.Models.HorarioServicoDomicilio> HorarioServicoDomicilio { get; set; }
+        public DbSet<PI_ES2_Grupo8.Models.HorarioTrabalho> HorarioTrabalho { get; set; }
 
         public DbSet<PI_ES2_Grupo8.Models.Troca> Troca { get; set; }
 
