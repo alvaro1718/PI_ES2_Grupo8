@@ -1,36 +1,53 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.Utente>
+﻿@model UtentesListViewModel
 
 @{
     ViewData["Title"] = "Lista Utente";
 }
 <h4>Lista Utente</h4>
+
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
+<div style="width: 350px; height: 100px; overflow: hidden; display: inline-block;">
+    <div class="panel panel-default">
+        
+        <div class="panel-body">
+            <form asp-action="Index">
+                <div class="form-group" style="width: 150px; height: 60px; overflow: hidden; display: inline-block; float:left">
+                    <label asp-for="CurrentName" class="control-label">""</label>
+                    <input asp-for="CurrentName" class="form-control" />
+                </div>
+                <div class="form-group" style="float:right">
+                    <input type="submit" value="Pesquisar" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+               Nome
             </th>
             <th>
                 <p>Nº Utente Saúde</p>
             </th>
             
             <th>
-                @Html.DisplayNameFor(model => model.Telefone)
+               Telefone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+               email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Problemas)
+                Problemas
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Utentes)
         {
         <tr>
             <td>
@@ -58,3 +75,4 @@
         }
     </tbody>
 </table>
+<div page-model="@Model.Pagination"> </div>

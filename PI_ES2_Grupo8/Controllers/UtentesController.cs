@@ -11,6 +11,7 @@ namespace PI_ES2_Grupo8.Controllers
 {
     public class UtentesController : Controller
     {
+        private const int PAGE_SIZE = 2;
         private readonly ServicoDomicilioDbContext _context;
 
         public UtentesController(ServicoDomicilioDbContext context)
@@ -19,9 +20,48 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Utentes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(UtentesListViewModel model = null, int page = 1)
         {
-            return View(await _context.Utente.ToListAsync());
+
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var utentes = _context.Utente
+                .Where(p =>nome == null || p.Nome.Contains(nome));
+
+            int numUtentes = await utentes.CountAsync();
+
+            if (page > (numUtentes / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var UtentesList = await utentes
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new UtentesListViewModel
+                {
+                    Utentes = UtentesList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numUtentes
+                    },
+                    CurrentName = nome
+                }
+            );
+
+            //return View(await _context.Utente.ToListAsync());
         }
 
         // GET: Utentes/Details/5
