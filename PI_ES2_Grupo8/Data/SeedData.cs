@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using PI_ES2_Grupo8.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,9 @@ namespace PI_ES2_Grupo8.Data
 {
     public class SeedData
     {
+        private const string ROLE_GESTOR = "Administrator";
+        private const string ROLE_ENFERMEIRO = "Enfermeiro";
+
         public static void Populate(ServicoDomicilioDbContext db)
         {
             SeedEspecialização(db);
@@ -17,13 +21,58 @@ namespace PI_ES2_Grupo8.Data
             //SeedEnfermeiroEscolhido(db);
             //SeedTroca(db);
             SeedHorarioTrabalho(db);
-          
-           
+        }
 
+        private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
 
         }
 
-        
+        public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string GESTOR_USER = "gestor@vandermail.com";
+            const string GESTOR_PASSWORD = "sECRET$123";
+
+            MakeSureRoleExistsAsync(roleManager, ROLE_GESTOR);
+            MakeSureRoleExistsAsync(roleManager, ROLE_ENFERMEIRO);
+
+            IdentityUser admin = await userManager.FindByNameAsync(GESTOR_USER);
+            if (admin == null)
+            {
+                admin = new IdentityUser { UserName = GESTOR_USER };
+                await userManager.CreateAsync(admin, GESTOR_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(admin, ROLE_GESTOR))
+            {
+                await userManager.AddToRoleAsync(admin, ROLE_GESTOR);
+            }
+
+        }
+        public static async Task CreateTestUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string ENFERMEIRO_USER = "paulo@gmail.com";
+            const string ENFERMEIRO_PASSWORD = "sECREDO$123";
+
+            IdentityUser enfermeiro = await userManager.FindByNameAsync(ENFERMEIRO_USER);
+            if (enfermeiro == null)
+            {
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(enfermeiro, ROLE_ENFERMEIRO))
+            {
+                await userManager.AddToRoleAsync(enfermeiro, ROLE_ENFERMEIRO);
+            }
+
+        }
+
+        //
 
         /*private static void SeedEnfermeiroRequerente(ServicoDomicilioDbContext db)
         {
@@ -122,13 +171,17 @@ namespace PI_ES2_Grupo8.Data
         private static void SeedEnfermeiros(ServicoDomicilioDbContext db)
         {
             Especialização especialização = GetEspecializaçãoCreatingIfNeed(db, "Pediatria");
-            CreateEnfermeirosIfDoesNotExist(db, "Paulo", "927405851", "paulo@gmail.com", "Rua Mota joao", especialização);
-            CreateEnfermeirosIfDoesNotExist(db, "Alvaro", "922076352", "alvaro555@gmail.com", "Rua da Liberdade", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Paulo Gomes De Almeida", "927405851", "paulo@gmail.com", "Rua Mota joao", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Alvaro Silva Dos Santos", "922076352", "alvaro555@gmail.com", "Rua da Liberdade", especialização);
 
             especialização = GetEspecializaçãoCreatingIfNeed(db, "Enfermagem de Saúde Mental e Psquiatria");
-            CreateEnfermeirosIfDoesNotExist(db, "João", "921402734", "joao@gmail.com", "Rua Madre de Deus", especialização);
-            CreateEnfermeirosIfDoesNotExist(db, "Maria", "921876398", "maria24@gmail.com", "Rua da Boa Esperança", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "João Paulo Marques", "921402734", "joao@gmail.com", "Rua Madre de Deus", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Maria Dos Anjos Pereira", "921876398", "maria24@gmail.com", "Rua da Boa Esperança", especialização);
 
+            especialização = GetEspecializaçãoCreatingIfNeed(db, "Pediatria");
+            CreateEnfermeirosIfDoesNotExist(db, "Manuel Monte Negro De Melo", "934570452", "melo@gmail.com", "Rua Evaristo Da Silva", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Joana Barreto Rita", "921876352", "joana10@gmail.com", "Rua da Neves e Ceita", especialização);
+            
             db.SaveChanges();
 
 

@@ -21,7 +21,7 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: PedidoTrocas
         public async Task<IActionResult> Index()
         {
-            var servicoDomicilioDbContext = _context.Troca.Include(t => t.EnfermeiroRequerente).Include(t => t.HorarioTrabalhoNovo);
+            var servicoDomicilioDbContext = _context.Troca.Include(t => t.EnfermeiroRequerente).Include(t => t.HorarioTrabalhoAntigo).Include(t => t.HorarioTrabalhoNovo);
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace PI_ES2_Grupo8.Controllers
 
             var troca = await _context.Troca
                 .Include(t => t.EnfermeiroRequerente)
+                .Include(t => t.HorarioTrabalhoAntigo)
                 .Include(t => t.HorarioTrabalhoNovo)
                 .FirstOrDefaultAsync(m => m.TrocaId == id);
             if (troca == null)
@@ -48,7 +49,8 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: PedidoTrocas/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome");
+            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId");
             ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId");
             return View();
         }
@@ -58,7 +60,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TrocaId,Justificação,EnfermeirosId,Data,HorarioTrabalhoId")] Troca troca)
+        public async Task<IActionResult> Create([Bind("TrocaId,Justificação,EnfermeirosId,Data,HorarioTrabalhoId,HorarioTrabalhoAntigoId,Aprovar")] Troca troca)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +68,8 @@ namespace PI_ES2_Grupo8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", troca.EnfermeirosId);
+            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoAntigoId);
             ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoId);
             return View(troca);
         }
@@ -84,7 +87,8 @@ namespace PI_ES2_Grupo8.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", troca.EnfermeirosId);
+            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoAntigoId);
             ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoId);
             return View(troca);
         }
@@ -94,7 +98,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,Justificação,EnfermeirosId,Data,HorarioTrabalhoId")] Troca troca)
+        public async Task<IActionResult> Edit(int id, [Bind("TrocaId,Justificação,EnfermeirosId,Data,HorarioTrabalhoId,HorarioTrabalhoAntigoId,Aprovar")] Troca troca)
         {
             if (id != troca.TrocaId)
             {
@@ -121,7 +125,8 @@ namespace PI_ES2_Grupo8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", troca.EnfermeirosId);
+            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome", troca.EnfermeirosId);
+            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoAntigoId);
             ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId", troca.HorarioTrabalhoId);
             return View(troca);
         }
@@ -136,6 +141,7 @@ namespace PI_ES2_Grupo8.Controllers
 
             var troca = await _context.Troca
                 .Include(t => t.EnfermeiroRequerente)
+                .Include(t => t.HorarioTrabalhoAntigo)
                 .Include(t => t.HorarioTrabalhoNovo)
                 .FirstOrDefaultAsync(m => m.TrocaId == id);
             if (troca == null)

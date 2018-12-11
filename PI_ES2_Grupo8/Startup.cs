@@ -38,8 +38,42 @@ namespace PI_ES2_Grupo8
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddDefaultIdentity
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("OnlyAdminAccess",
+                    policy => policy.RequireRole("Administrator"));
+            });
+
+            services.Configure<IdentityOptions>(
+                options =>
+                {
+                    //definições Password
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequiredUniqueChars = 5;
+
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    // user setttings
+                    // options.User.RequireUniqueEmail = true;
+
+                }
+              );
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -50,10 +84,15 @@ namespace PI_ES2_Grupo8
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ServicoDomicilioDbContext db)
-        {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ServicoDomicilioDbContext db, 
+            UserManager<IdentityUser>userManager, RoleManager<IdentityRole>roleManager
+        ){
+            //A primeira que introduzires
+            SeedData.CreateRolesAndUsersAsync(userManager , roleManager).Wait();
+
             if (env.IsDevelopment())
             {
+                SeedData.CreateTestUsersAsync(userManager, roleManager).Wait();
                 SeedData.Populate(db);
 
                 app.UseDeveloperExceptionPage();

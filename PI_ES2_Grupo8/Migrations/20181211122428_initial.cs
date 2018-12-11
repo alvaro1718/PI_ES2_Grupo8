@@ -115,6 +115,8 @@ namespace PI_ES2_Grupo8.Migrations
                     EnfermeirosId = table.Column<int>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
                     HorarioTrabalhoId = table.Column<int>(nullable: false),
+                    HorarioTrabalhoAntigoId = table.Column<int>(nullable: false),
+                    Aprovar = table.Column<bool>(nullable: false),
                     EnfermeiroEscolhidoId = table.Column<int>(nullable: true),
                     EnfermeiroRequerenteId = table.Column<int>(nullable: true)
                 },
@@ -138,7 +140,13 @@ namespace PI_ES2_Grupo8.Migrations
                         column: x => x.EnfermeirosId,
                         principalTable: "Enfermeiros",
                         principalColumn: "EnfermeirosId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Troca_HorarioTrabalho_HorarioTrabalhoAntigoId",
+                        column: x => x.HorarioTrabalhoAntigoId,
+                        principalTable: "HorarioTrabalho",
+                        principalColumn: "HorarioTrabalhoId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Troca_HorarioTrabalho_HorarioTrabalhoId",
                         column: x => x.HorarioTrabalhoId,
@@ -278,6 +286,11 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "IX_Troca_EnfermeirosId",
                 table: "Troca",
                 column: "EnfermeirosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Troca_HorarioTrabalhoAntigoId",
+                table: "Troca",
+                column: "HorarioTrabalhoAntigoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Troca_HorarioTrabalhoId",

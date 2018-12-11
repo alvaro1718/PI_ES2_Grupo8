@@ -25,18 +25,18 @@ namespace PI_ES2_Grupo8.Models
                 .OnDelete(DeleteBehavior.ClientSetNull); // prevent cascade delete
 
 
-           /* modelBuilder.Entity<Troca>()
-               .HasOne(tr => tr.EnfermeiroRequerente)
-               .WithMany(r=>r.Trocas)
-               .HasForeignKey(tr => tr.EnfermeiroRequerenteId)
-                 .OnDelete(DeleteBehavior.ClientSetNull);*/
+            modelBuilder.Entity<Troca>()
+               .HasOne(tr => tr.HorarioTrabalhoAntigo)
+               .WithMany(r=>r.Trocass)
+               .HasForeignKey(tr => tr.HorarioTrabalhoAntigoId)
+                 .OnDelete(DeleteBehavior.ClientSetNull);
 
 
-           /* modelBuilder.Entity<Troca>()
-                 .HasOne(bc => bc.EnfermeiroEscolhido)
+            modelBuilder.Entity<Troca>()
+                 .HasOne(bc => bc.EnfermeiroRequerente)
                  .WithMany(c => c.Trocas)
-                 .HasForeignKey(bc => bc.EnfermeiroEscolhidoId)
-                 .OnDelete(DeleteBehavior.ClientSetNull); */
+                 .HasForeignKey(bc => bc.EnfermeirosId)
+                 .OnDelete(DeleteBehavior.ClientSetNull); 
 
          
 

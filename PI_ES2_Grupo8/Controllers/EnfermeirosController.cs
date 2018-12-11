@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
+    [Authorize]
     public class EnfermeirosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
@@ -45,6 +47,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Enfermeiros/Create
+        [Authorize(Policy = "OnlyAdminAccess")]
         public IActionResult Create()
         {
             ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome");
@@ -56,6 +59,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Create([Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
         {
             if (ModelState.IsValid)
@@ -69,6 +73,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Enfermeiros/Edit/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,6 +95,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int id, [Bind("EnfermeirosId,Nome,Telefone,Email,Morada,EspecializaçãoId")] Enfermeiros enfermeiros)
         {
             if (id != enfermeiros.EnfermeirosId)
@@ -122,6 +128,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Enfermeiros/Delete/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,6 +150,7 @@ namespace PI_ES2_Grupo8.Controllers
         // POST: Enfermeiros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enfermeiros = await _context.Enfermeiros.FindAsync(id);

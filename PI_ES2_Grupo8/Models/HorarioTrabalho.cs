@@ -24,7 +24,11 @@ namespace PI_ES2_Grupo8.Models
 
         public ICollection<Tratamento> Tratamentos { get; set; }
 
-        public ICollection<Troca> Trocas { get; set; } 
+        public ICollection<Troca> Trocas { get; set; }
+        public ICollection<Troca> Trocass { get; set; }
+
+
+
 
     }
 }

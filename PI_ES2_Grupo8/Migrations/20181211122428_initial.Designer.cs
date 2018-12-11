@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20181207085819_initial")]
+    [Migration("20181211122428_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,6 +161,8 @@ namespace PI_ES2_Grupo8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Aprovar");
+
                     b.Property<DateTime>("Data");
 
                     b.Property<int?>("EnfermeiroEscolhidoId");
@@ -168,6 +170,8 @@ namespace PI_ES2_Grupo8.Migrations
                     b.Property<int?>("EnfermeiroRequerenteId");
 
                     b.Property<int>("EnfermeirosId");
+
+                    b.Property<int>("HorarioTrabalhoAntigoId");
 
                     b.Property<int>("HorarioTrabalhoId");
 
@@ -181,6 +185,8 @@ namespace PI_ES2_Grupo8.Migrations
                     b.HasIndex("EnfermeiroRequerenteId");
 
                     b.HasIndex("EnfermeirosId");
+
+                    b.HasIndex("HorarioTrabalhoAntigoId");
 
                     b.HasIndex("HorarioTrabalhoId");
 
@@ -279,8 +285,11 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "EnfermeiroRequerente")
                         .WithMany("Trocas")
-                        .HasForeignKey("EnfermeirosId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EnfermeirosId");
+
+                    b.HasOne("PI_ES2_Grupo8.Models.HorarioTrabalho", "HorarioTrabalhoAntigo")
+                        .WithMany("Trocass")
+                        .HasForeignKey("HorarioTrabalhoAntigoId");
 
                     b.HasOne("PI_ES2_Grupo8.Models.HorarioTrabalho", "HorarioTrabalhoNovo")
                         .WithMany("Trocas")
