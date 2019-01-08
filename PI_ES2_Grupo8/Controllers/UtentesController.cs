@@ -195,7 +195,11 @@ namespace PI_ES2_Grupo8.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [ActionName("Confirmar")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Medico.ToListAsync());
+        }
         private bool UtenteExists(int id)
         {
             return _context.Utente.Any(e => e.UtenteId == id);
