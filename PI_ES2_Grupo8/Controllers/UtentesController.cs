@@ -11,7 +11,7 @@ namespace PI_ES2_Grupo8.Controllers
 {
     public class UtentesController : Controller
     {
-        private const int PAGE_SIZE = 2;
+        private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 
         public UtentesController(ServicoDomicilioDbContext context)

@@ -12,16 +12,53 @@ namespace PI_ES2_Grupo8.Controllers
     public class TratamentosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
-
+        private const int PAGE_SIZE = 4;
         public TratamentosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
         // GET: Tratamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(TratamentosListViewModel model = null, int page = 1)
         {
-            return View(await _context.Tratamento.ToListAsync());
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var tratamentos = _context.Tratamento
+                .Where(p => nome == null || p.TipodeTratamento.Contains(nome));
+
+            int numMedicos = await tratamentos.CountAsync();
+
+            if (page > (numMedicos / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var TratamentosList = await tratamentos
+                    .OrderBy(p => p.TipodeTratamento)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new TratamentosListViewModel
+                {
+                    Tratamentos = TratamentosList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numMedicos
+                    },
+                    CurrentName = nome
+                }
+            );
+            //  return View(await _context.Tratamento.ToListAsync());
         }
 
         // GET: Tratamentos/Details/5

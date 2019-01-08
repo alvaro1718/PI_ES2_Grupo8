@@ -12,16 +12,54 @@ namespace PI_ES2_Grupo8.Controllers
     public class MedicosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
-
+        private const int PAGE_SIZE = 4;
         public MedicosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
         // GET: Medicos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(MedicosListViewModel model = null, int page = 1)
         {
-            return View(await _context.Medico.ToListAsync());
+
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var medicos = _context.Medico
+                .Where(p => nome == null || p.Nome.Contains(nome));
+
+            int numMedicos = await medicos.CountAsync();
+
+            if (page > (numMedicos / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var MedicosList = await medicos
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new MedicosListViewModel
+                {
+                    Medicos = MedicosList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numMedicos
+                    },
+                    CurrentName = nome
+                }
+            );
+            // return View(await _context.Medico.ToListAsync());
         }
 
         // GET: Medicos/Details/5
