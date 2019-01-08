@@ -25,9 +25,34 @@ namespace PI_ES2_Grupo8.Controllers
             return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
+        ///////////////////////////////////////////////////////
+        public IActionResult VisualizarTroca()
+        {
+            HorarioTrabalho horario;
+            //Troca nome;
+            IList<Troca> TrocaList = new List<Troca>();
+            foreach (var item in _context.Troca)
+            {
+                if (item.Aprovar == true)
+                {
+                    horario = _context.HorarioTrabalho.SingleOrDefault(p => p.HorarioTrabalhoId == item.HorarioTrabalhoId);
+                    //nome = _context.Troca.SingleOrDefault(p => p.EnfermeirosId == item.EnfermeirosId);
+                    TrocaList.Add(new Troca() { HorarioTrabalhoId = item.HorarioTrabalhoId, TrocaId = item.TrocaId, HorarioTrabalhoNovo = horario });
+                    //HorarioTrabalhoAntigo = item.HorarioTrabalhoAntigo
+                    ViewBag.Message = "" + item.HorarioTrabalhoId.ToString();
+
+                }
+            }
+            ViewData["VisualizarTroca"] = TrocaList;
+            return View(TrocaList);
+        }
+        ///////////////////////////////////777
+        
+
         // GET: HorarioTrabalho/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+           
             if (id == null)
             {
                 return NotFound();

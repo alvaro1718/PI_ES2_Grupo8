@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.Enfermeiros>
+﻿<!-- model IEnumerable<PI_ES2_Grupo8.Models.Enfermeiros> -->
+@model EnfermeirosListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,47 +14,54 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
+            </th>
+            <!--
+            <th>
+                Html.DisplayNameFor(model => model.Telefone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefone)
+                Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Html.DisplayNameFor(model => model.Morada)
             </th>
+            -->
             <th>
-                @Html.DisplayNameFor(model => model.Morada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Especialização)
+                Especialização
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Especialização.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnfermeirosId"  class="btn btn-default">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Enfermeiro)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <!--
+                <td>
+                    Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    Html.DisplayFor(modelItem => item.Morada)
+                </td>
+                -->
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Especialização.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div page-model="@Model.Pagination"> </div>

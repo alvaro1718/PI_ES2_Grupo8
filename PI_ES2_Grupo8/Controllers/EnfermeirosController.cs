@@ -13,6 +13,8 @@ namespace PI_ES2_Grupo8.Controllers
     [Authorize]
     public class EnfermeirosController : Controller
     {
+        private const int PAGE_SIZE = 4;
+
         private readonly ServicoDomicilioDbContext _context;
 
         public EnfermeirosController(ServicoDomicilioDbContext context)
@@ -21,11 +23,66 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Enfermeiros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(EnfermeirosListViewModel model = null, int page = 1, string order = null)
         {
-            var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.Especialização);
-            return View(await servicoDomicilioDbContext.ToListAsync());
-        }
+            string name = null;
+
+            if (model != null)
+            {
+                name = model.CurrentName;
+            }
+
+            var enfermeiros = _context.Enfermeiros
+                .Where(p => name == null || p.Nome.Contains(name));
+
+            int numEnfermeiros = await enfermeiros.CountAsync();
+
+            IEnumerable<Enfermeiros> enfermeirosList;
+
+            if (order == "name")
+            {
+                enfermeirosList = await enfermeiros
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (order == "especialização")
+            {
+                 enfermeirosList = await enfermeiros
+                    .OrderBy(p => p.Especialização)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+                enfermeirosList = await enfermeiros
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+
+            return View(
+                new EnfermeirosListViewModel
+                {
+                    Enfermeiro = enfermeirosList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        Totaltems = numEnfermeiros,
+                        Order = order
+                    },
+                    CurrentName = name,
+                }
+            );
+        
+
+        //var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.Especialização);
+        //return View(await servicoDomicilioDbContext.ToListAsync());
+    }
 
         // GET: Enfermeiros/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -64,11 +121,23 @@ namespace PI_ES2_Grupo8.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //verificar Enfermeiro
+                Enfermeiros verificarEnfermeiro = _context.Enfermeiros.SingleOrDefault(p => p.Nome == enfermeiros.Nome);
+
+                if (verificarEnfermeiro == null)
+                {
+                    _context.Add(enfermeiros);
+                    await _context.SaveChangesAsync();
+                    return View("Enfermeiros", enfermeiros); // RedirectToAction(nameof(Index))
+                }
+                else
+                {
+                    ViewBag.Message = "Enfermeiro já existe!";
+                    return View("Create");
+                }
+
+                //ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
             }
-            ViewData["EspecializaçãoId"] = new SelectList(_context.Especialização, "EspecializaçãoId", "Nome", enfermeiros.EspecializaçãoId);
             return View(enfermeiros);
         }
 

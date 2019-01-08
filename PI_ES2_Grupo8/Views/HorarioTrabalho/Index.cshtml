@@ -49,9 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Troca)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default" >Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default" >Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default" >Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Eliminar</a> |
+                <a asp-action="VisualizarTroca" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Ver a troca</a>
             </td>
         </tr>
 }

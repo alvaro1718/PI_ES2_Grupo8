@@ -42,6 +42,43 @@
         </dd>
     </dl>
 </div>
+
+
+<table class="table">
+<thead>
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Tratamento
+        </th>
+        <th>
+            Data Tratamento
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @{int i = 1;}
+    @foreach (var item in ViewData["EfetuarTroca"] as IList<Troca>)
+    {
+        <tr>
+            <td>
+                @(i++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
+            </td>
+        </tr>
+    }
+</tbody>
+</table>
+
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.HorarioTrabalhoId">Editar</a> |
     <a asp-action="Index">Voltar a lista</a>
