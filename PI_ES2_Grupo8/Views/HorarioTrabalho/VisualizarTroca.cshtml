@@ -11,11 +11,15 @@
             <th>
                 Trocas Id
             </th>
-            <!--
+
             <th>
                 Nome
             </th>
-                -->
+
+            <th>
+                Antigo
+            </th>
+
             <th>
                 Horario Trabalho Novo
             </th>
@@ -26,29 +30,47 @@
     <tbody>
         @foreach (var item in ViewData["VisualizarTroca"] as IList<Troca>)
         {
-        <tr>
+            <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.TrocaId)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrocaId)
+                </td>
 
-            <!--
-    <td>
-        @Html.DisplayFor(modelItem => item.EnfermeirosId)
-    </td>
-    -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
+                </td>
+                <!--
+                <td>
+                    Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
+                </td>
+                -->
 
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
-            </td>
-            <!--
-    <td>
-        Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
-    </td>
-    -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
+                </td>
+            </tr>
 
-        </tr>
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrocaId)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.Nome)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
+                </td>
+
+            </tr>
+
+
         }
+
+
     </tbody>
 </table>
 

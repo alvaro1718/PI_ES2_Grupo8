@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.EnfermeiroRequerente)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EnfermeiroEscolhido)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Data)
             </th>
             <th>
@@ -43,6 +46,9 @@
                 @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.Nome)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
@@ -55,9 +61,9 @@
                 @Html.DisplayFor(modelItem => item.Aprovar)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.TrocaId" class="btn btn-default">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.TrocaId" class="btn btn-default">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.TrocaId" class="btn btn-default">Eliminar</a>
+                <a asp-action="Edit" asp-route-id="@item.TrocaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TrocaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TrocaId">Delete</a>
             </td>
         </tr>
 }

@@ -163,9 +163,13 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<DateTime>("Data");
 
+                    b.Property<int?>("EnfermeiroEscolhidoEnfermeirosId");
+
                     b.Property<int?>("EnfermeiroEscolhidoId");
 
                     b.Property<int?>("EnfermeiroRequerenteId");
+
+                    b.Property<int>("EnfermeirosEId");
 
                     b.Property<int>("EnfermeirosId");
 
@@ -177,6 +181,8 @@ namespace PI_ES2_Grupo8.Migrations
                         .IsRequired();
 
                     b.HasKey("TrocaId");
+
+                    b.HasIndex("EnfermeiroEscolhidoEnfermeirosId");
 
                     b.HasIndex("EnfermeiroEscolhidoId");
 
@@ -273,6 +279,10 @@ namespace PI_ES2_Grupo8.Migrations
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Troca", b =>
                 {
+                    b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "EnfermeiroEscolhido")
+                        .WithMany("TrocaE")
+                        .HasForeignKey("EnfermeiroEscolhidoEnfermeirosId");
+
                     b.HasOne("PI_ES2_Grupo8.Models.EnfermeiroEscolhido")
                         .WithMany("Trocas")
                         .HasForeignKey("EnfermeiroEscolhidoId");

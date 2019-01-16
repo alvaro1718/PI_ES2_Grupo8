@@ -28,9 +28,11 @@ namespace PI_ES2_Grupo8.Models
 
         public int EspecializaçãoId { get; set; }
 
-        public ICollection<Troca> Trocas { get; set; } //
+        public ICollection<Troca> Trocas { get; set; }
+        public ICollection<Troca> TrocaE { get; set; }
 
         public ICollection<Tratamento> Tratamentos { get; set; }
+
 
        
 

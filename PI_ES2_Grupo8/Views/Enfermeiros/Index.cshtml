@@ -2,45 +2,71 @@
 @model EnfermeirosListViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista dos Enfermeiros";
 }
 
-<h2>Enfermeiros</h2>
+<h2>@ViewData["Title"]</h2>
 
-<p>
-    <a asp-action="Create">Criar Novo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nome
-            </th>
-            <!--
-            <th>
-                Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                Html.DisplayNameFor(model => model.Morada)
-            </th>
-            -->
-            <th>
-                Especialização
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Enfermeiro)
-        {
+<div>
+    <div >
+        
+        <form asp-action="Index">
+            <div class="form-group" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <!-- <label asp-for="Name" class="control-label"></label>           form-control -->
+                                <input asp-for="CurrentName" class="form-label" />
+                                <!--<div class="form-group"> -->
+                                <input type="submit" value="Pesquisar" class="btn btn-default" />
+                                <!-- </div> -->
+                            </th>
+                            <th>
+                                <p>
+                                    <a asp-action="Create" class="btn btn-default">Criar Novo</a>
+                                </p>
+                            <th>
+                        <tr>
+                    </thead>
+                </table>
+            </div>
+            
+        </form>
+    </div>
+</div>
+   
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
+                <th>
+                    Nome
+                </th>
                 <!--
+                <th>
+                    Html.DisplayNameFor(model => model.Telefone)
+                </th>
+                <th>
+                    Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    Html.DisplayNameFor(model => model.Morada)
+                </th>
+                -->
+        <th>
+            Especialização
+        </th>
+        <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Enfermeiro)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <!--
                 <td>
                     Html.DisplayFor(modelItem => item.Telefone)
                 </td>
@@ -52,16 +78,16 @@
                 </td>
                 -->
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Especialização.Nome)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div page-model="@Model.Pagination"> </div>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Especialização.Nome)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+        <div page-model="@Model.Pagination"> </div>

@@ -33,7 +33,8 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var enfermeiros = _context.Enfermeiros
-                .Where(p => name == null || p.Nome.Contains(name));
+                .Where(p => name == null || p.Nome.Contains(name))
+                .Include(p => p.Especialização);
 
             int numEnfermeiros = await enfermeiros.CountAsync();
 
@@ -82,7 +83,7 @@ namespace PI_ES2_Grupo8.Controllers
 
         //var servicoDomicilioDbContext = _context.Enfermeiros.Include(e => e.Especialização);
         //return View(await servicoDomicilioDbContext.ToListAsync());
-    }
+        }
 
         // GET: Enfermeiros/Details/5
         public async Task<IActionResult> Details(int? id)

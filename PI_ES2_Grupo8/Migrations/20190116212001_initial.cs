@@ -113,6 +113,8 @@ namespace PI_ES2_Grupo8.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Justificação = table.Column<string>(nullable: false),
                     EnfermeirosId = table.Column<int>(nullable: false),
+                    EnfermeiroEscolhidoEnfermeirosId = table.Column<int>(nullable: true),
+                    EnfermeirosEId = table.Column<int>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
                     HorarioTrabalhoId = table.Column<int>(nullable: false),
                     HorarioTrabalhoAntigoId = table.Column<int>(nullable: false),
@@ -123,6 +125,12 @@ namespace PI_ES2_Grupo8.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Troca", x => x.TrocaId);
+                    table.ForeignKey(
+                        name: "FK_Troca_Enfermeiros_EnfermeiroEscolhidoEnfermeirosId",
+                        column: x => x.EnfermeiroEscolhidoEnfermeirosId,
+                        principalTable: "Enfermeiros",
+                        principalColumn: "EnfermeirosId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Troca_EnfermeiroEscolhido_EnfermeiroEscolhidoId",
                         column: x => x.EnfermeiroEscolhidoId,
@@ -271,6 +279,11 @@ namespace PI_ES2_Grupo8.Migrations
                 name: "IX_Tratamento_UtenteId",
                 table: "Tratamento",
                 column: "UtenteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Troca_EnfermeiroEscolhidoEnfermeirosId",
+                table: "Troca",
+                column: "EnfermeiroEscolhidoEnfermeirosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Troca_EnfermeiroEscolhidoId",

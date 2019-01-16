@@ -36,9 +36,14 @@ namespace PI_ES2_Grupo8.Models
                  .HasOne(bc => bc.EnfermeiroRequerente)
                  .WithMany(c => c.Trocas)
                  .HasForeignKey(bc => bc.EnfermeirosId)
-                 .OnDelete(DeleteBehavior.ClientSetNull); 
+                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-         
+            modelBuilder.Entity<Troca>()
+                 .HasOne(cb => cb.EnfermeiroEscolhido)
+                 .WithMany(b => b.TrocaE)
+                 .HasForeignKey(cb => cb.EnfermeirosEId)
+                 .OnDelete(DeleteBehavior.ClientSetNull);
+
 
             modelBuilder.Entity<Enfermeiros>()
                .HasOne(b => b.Especialização)
