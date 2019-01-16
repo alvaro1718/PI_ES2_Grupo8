@@ -31,21 +31,19 @@
     <thead>
         <tr>
             <th>
-               Nome
+                Nome
             </th>
             <th>
                 Nº Utente Saúde
             </th>
-            
+
             <th>
-               Telefone
+                Telefone
             </th>
             <th>
-               email
+                email
             </th>
-            <th>
-                Problemas
-            </th>
+            <!--<th>Problemas</th>-->
             <th></th>
         </tr>
     </thead>
@@ -59,20 +57,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.N_Utente_Saude)
             </td>
-           
+
             <td>
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Problemas)
-            </td>
+            <!-- <td>   @Html.DisplayFor(modelItem => item.Problemas) </td>-->
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UtenteId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.UtenteId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.UtenteId" >Apagar</a>
+                <a asp-action="Delete" asp-route-id="@item.UtenteId">Apagar</a>
             </td>
         </tr>
         }

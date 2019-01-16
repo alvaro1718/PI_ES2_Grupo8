@@ -1,27 +1,27 @@
 ﻿@model PI_ES2_Grupo8.Models.Receita
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Apagar Receita";
 }
 
 
 
-<h3>Deseja apagar?</h3>
+
 <div>
-    <h4>Apagar Receita</h4>
+    <h3>Deseja apagar a receita @ViewBag.Message?</h3>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.medico)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.medico.Email)
+            @Html.DisplayFor(model => model.medico.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.utente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.utente.Email)
+            @Html.DisplayFor(model => model.utente.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Date)
@@ -29,17 +29,84 @@
         <dd>
             @Html.DisplayFor(model => model.Date)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nreceita)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nreceita)
-        </dd>
+        <!-- <dt>
+             @Html.DisplayNameFor(model => model.Nreceita)
+         </dt>
+         <dd>
+             @Html.DisplayFor(model => model.Nreceita)
+         </dd>-->
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ReceitaId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Voltar</a>
-    </form>
+  
 </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Tratamento
+                </th>
+                <th>
+                    Data Tratamento
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 1;}
+            @foreach (var item in ViewData["ReceitaTratamentos"] as IList<ReceitarTratamento>)
+            {
+                <tr>
+                    <td>
+                        @(i++)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataTratamento)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <!-- <form asp-action="Delete">
+         <input type="hidden" asp-for="ReceitaId" />
+         <input type="submit" value="Delete" class="btn btn-default" /> |
+         <a asp-action="Index">Voltar</a>
+     </form>-->
+
+    <style>
+        #myDiv {
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div>
+        <button type="button" class="btn btn-warning" onclick="myFunction()">Quero Apagar</button>
+        <a asp-action="Index" class="btn btn-default">Lista Receitas</a>
+    </div>
+
+    <div id="myDiv">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ReceitaId" />
+            <input type="submit" value="Apagar" class="btn btn-danger" onclick="return confirm('Tem a certeza que pretende Apagar?') " />
+        </form>
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDiv");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+

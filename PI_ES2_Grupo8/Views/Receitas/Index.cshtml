@@ -1,38 +1,55 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.Receita>
+﻿@model ReceitasListViewModel
 
 @{
     ViewData["Title"] = "Lista Receitas";
 }
 
-<h2>Lista Receitas</h2>
+<h4>Lista Receitas</h4>
+<!--<p><a asp-action="Create">Criar novo</a></p>-->
+<div style="width:1100px">
+    <div class="form-group" style="width:300px; float:left; margin-top:15px">
+        <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
+    </div>
+    <!--<p><a asp-action="Create">Criar novo</a></p>-->
+    <div style="width:700px; float:right">
 
-<p>
-    <a asp-action="Create">Criar novo</a>
-</p>
+
+        <div class="panel-body" style="width: 350px; float:right;">
+            <form asp-action="Index">
+                <div class="form-group" style="width: 200px; height: 35px; overflow: hidden; display: inline-block; float:left">
+                    <!--  <label asp-for="CurrentName" class="control-label">""</label>-->
+                    <input asp-for="CurrentName" class="form-control" placeholder="Nome" />
+                </div>
+                <div class="form-group" style="float:right; width: 100px; height: 35px;">
+                    <input type="submit" value="Pesquisar" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ReceitaId)
+                ReceitaId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.medico)
+                Médico
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.utente)
+                Utente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Data
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nreceita)
-            </th>
-            <th></th>
+            <!--<th>Nreceita</th>-->
+
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Receitas)
         {
         <tr>
             <td>
@@ -47,9 +64,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nreceita)
-            </td>
+            <!-- <td> @Html.DisplayFor(modelItem => item.Nreceita)</td>-->
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ReceitaId">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.ReceitaId">Detalhes</a> |
@@ -59,3 +74,4 @@
         }
     </tbody>
 </table>
+<div page-model="@Model.Pagination"> </div>

@@ -11,6 +11,7 @@ namespace PI_ES2_Grupo8.Controllers
 {
     public class ReceitarTratamentosController : Controller
     {
+        private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 
         public ReceitarTratamentosController(ServicoDomicilioDbContext context)
@@ -19,10 +20,47 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: ReceitarTratamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ReceitaTratamentoListViewModel model = null, int page = 1)
         {
-            var servicoDomicilioDbContext = _context.ReceitarTratamento.Include(r => r.receita).Include(r => r.tratamento);
-            return View(await servicoDomicilioDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var receitaTratamento = _context.ReceitarTratamento.Include(r => r.receita).Include(r => r.tratamento)
+                .Where(p => nome == null || p.tratamento.TipodeTratamento.Contains(nome));
+
+            int numReceitas = await receitaTratamento.CountAsync();
+
+            if (page > (numReceitas / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var ReceitaTratamentoList = await receitaTratamento
+                    .OrderBy(p => p.ReceitaId)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new ReceitaTratamentoListViewModel
+                {
+                    ReceitaTratamento = ReceitaTratamentoList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numReceitas
+                    },
+                    CurrentName = nome
+                }
+            );
+            //var servicoDomicilioDbContext = _context.ReceitarTratamento.Include(r => r.receita).Include(r => r.tratamento);
+            //return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
         // GET: ReceitarTratamentos/Details/5
@@ -90,11 +128,13 @@ namespace PI_ES2_Grupo8.Controllers
                     //return RedirectToAction("Create", "ReceitarTratamentos");
                 }
                 // await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
             // ViewData["ReceitaId"] = new SelectList(_context.Receita, "ReceitaId", "ReceitaId", receitarTratamento.ReceitaId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);
-            return View(receitarTratamento);
+            // ViewData["TratamentoId"] = new SelectList(_context.Tratamento, "TratamentoId", "TipodeTratamento", receitarTratamento.TratamentoId);
+            // return View(receitarTratamento);
+            return RedirectToAction("Index", "Receitas");
+            
         }
 
         // GET: ReceitarTratamentos/Edit/5

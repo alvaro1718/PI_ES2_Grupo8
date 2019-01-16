@@ -1,12 +1,11 @@
 ﻿@model PI_ES2_Grupo8.Models.ReceitarTratamento
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Apagar";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que pretende apagar?</h3>
 <div>
     <h4>ReceitarTratamento</h4>
     <hr />
@@ -30,10 +29,39 @@
             @Html.DisplayFor(model => model.DataTratamento)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ReceitarTratamentoId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+    <!--  <form asp-action="Delete">
+          <input type="hidden" asp-for="ReceitarTratamentoId" />
+          <input type="submit" value="Delete" class="btn btn-default" /> |
+          <a asp-action="Index">Back to List</a>
+      </form>-->
+    <style>
+        #myDiv {
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div>
+        <button type="button" class="btn btn-warning" onclick="myFunction()">Quero Apagar</button>
+        <a asp-action="Index" class="btn btn-default">Voltar</a>
+    </div>
+
+    <div id="myDiv">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ReceitarTratamentoId" />
+            <input type="submit" value="Apagar" class="btn btn-danger" onclick="return confirm('Tem a certeza que pretende Apagar?') " />
+        </form>
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDiv");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
 </div>

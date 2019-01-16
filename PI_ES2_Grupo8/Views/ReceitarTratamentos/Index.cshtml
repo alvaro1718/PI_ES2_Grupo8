@@ -1,47 +1,68 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.ReceitarTratamento>
+﻿@model ReceitaTratamentoListViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h4>Lista Receitas</h4>
 
-<p>
-    <a asp-action="Create">Criar Novo</a>
-</p>
+<div style="width:1100px">
+    <div class="form-group" style="width:300px; float:left; margin-top:15px">
+        <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
+    </div>
+  
+    <div style="width:700px; float:right">
+
+
+        <div class="panel-body" style="width: 350px; float:right;">
+            <form asp-action="Index">
+                <div class="form-group" style="width: 200px; height: 35px; overflow: hidden; display: inline-block; float:left">
+                    
+                    <input asp-for="CurrentName" class="form-control" placeholder="Nome tratamento" />
+                </div>
+                <div class="form-group" style="float:right; width: 100px; height: 35px;">
+                    <input type="submit" value="Pesquisar" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+
+    </div>
+    </div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                 Receita  <!-- @Html.DisplayNameFor(model => model.receita)-->
+                Receita  
             </th>
-           <th>
-                 Tratamento<!-- @Html.DisplayNameFor(model => model.tratamento)-->
-           </th>
-           <th>
-               Data Tratamento<!-- @Html.DisplayNameFor(model => model.DataTratamento)-->
-           </th>
+            <th>
+                Tratamento
+            </th>
+            <th>
+                Data Tratamento
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.receita.ReceitaId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataTratamento)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReceitarTratamentoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReceitarTratamentoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReceitarTratamentoId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ReceitaTratamento)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.receita.ReceitaId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataTratamento)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReceitarTratamentoId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReceitarTratamentoId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReceitarTratamentoId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div page-model="@Model.Pagination"> </div>

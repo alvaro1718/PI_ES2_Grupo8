@@ -11,6 +11,7 @@ namespace PI_ES2_Grupo8.Controllers
 {
     public class ReceitasController : Controller
     {
+        private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 
         public ReceitasController(ServicoDomicilioDbContext context)
@@ -19,10 +20,47 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Receitas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ReceitasListViewModel model=null, int page=1)
         {
-            var servicoDomicilioDbContext = _context.Receita.Include(r => r.medico).Include(r => r.utente);
-            return View(await servicoDomicilioDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var receita = _context.Receita.Include(r => r.medico).Include(r => r.utente)
+                .Where(p => nome == null || p.medico.Nome.Contains(nome));
+
+            int numReceitas = await receita.CountAsync();
+
+            if (page > (numReceitas / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var ReceitasList = await receita
+                    .OrderBy(p => p.ReceitaId)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new ReceitasListViewModel
+                {
+                    Receitas = ReceitasList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numReceitas
+                    },
+                    CurrentName = nome
+                }
+            );
+            //var servicoDomicilioDbContext = _context.Receita.Include(r => r.medico).Include(r => r.utente);
+            // return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
         // GET: Receitas/Details/5
@@ -31,7 +69,7 @@ namespace PI_ES2_Grupo8.Controllers
             // ReceitarTratamento receitarTratamento;
             Tratamento tratamento;
             IList<ReceitarTratamento> ReceitaTratamentoList = new List<ReceitarTratamento>();
-            // ViewData[]
+            // selecionar todas os tratamentos relacionados com a receita selecionada
             foreach (var item in _context.ReceitarTratamento)
             {
                 if (item.ReceitaId==id) {
@@ -150,11 +188,26 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Receitas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            
+            Tratamento tratamento;
+            IList<ReceitarTratamento> ReceitaTratamentoList = new List<ReceitarTratamento>();
+            // selecionar todas os tratamentos relacionados com a receita selecionada
+            foreach (var item in _context.ReceitarTratamento)
+            {
+                if (item.ReceitaId == id)
+                {
+                    tratamento = _context.Tratamento.SingleOrDefault(p => p.TratamentoId == item.TratamentoId);
+                    ReceitaTratamentoList.Add(new ReceitarTratamento() { ReceitaId = item.ReceitaId, TratamentoId = item.TratamentoId, tratamento = tratamento });
+                    ViewBag.Message = "" + item.ReceitaId.ToString();
+                }
+                //receitarTratamento = _context.ReceitarTratamento.//Where(p => p.ReceitaId == id);
+
+            }
+            ViewData["ReceitaTratamentos"] = ReceitaTratamentoList;
             if (id == null)
             {
                 return NotFound();
             }
-
             var receita = await _context.Receita
                 .Include(r => r.medico)
                 .Include(r => r.utente)
