@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using PI_ES2_Grupo8.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,10 @@ namespace PI_ES2_Grupo8.Data
     public class SeedData
     {
         public static Boolean populate = false;
+        
+        private const string ROLE_ADMINISTRATOR = "Administrator";
+        private const string ROLE_MEDICO = "Medico";
+        private const string ROLE_UTENTE = "Utente";
         internal static void Populate(ServicoDomicilioDbContext db)
         {
             if (populate ==true)
@@ -22,7 +27,67 @@ namespace PI_ES2_Grupo8.Data
                 SeedReceitaTratamento(db);
             }
         }
-       public static int nreceita =0;
+
+        private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string ADMIN_USER = "admin@noemail.com"; 
+            const string ADMIN_PASSWORD = "sECRET$123";
+
+            MakeSureRoleExistsAsync(roleManager, ROLE_ADMINISTRATOR);
+            MakeSureRoleExistsAsync(roleManager, ROLE_MEDICO);
+            MakeSureRoleExistsAsync(roleManager, ROLE_UTENTE);
+            IdentityUser admin = await userManager.FindByNameAsync(ADMIN_USER);
+            if (admin == null)
+            {
+                admin = new IdentityUser { UserName = ADMIN_USER };
+                await userManager.CreateAsync(admin, ADMIN_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(admin, ROLE_ADMINISTRATOR))
+            {
+                await userManager.AddToRoleAsync(admin, ROLE_ADMINISTRATOR);
+            }
+        }
+
+        public static async Task CreateTestUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string MEDICO_USER = "Lua@gmail.com";
+            const string MEDICO_PASSWORD = "sECREDO$123";
+            const string UTENTE_USER = "pedro12@gmail.com";
+            const string UTENTE_PASSWORD = "sECREDO$123";
+            IdentityUser medico = await userManager.FindByNameAsync(MEDICO_USER);
+            IdentityUser utente = await userManager.FindByNameAsync(UTENTE_USER);
+            if (medico == null)
+            {
+                medico = new IdentityUser { UserName = MEDICO_USER };
+                await userManager.CreateAsync(medico, MEDICO_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(medico, ROLE_MEDICO))
+            {
+                await userManager.AddToRoleAsync(medico, ROLE_MEDICO);
+            }
+
+            if (utente == null)
+            {
+                utente = new IdentityUser { UserName = UTENTE_USER };
+                await userManager.CreateAsync(utente, UTENTE_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(utente, ROLE_UTENTE))
+            {
+                await userManager.AddToRoleAsync(utente, ROLE_UTENTE);
+            }
+        }
+        public static int nreceita =0;
         private static void SeedReceitaTratamento(ServicoDomicilioDbContext db)
         {
          
@@ -40,7 +105,9 @@ namespace PI_ES2_Grupo8.Data
             db.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receita.ReceitaId, TratamentoId = tratamento.TratamentoId });
             db.SaveChanges();
         }
-   
+
+
+
         private static void seedReceita(ServicoDomicilioDbContext db)
         {
             Medico medico = GetMedicoCreatingIfNeed(db,"Pedro Martins", "Rua dos Silva", "921876352", "Martins122@gmail.com");

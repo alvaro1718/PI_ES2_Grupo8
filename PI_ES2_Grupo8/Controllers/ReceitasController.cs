@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PI_ES2_Grupo8.Models;
-
 namespace PI_ES2_Grupo8.Controllers
 {
     public class ReceitasController : Controller
@@ -14,9 +15,13 @@ namespace PI_ES2_Grupo8.Controllers
         private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 
+        //  private readonly Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext _2context;
+        
         public ReceitasController(ServicoDomicilioDbContext context)
         {
             _context = context;
+           // Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext identityDbContext
+          //  _2context = identityDbContext;
         }
 
         // GET: Receitas
@@ -113,9 +118,22 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReceitaId,MedicoId,UtenteId,Date,Nreceita")] Receita receita)
         {
+           
+            //string userName;
+
+           // var userId = User.Identity.IsAuthenticated;
+            //string userId2 = User.Identity.;
+            //  Medico medico = _context.Medico.SingleOrDefault(a => a.Email == );
+            
             DateTime date = DateTime.Now;
             if (ModelState.IsValid)
             {
+               /* if (SignInManager.IsSignedIn(User))
+                {
+                    userName = UserManager.GetUserName(User);
+                    medicoLogin = _context.Medico.SingleOrDefault(a => a.Email == userName);
+                }
+                receita.medico = medicoLogin;*/
                 receita.Date = date;
                 int ultimareceita = _context.Receita.Max(p=>p.Nreceita);
                 receita.Nreceita = ultimareceita+1;

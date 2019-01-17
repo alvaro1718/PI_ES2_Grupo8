@@ -4,7 +4,19 @@
     ViewData["Title"] = "Criar Receita";
 }
 
+@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @foreach (var item in ViewData["MedicoId"] as IList<Medico>)
+    {
+       }
+    } 
+}
 
 <h4>Criar Receita</h4>
 <hr />
@@ -12,24 +24,21 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MedicoId" class="control-label">Medico</label>
-                <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select>
-            </div>
+           <div class="form-group"><label asp-for="MedicoId" class="control-label">Medico</label><select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select></div>
             <div class="form-group">
                 <label asp-for="UtenteId" class="control-label">Utente</label>
                 <select asp-for="UtenteId" class="form-control" asp-items="ViewBag.UtenteId"></select>
             </div>
             <!--<div class="form-group">
-        <label asp-for="Date" class="control-label"></label>
-        <input asp-for="Date" class="form-control" />
-        <span asp-validation-for="Date" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Nreceita" class="control-label"></label>
-        <input asp-for="Nreceita" class="form-control" />
-        <span asp-validation-for="Nreceita" class="text-danger"></span>
-    </div>-->
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nreceita" class="control-label"></label>
+                <input asp-for="Nreceita" class="form-control" />
+                <span asp-validation-for="Nreceita" class="text-danger"></span>
+            </div>-->
             <div class="form-group">
                 <input type="submit" value="Seguinte" class="btn btn-default" />
             </div>
@@ -38,7 +47,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
 </div>
 
 @section Scripts {

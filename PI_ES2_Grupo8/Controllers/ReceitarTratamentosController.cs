@@ -107,6 +107,7 @@ namespace PI_ES2_Grupo8.Controllers
         {
             string selected = Request.Form["SelectedTratamento"].ToString();
             string[] selectedList = selected.Split(',');
+
             if (ModelState.IsValid)
             {
                 // receitarTratamento.ReceitaId = receita.ReceitaId;
