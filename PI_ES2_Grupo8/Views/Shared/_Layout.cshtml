@@ -71,11 +71,35 @@
                             <!--  <a href="#">Something else here</a>-->
                         </div>
                     </li>
-			<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Enfermeiros" asp-action="Index">Enfermeiros</a></li>
-                    <li><a asp-area="" asp-controller="PedidoTrocas" asp-action="Index">Pedido Trocas</a></li>
-                    <li><a asp-area="" asp-controller="HorarioTrabalho" asp-action="Index">Horário Trabalho</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+			
+                    <li><a asp-area="" asp-controller="Enfermeiros" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Enfermeiros</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="Enfermeiros" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Enfermeiros</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="Enfermeiros" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista de Enfermeiros</a>
+                            <div class="dropdown-divider"></div>
+                            <!--  <a href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                    <li><a asp-area="" asp-controller="PedidoTrocas" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pedido Trocas</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="PedidoTrocas" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Pedir Troca</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="PedidoTrocas" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista das trocas</a>
+                            <div class="dropdown-divider"></div>
+                            <!--  <a href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                    <li><a asp-area="" asp-controller="HorarioTrabalho" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Horário Trabalho</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="HorarioTrabalho" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Horário</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="HorarioTrabalho" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista dos Horários</a>
+                            <div class="dropdown-divider"></div>
+                            <!--  <a href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                    
                     <!--<li><a asp-area="" asp-controller="ReceitarTratamentos" asp-action="Index">Receita/Tratamento</a></li>-->
                 </ul>
                 <partial name="_LoginPartial" />

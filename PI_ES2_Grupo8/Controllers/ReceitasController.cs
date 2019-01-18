@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Controllers
 {
+    [Authorize]
     public class ReceitasController : Controller
     {
+       
         private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 

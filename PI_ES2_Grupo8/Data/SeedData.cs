@@ -46,7 +46,7 @@ private const string ROLE_ENFERMEIRO = "Enfermeiro";
 
         public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            const string ADMIN_USER = "admin@noemail.com"; 
+            const string ADMIN_USER = "admin@vava.com"; 
             const string ADMIN_PASSWORD = "sECRET$123";
 
             MakeSureRoleExistsAsync(roleManager, ROLE_ADMINISTRATOR);

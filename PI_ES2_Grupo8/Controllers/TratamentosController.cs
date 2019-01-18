@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
+    [Authorize]
     public class TratamentosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
