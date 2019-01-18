@@ -1,13 +1,20 @@
 ﻿@model PI_ES2_Grupo8.Models.Medico
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Details</h2>
 
 <div>
-    <h4>Medico</h4>
+
+    @if (ViewBag.Message == "MedicoCriado")
+    {
+        <h4>Médico/a criado com sucesso. </h4>
+    }
+    else
+    {
+        <h4>Detalhes Médico/a @Model.Nome</h4>
+    }
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -37,6 +44,13 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MedicoId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (ViewBag.Message == "MedicoCriado")
+    {
+        <a asp-action="Index" class="btn btn-default">Lista dos Médicos</a>
+    }
+    else
+    {
+        <a asp-action="Edit" asp-route-id="@Model.MedicoId" class="btn btn-default">Editar</a> 
+        <a asp-action="Index" class="btn btn-default">Voltar</a>
+    }
 </div>

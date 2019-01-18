@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h4>Lista Medicos</h4>
+<h4>Lista dos Medicos</h4>
 
 <div style="width:1100px">
     <div class="form-group" style="width:300px; float:left; margin-top:15px">
@@ -32,18 +32,15 @@
     <thead>
         <tr>
             <th>
-               Nome 
+                Nome
+            </th>
+
+            <th>
+                Telefone
             </th>
             <th>
-               Morada
+               Email
             </th>
-            <th>
-               Telefone 
-            </th>
-            <th>
-               Email 
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -52,9 +49,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
@@ -62,9 +57,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MedicoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MedicoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MedicoId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MedicoId" class="btn btn-default" >Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.MedicoId" class="btn btn-default" >Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.MedicoId" class="btn btn-default" >Apagar</a>
             </td>
         </tr>
 }

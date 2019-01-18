@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class TratamentosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
@@ -64,6 +64,8 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Tratamentos/Details/5
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -82,6 +84,8 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Tratamentos/Create
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public IActionResult Create()
         {
             return View();
@@ -92,6 +96,8 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Create([Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
@@ -113,6 +119,8 @@ namespace PI_ES2_Grupo8.Controllers
         }
         public static String TratamentoSelecionado;
         // GET: Tratamentos/Edit/5
+
+        [Authorize(Policy = "OnlyAdminAccess")] 
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -134,7 +142,8 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-            
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
         {
             verificarTratamento = _context.Tratamento.SingleOrDefault(p => p.TipodeTratamento == tratamento.TipodeTratamento);
@@ -181,6 +190,8 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Tratamentos/Delete/5
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -201,6 +212,8 @@ namespace PI_ES2_Grupo8.Controllers
         // POST: Tratamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             

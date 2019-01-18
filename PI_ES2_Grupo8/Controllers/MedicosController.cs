@@ -65,6 +65,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Medicos/Details/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -83,6 +84,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Medicos/Create
+        [Authorize(Policy = "OnlyAdminAccess")]
         public IActionResult Create()
         {
             return View();
@@ -93,18 +95,32 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Create([Bind("MedicoId,Nome,Morada,Telefone,Email")] Medico medico)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(medico);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Medico verificarMedico = _context.Medico.SingleOrDefault(p => p.Email == medico.Email);
+                if (verificarMedico == null)
+                {
+                    _context.Add(medico);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message = "MedicoCriado";
+                    return View("Details", medico);///return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "Medico já existente.";
+                    return View("Create");
+
+                }
+
             }
             return View(medico);
         }
 
         // GET: Medicos/Edit/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -125,6 +141,8 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int id, [Bind("MedicoId,Nome,Morada,Telefone,Email")] Medico medico)
         {
             if (id != medico.MedicoId)
@@ -156,6 +174,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Medicos/Delete/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -176,6 +195,7 @@ namespace PI_ES2_Grupo8.Controllers
         // POST: Medicos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var medico = await _context.Medico.FindAsync(id);

@@ -10,7 +10,9 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
-    [Authorize]
+   // [Authorize]
+
+    [Authorize(Policy = "OnlyAdminAccess")]
     public class UtentesController : Controller
     {
         private const int PAGE_SIZE = 4;

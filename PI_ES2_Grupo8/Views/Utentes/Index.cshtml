@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Lista Utente";
 }
-<h4>Lista Utente</h4>
+<h4>Lista de Utentes</h4>
 
 <div style="width:1100px">
     <div class="form-group" style="width:300px; float:left; margin-top:15px">
@@ -66,9 +66,9 @@
             </td>
             <!-- <td>   @Html.DisplayFor(modelItem => item.Problemas) </td>-->
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UtenteId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.UtenteId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.UtenteId">Apagar</a>
+                <a asp-action="Edit" asp-route-id="@item.UtenteId" class="btn btn-default">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.UtenteId" class="btn btn-default">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.UtenteId" class="btn btn-default">Apagar</a>
             </td>
         </tr>
         }

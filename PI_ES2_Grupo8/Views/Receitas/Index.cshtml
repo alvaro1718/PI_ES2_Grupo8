@@ -4,12 +4,15 @@
     ViewData["Title"] = "Lista Receitas";
 }
 
-<h4>Lista Receitas</h4>
+<h4>Lista das Receitas</h4>
 <!--<p><a asp-action="Create">Criar novo</a></p>-->
 <div style="width:1100px">
     <div class="form-group" style="width:300px; float:left; margin-top:15px">
-        <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
-    </div>
+        @if (User.IsInRole("Administrator")|| User.IsInRole("Medicos"))
+        {
+            <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
+        }
+        </div>
     <!--<p><a asp-action="Create">Criar novo</a></p>-->
     <div style="width:700px; float:right">
 
@@ -33,9 +36,6 @@
     <thead>
         <tr>
             <th>
-                ReceitaId
-            </th>
-            <th>
                 Médico
             </th>
             <th>
@@ -53,9 +53,6 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ReceitaId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.medico.Nome)
             </td>
             <td>
@@ -65,11 +62,23 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <!-- <td> @Html.DisplayFor(modelItem => item.Nreceita)</td>-->
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReceitaId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ReceitaId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReceitaId">Apagar</a>
-            </td>
+            @if (User.IsInRole("Administrator"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReceitaId" class="btn btn-default" >Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReceitaId" class="btn btn-default" >Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReceitaId" class="btn btn-default" >Apagar</a>
+                </td>
+            }
+            @if (User.IsInRole("Medicos")|| User.IsInRole("Enfermeiros"))
+            {
+                <td>
+                   
+                    <a asp-action="Details" asp-route-id="@item.ReceitaId" class="btn btn-default" >Detalhes</a> |
+                   
+                </td>
+
+            }
         </tr>
         }
     </tbody>

@@ -1,12 +1,11 @@
 ﻿@model PI_ES2_Grupo8.Models.Utente
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar";
 }
 
-<h2>Edit</h2>
 
-<h4>Utente</h4>
+<h4>Editar Utente @Model.Nome</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,7 +18,7 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="N_Utente_Saude" class="control-label"></label>
+                <label asp-for="N_Utente_Saude" class="control-label">Nº Utente de saúde</label>
                 <input asp-for="N_Utente_Saude" class="form-control" />
                 <span asp-validation-for="N_Utente_Saude" class="text-danger"></span>
             </div>
@@ -45,7 +44,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-default" />
-                <a asp-action="Index">Lista Utente</a>
+                <a asp-action="Index" class="btn btn-default" >Lista Utente</a>
             </div>
         </form>
     </div>

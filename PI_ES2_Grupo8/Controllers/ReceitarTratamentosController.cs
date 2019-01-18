@@ -120,7 +120,7 @@ namespace PI_ES2_Grupo8.Controllers
                     // Tratamento tratamento = _contex
                     receitarTratamento.TratamentoId = idTratamento;
                     receitarTratamento.ReceitaId = IDultimareceita;
-                    _context.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receitarTratamento.ReceitaId, TratamentoId = receitarTratamento.TratamentoId });
+                    _context.ReceitarTratamento.Add(new ReceitarTratamento { ReceitaId = receitarTratamento.ReceitaId, TratamentoId = receitarTratamento.TratamentoId});
                     _context.SaveChanges();
                     // _context.Add(receitarTratamento);
                     //await _context.SaveChangesAsync();

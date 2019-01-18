@@ -12,7 +12,7 @@
     }
     else
     {
-        <h4>Detalhes Utente</h4>
+        <h4>Detalhes do utente  @Model.Nome</h4>
     }
     <hr />
     <dl class="dl-horizontal">
@@ -57,12 +57,12 @@
 <div>
     @if (ViewBag.Message == "UtenteCriado")
     {
-        <a asp-action="Index">Lista Utente</a>
+        <a asp-action="Index" class="btn btn-default">Lista Utente</a>
     }
     else
     {
         <a asp-action="Edit" asp-route-id="@Model.UtenteId"><input type="button" value="Editar" class="btn btn-default" /></a>
-        <a asp-action="Index">Lista Utente</a>
+        <a asp-action="Index" class="btn btn-default">Voltar </a>
 
     }
 </div>

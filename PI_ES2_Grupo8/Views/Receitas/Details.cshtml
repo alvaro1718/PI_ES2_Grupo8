@@ -12,19 +12,19 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.medico)
+            Médico
         </dt>
         <dd>
             @Html.DisplayFor(model => model.medico.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.utente)
+           Utente
         </dt>
         <dd>
             @Html.DisplayFor(model => model.utente.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            Data
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Date)
@@ -48,7 +48,7 @@
                 Tratamento
             </th>
             <th>
-                Data Tratamento
+                Data do Tratamento
             </th>
             <th></th>
         </tr>
@@ -65,7 +65,7 @@
                     @Html.DisplayFor(modelItem => item.tratamento.TipodeTratamento)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DataTratamento)
+                    <!--@Html.DisplayFor(modelItem => item.DataTratamento)-->
                 </td>
 
             </tr>
@@ -74,6 +74,6 @@
 
 </table>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ReceitaId">Editar</a> |
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Edit" asp-route-id="@Model.ReceitaId" class="btn btn-default" >Editar</a> |
+    <a asp-action="Index" class="btn btn-default" >Voltar</a>
 </div>

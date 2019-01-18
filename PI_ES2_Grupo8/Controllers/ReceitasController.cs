@@ -150,7 +150,7 @@ namespace PI_ES2_Grupo8.Controllers
             ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);
             return View(receita);
         }
-
+        [Authorize(Policy = "OnlyAdminAccess")]
         // GET: Receitas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -174,6 +174,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int id, [Bind("ReceitaId,MedicoId,UtenteId,Date,Nreceita")] Receita receita)
         {
             if (id != receita.ReceitaId)
@@ -205,7 +206,7 @@ namespace PI_ES2_Grupo8.Controllers
             ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "Nome", receita.UtenteId);
             return View(receita);
         }
-
+        [Authorize(Policy = "OnlyAdminAccess")]
         // GET: Receitas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -240,10 +241,12 @@ namespace PI_ES2_Grupo8.Controllers
 
             return View(receita);
         }
-
+        
+        
         // POST: Receitas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var receita = await _context.Receita.FindAsync(id);
