@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PI_ES2_Grupo8.Models;
 
-namespace PI_ES2_Grupo8.Migrations
+namespace PI_ES2_Grupo8.Migrations.ServicoDomicilioDb
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20190118013908_initial")]
+    [Migration("20190118022748_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PI_ES2_Grupo8.Migrations.ApplicationDb
+namespace PI_ES2_Grupo8.Migrations
 {
     public partial class initial : Migration
     {
