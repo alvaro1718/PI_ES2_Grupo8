@@ -1,0 +1,32 @@
+﻿@model PI_ES2_Grupo8.Models.Tratamento
+
+@{
+    ViewData["Title"] = "Editar Tratamento";
+}
+
+<h4>Editar Tratamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TratamentoId" />
+            <div class="form-group">
+                <label asp-for="TipodeTratamento" class="control-label">Tratamento</label>
+                <div> @ViewBag.Message</div>
+                <input asp-for="TipodeTratamento" class="form-control" />
+                <span asp-validation-for="TipodeTratamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+                <a asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

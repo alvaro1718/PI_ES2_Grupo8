@@ -1,0 +1,80 @@
+﻿@model PI_ES2_Grupo8.Models.Utente
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Tem certeza que pretende apagar este Utente?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            <p>Nº Utente Saúde</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.N_Utente_Saude)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Morada)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Morada)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Problemas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Problemas)
+        </dd>
+    </dl>
+    <style>
+        #myDiv {
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div>
+        <button type="button" class="btn btn-warning" onclick="myFunction()">Quero Apagar</button>
+        <a asp-action="Index" class="btn btn-default">Lista Utente</a>
+    </div>
+
+    <div id="myDiv">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="UtenteId" />
+            <input type="submit" value="Apagar" class="btn btn-danger" onclick="return confirm('Tem a certeza que pretende Apagar?') " />
+        </form>
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDiv");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+
+
+</div>

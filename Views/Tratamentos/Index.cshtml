@@ -1,0 +1,55 @@
+﻿@model TratamentosListViewModel
+@{
+    ViewData["Title"] = "Lista Tratamentos";
+}
+
+
+<h4>Lista Tratamentos</h4>
+<div style="width:1100px">
+<div class="form-group" style="width:300px; float:left; margin-top:15px">
+    <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
+</div>
+<!--<p><a asp-action="Create">Criar novo</a></p>-->
+<div style="width:700px; float:right">
+
+
+    <div class="panel-body" style="width: 350px; float:right;">
+        <form asp-action="Index">
+            <div class="form-group" style="width: 200px; height: 35px; overflow: hidden; display: inline-block; float:left">
+                <!--  <label asp-for="CurrentName" class="control-label">""</label>-->
+                <input asp-for="CurrentName" class="form-control" placeholder="Nome" />
+            </div>
+            <div class="form-group" style="float:right; width: 100px; height: 35px;">
+                <input type="submit" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <p>Tratamentos</p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tratamentos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipodeTratamento)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TratamentoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.TratamentoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TratamentoId">Apagar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div page-model="@Model.Pagination"> </div>

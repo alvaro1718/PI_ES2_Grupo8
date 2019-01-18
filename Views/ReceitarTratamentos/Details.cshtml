@@ -1,0 +1,36 @@
+﻿@model PI_ES2_Grupo8.Models.ReceitarTratamento
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReceitarTratamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.receita)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.receita.ReceitaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tratamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tratamento.TipodeTratamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataTratamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataTratamento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ReceitarTratamentoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
