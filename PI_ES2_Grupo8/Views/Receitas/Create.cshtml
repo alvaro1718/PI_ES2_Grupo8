@@ -10,13 +10,6 @@
 @inject UserManager<IdentityUser> UserManager
 
 
-@if (SignInManager.IsSignedIn(User))
-{
-    @foreach (var item in ViewData["MedicoId"] as IList<Medico>)
-    {
-       }
-    } 
-}
 
 <h4>Criar Receita</h4>
 <hr />
