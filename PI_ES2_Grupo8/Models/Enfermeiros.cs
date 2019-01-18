@@ -18,14 +18,26 @@ namespace PI_ES2_Grupo8.Models
         [EmailAddress(ErrorMessage = "Numero Invalido.")]
         public string Telefone { get; set; }
 
-        [RegularExpression(@"(\w+(\.\w+)*@[populate-zA-Z_]+?\.[populate-zA-Z]{2,6})", ErrorMessage = "Invalid email.")]
+        [RegularExpression(@"(\w+(\.\w+)*@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Invalid email.")]
         [Required(ErrorMessage = "Por favor insira o seu Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Por favor insira o sua morada")]
         public string Morada { get; set; }
 
-        [Required(ErrorMessage = "Por favor insira populate sua profissao ou especializao")]
-        public string Especializacao { get; set; }
+        public Especialização Especialização { get; set; }
+
+        public int EspecializaçãoId { get; set; }
+
+        public ICollection<Troca> Trocas { get; set; }
+        public ICollection<Troca> TrocaE { get; set; }
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
+
+
+       
+
+        
+
     }
 }

@@ -1,0 +1,66 @@
+﻿@model PI_ES2_Grupo8.Models.Troca
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h2>Editar o pedido</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TrocaId" />
+            <div class="form-group">
+                <label asp-for="Justificação" class="control-label"></label>
+                <input asp-for="Justificação" class="form-control" />
+                <span asp-validation-for="Justificação" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnfermeirosId" class="control-label"></label>
+                <select asp-for="EnfermeirosId" class="form-control" asp-items="ViewBag.EnfermeirosId"></select>
+                <span asp-validation-for="EnfermeirosId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnfermeirosEId" class="control-label"></label>
+                <select asp-for="EnfermeirosEId" class="form-control" asp-items="ViewBag.EnfermeirosEId"></select>
+                <span asp-validation-for="EnfermeirosEId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioTrabalhoId" class="control-label"></label>
+                <select asp-for="HorarioTrabalhoId" class="form-control" asp-items="ViewBag.HorarioTrabalhoId"></select>
+                <span asp-validation-for="HorarioTrabalhoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioTrabalhoAntigoId" class="control-label"></label>
+                <select asp-for="HorarioTrabalhoAntigoId" class="form-control" asp-items="ViewBag.HorarioTrabalhoAntigoId"></select>
+                <span asp-validation-for="HorarioTrabalhoAntigoId" class="text-danger"></span>
+            </div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Aprovar" /> @Html.DisplayNameFor(model => model.Aprovar)
+                        </label>
+                    </div>
+                </div>
+            }
+             <div class="form-group">
+                    <input type="submit" value="Salvar" class="btn btn-default" />
+             </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn-default">Voltar</a>
+</div>
+

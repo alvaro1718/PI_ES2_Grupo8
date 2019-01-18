@@ -1,0 +1,23 @@
+﻿@model PI_ES2_Grupo8.Models.Especialização
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h2>Detalhes da Especialização</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EspecializaçãoId" class="btn btn-default">Editar</a> |
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>

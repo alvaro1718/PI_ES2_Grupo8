@@ -1,0 +1,60 @@
+﻿@model PI_ES2_Grupo8.Models.Troca
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h2>Detalhes do pedido </h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Justificação
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Justificação)
+        </dd>
+        <dt>
+            Enfermeiro Requerente
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroRequerente.Nome)
+        </dd>
+        <dt>
+            Enfermeiro Escolhido
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroEscolhido.Nome)
+        </dd>
+        <dt>
+            Data
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt>
+           Hora a trocar
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioTrabalhoNovo.HoraInicio)
+        </dd>
+        <dt>
+           Hora Actual
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioTrabalhoAntigo.HoraInicio)
+        </dd>
+
+        <dt>
+            Aprovar
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Aprovar)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TrocaId" class="btn btn-default">Editar</a> |
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>
