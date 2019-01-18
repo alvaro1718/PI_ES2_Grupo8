@@ -117,8 +117,8 @@ namespace PI_ES2_Grupo8.Controllers
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome");
             ViewData["EnfermeirosEId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome");//
-            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId");
-            ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HorarioTrabalhoId");
+            ViewData["HorarioTrabalhoAntigoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HoraInicio");
+            ViewData["HorarioTrabalhoId"] = new SelectList(_context.HorarioTrabalho, "HorarioTrabalhoId", "HoraInicio");
             return View();
         }
 

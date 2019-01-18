@@ -6,34 +6,30 @@
 }
 
 <h2>Horarios de Trabalho</h2>
+<div>
+    <div>
+        <input asp-for="CurrentName" class="form-label" />
 
-<form asp-action="Index">
-    <div >
-          <input asp-for="CurrentName" class="form-label" />
-
-          <input type="submit" value="Pesquisar" class="btn btn-default" />
+        <input type="submit" value="Pesquisar" class="btn btn-default" />
 
     </div>
 
-</form>
 
-<table class="table">
-    <tr>
-        <th>
+    <div style=" width:1000px; margin-top:10px;">
+
+        <div style=" float:left">
             @if (User.IsInRole("Administrator"))
             {
                 <a asp-action="Create" class="btn btn-default">Gerar Novo</a>
             }
-        </th>
-        <th>
-            <br />
-        </th>
+        </div>
+        
 
-        <th>
+        <div style=" float:right">
             <a asp-action="VisualizarTroca" asp-route-id="HorarioTrabalhoId" class="btn btn-default">Ver a troca</a>
-        </th>
-    </tr>
-</table>
+        </div>
+    </div>
+    </div>
 <table class="table">
     <thead>
         <tr>
