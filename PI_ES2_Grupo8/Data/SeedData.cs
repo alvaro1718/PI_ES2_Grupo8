@@ -58,11 +58,25 @@ namespace PI_ES2_Grupo8.Data
             const string ENFERMEIRO_USER = "paulo@gmail.com";
             const string ENFERMEIRO_PASSWORD = "sECREDO$123";
 
+            const string ENFERMEIRO_USER1 = "alvaro555@gmail.com";
+            const string ENFERMEIRO_PASSWORD1 = "aLVARO$124";
+
+            const string ENFERMEIRO_USER2 = "maria24@gmail.com";
+            const string ENFERMEIRO_PASSWORD2 = "mARIA$125";
+
+
+
             IdentityUser enfermeiro = await userManager.FindByNameAsync(ENFERMEIRO_USER);
             if (enfermeiro == null)
             {
                 enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER };
                 await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD);
+
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER1 };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD1);
+
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER2 };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD2);
             }
 
             if (!await userManager.IsInRoleAsync(enfermeiro, ROLE_ENFERMEIRO))
@@ -72,57 +86,7 @@ namespace PI_ES2_Grupo8.Data
 
         }
 
-        //
-
-        /*private static void SeedEnfermeiroRequerente(ServicoDomicilioDbContext db)
-        {
-            if (db.EnfermeiroRequerente.Any()) return;
-
-            Enfermeiros enfermeiros = db.Enfermeiros.SingleOrDefault(b => b.Nome == "Paulo");
-            db.EnfermeiroRequerente.Add(new EnfermeiroRequerente { EnfermeirosId = enfermeiros.EnfermeirosId});
-
-            db.SaveChanges();
-            //   db.Enfermeiros.SingleOrDefault(b => b.Nome == "Alvaro");
-            //   db.EnfermeiroRequerente.Add(new EnfermeiroRequerente { EnfermeirosId = enfermeiros.EnfermeirosId });
-
-        }
-
-        private static void SeedEnfermeiroEscolhido(ServicoDomicilioDbContext db)
-        {
-            if (db.EnfermeiroEscolhido.Any()) return;
-
-            Enfermeiros enfermeiros = db.Enfermeiros.SingleOrDefault(b => b.Nome == "João");
-            db.EnfermeiroEscolhido.Add(new EnfermeiroEscolhido { EnfermeirosId = enfermeiros.EnfermeirosId });
-            db.SaveChanges();
-            //db.Enfermeiros.SingleOrDefault(b => b.Nome == "Maria");
-            // db.EnfermeiroEscolhido.Add(new EnfermeiroEscolhido { EnfermeirosId = enfermeiros.EnfermeirosId });
-        }
-
-        private static EnfermeiroRequerente CreateEnfermeiroRequerenteIfDoesNotExist(ServicoDomicilioDbContext db, Enfermeiros enfermeiros)
-        {
-            EnfermeiroRequerente enfermeiroRequerente = db.EnfermeiroRequerente.SingleOrDefault(b => b.EnfermeirosId == enfermeiros.EnfermeirosId);
-
-            if (enfermeiroRequerente == null)
-            {
-
-                db.EnfermeiroRequerente.Add(new EnfermeiroRequerente { EnfermeirosId = enfermeiros.EnfermeirosId });
-                db.SaveChanges();
-            }
-            return enfermeiroRequerente;
-        }
-        private static EnfermeiroEscolhido CreateEnfermeiroEscolhidoIfDoesNotExist(ServicoDomicilioDbContext db, Enfermeiros enfermeiros)
-        {
-            EnfermeiroEscolhido enfermeiroEscolhido  = db.EnfermeiroEscolhido.SingleOrDefault(b => b.EnfermeirosId == enfermeiros.EnfermeirosId);
-
-            if (enfermeiroEscolhido == null)
-            {
-
-                db.EnfermeiroRequerente.Add(new EnfermeiroRequerente { EnfermeirosId = enfermeiros.EnfermeirosId });
-                db.SaveChanges();
-            }
-            return enfermeiroEscolhido;
-        }*/
-
+        
         private static HorarioTrabalho HorarioTrabalhoIfDoesNotExist(ServicoDomicilioDbContext db, DateTime data, string horaInicio, 
             string horaFim, Enfermeiros enfermeiro)
         {
@@ -218,7 +182,7 @@ namespace PI_ES2_Grupo8.Data
         }
        
 
-        private static Troca GetTrocaCreatingIfNeed(ServicoDomicilioDbContext db, string justificação, EnfermeiroRequerente enfermeiroRequerente,
+        /*private static Troca GetTrocaCreatingIfNeed(ServicoDomicilioDbContext db, string justificação, EnfermeiroRequerente,
             EnfermeiroEscolhido enfermeiroEscolhido, DateTime data, HorarioTrabalho horarioTrabalho)
         {
             Troca troca = db.Troca.SingleOrDefault(b => b.Justificação == justificação);

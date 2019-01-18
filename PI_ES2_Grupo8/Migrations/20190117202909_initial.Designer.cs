@@ -10,7 +10,7 @@ using PI_ES2_Grupo8.Models;
 namespace PI_ES2_Grupo8.Migrations
 {
     [DbContext(typeof(ServicoDomicilioDbContext))]
-    [Migration("20190116212001_initial")]
+    [Migration("20190117202909_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,8 +165,6 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.Property<DateTime>("Data");
 
-                    b.Property<int?>("EnfermeiroEscolhidoEnfermeirosId");
-
                     b.Property<int?>("EnfermeiroEscolhidoId");
 
                     b.Property<int?>("EnfermeiroRequerenteId");
@@ -184,11 +182,11 @@ namespace PI_ES2_Grupo8.Migrations
 
                     b.HasKey("TrocaId");
 
-                    b.HasIndex("EnfermeiroEscolhidoEnfermeirosId");
-
                     b.HasIndex("EnfermeiroEscolhidoId");
 
                     b.HasIndex("EnfermeiroRequerenteId");
+
+                    b.HasIndex("EnfermeirosEId");
 
                     b.HasIndex("EnfermeirosId");
 
@@ -281,10 +279,6 @@ namespace PI_ES2_Grupo8.Migrations
 
             modelBuilder.Entity("PI_ES2_Grupo8.Models.Troca", b =>
                 {
-                    b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "EnfermeiroEscolhido")
-                        .WithMany("TrocaE")
-                        .HasForeignKey("EnfermeiroEscolhidoEnfermeirosId");
-
                     b.HasOne("PI_ES2_Grupo8.Models.EnfermeiroEscolhido")
                         .WithMany("Trocas")
                         .HasForeignKey("EnfermeiroEscolhidoId");
@@ -292,6 +286,10 @@ namespace PI_ES2_Grupo8.Migrations
                     b.HasOne("PI_ES2_Grupo8.Models.EnfermeiroRequerente")
                         .WithMany("Trocas")
                         .HasForeignKey("EnfermeiroRequerenteId");
+
+                    b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "EnfermeiroEscolhido")
+                        .WithMany("TrocaE")
+                        .HasForeignKey("EnfermeirosEId");
 
                     b.HasOne("PI_ES2_Grupo8.Models.Enfermeiros", "EnfermeiroRequerente")
                         .WithMany("Trocas")

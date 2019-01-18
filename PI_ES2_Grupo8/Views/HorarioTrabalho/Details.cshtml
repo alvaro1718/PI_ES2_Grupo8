@@ -1,85 +1,47 @@
 ﻿@model PI_ES2_Grupo8.Models.HorarioTrabalho
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Detalhes</h2>
+<h2>Detalhes do horário</h2>
 
 <div>
-    <h4>Horario de Trabalho</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Data)
+            Data
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HoraInicio)
+           Hora Inicio
         </dt>
         <dd>
             @Html.DisplayFor(model => model.HoraInicio)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HoraFim)
+           Hora Fim
         </dt>
         <dd>
             @Html.DisplayFor(model => model.HoraFim)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Enfermeiros)
+            Nome
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Enfermeiros.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Troca)
+           Troca
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Troca)
         </dd>
     </dl>
 </div>
-
-
-<table class="table">
-<thead>
-    <tr>
-        <th>
-
-        </th>
-        <th>
-            Tratamento
-        </th>
-        <th>
-            Data Tratamento
-        </th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-    @{int i = 1;}
-    @foreach (var item in ViewData["EfetuarTroca"] as IList<Troca>)
-    {
-        <tr>
-            <td>
-                @(i++)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
-            </td>
-        </tr>
-    }
-</tbody>
-</table>
-
-
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.HorarioTrabalhoId">Editar</a> |
-    <a asp-action="Index">Voltar a lista</a>
+    <a asp-action="Edit" asp-route-id="@Model.HorarioTrabalhoId" class="btn btn-default" >Editar</a> |
+    <a asp-action="Index" class="btn btn-default" >Voltar a lista</a>
 </div>

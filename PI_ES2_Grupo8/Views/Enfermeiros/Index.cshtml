@@ -15,18 +15,21 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>
-                                <!-- <label asp-for="Name" class="control-label"></label>           form-control -->
-                                <input asp-for="CurrentName" class="form-label" />
-                                <!--<div class="form-group"> -->
-                                <input type="submit" value="Pesquisar" class="btn btn-default" />
-                                <!-- </div> -->
-                            </th>
-                            <th>
-                                <p>
-                                    <a asp-action="Create" class="btn btn-default">Criar Novo</a>
-                                </p>
-                            <th>
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                
+                                    <p>
+                                        <a asp-action="Create" class="btn btn-default">Criar Novo</a>
+                                    </p>
+                                
+                                }
+                                <th>
+                                    <input asp-for="CurrentName" class="form-label" />
+                                    
+                                    <input type="submit" value="Pesquisar" class="btn btn-default" />
+                                    
+                                </th>
+
                         <tr>
                     </thead>
                 </table>
@@ -42,21 +45,10 @@
                 <th>
                     Nome
                 </th>
-                <!--
                 <th>
-                    Html.DisplayNameFor(model => model.Telefone)
+                    Especialização
                 </th>
-                <th>
-                    Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    Html.DisplayNameFor(model => model.Morada)
-                </th>
-                -->
-        <th>
-            Especialização
-        </th>
-        <th></th>
+               
         </tr>
         </thead>
         <tbody>
@@ -66,17 +58,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
-                    <!--
-                <td>
-                    Html.DisplayFor(modelItem => item.Telefone)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    Html.DisplayFor(modelItem => item.Morada)
-                </td>
-                -->
 
                     <td>
                         @Html.DisplayFor(modelItem => item.Especialização.Nome)

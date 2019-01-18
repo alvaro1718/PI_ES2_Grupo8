@@ -4,38 +4,37 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Detalhes</h2>
+<h2>Detalhes dos Enfermeiros</h2>
 
 <div>
-    <h4>Enfermeiros</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+           Nome
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Telefone)
+            Telefone
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Telefone)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Morada)
+            Morada
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Morada)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Especialização)
+            Especialização
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Especialização.Nome)
@@ -43,6 +42,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EnfermeirosId">Editar</a> |
-    <a asp-action="Index">Voltar a lista</a>
+    <a asp-action="Edit" asp-route-id="@Model.EnfermeirosId" class="btn btn-default">Editar</a> |
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
 </div>

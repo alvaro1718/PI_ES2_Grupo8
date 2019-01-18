@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,10 @@ using PI_ES2_Grupo8.Models;
 
 namespace PI_ES2_Grupo8.Controllers
 {
+    [Authorize]
     public class PedidoTrocasController : Controller
     {
+        private const int PAGE_SIZE = 3;
         private readonly ServicoDomicilioDbContext _context;
 
         public PedidoTrocasController(ServicoDomicilioDbContext context)
@@ -19,10 +22,71 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: PedidoTrocas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PedidosTrocasListViewModel model = null, int page = 1, string order = null)
         {
-            var servicoDomicilioDbContext = _context.Troca.Include(t => t.EnfermeiroRequerente).Include(t => t.EnfermeiroEscolhido).Include(t => t.HorarioTrabalhoAntigo).Include(t => t.HorarioTrabalhoNovo);
-            return View(await servicoDomicilioDbContext.ToListAsync());
+
+            string name = null;
+
+            if (model != null)
+            {
+                name = model.CurrentName;
+            }
+
+            var pedidoTrocas = _context.Troca
+                .Where(p => name == null || p.EnfermeiroRequerente.Nome.Contains(name))
+                .Include(p => p.EnfermeiroRequerente)
+                .Include(p => p.EnfermeiroEscolhido)
+                .Include(p => p.HorarioTrabalhoAntigo)
+                .Include(p => p.HorarioTrabalhoNovo); ;
+
+
+            int numPedidos = await pedidoTrocas.CountAsync();
+
+            IEnumerable<Troca> pedidosList;
+
+            if (order == "name")
+            {
+                pedidosList = await pedidoTrocas
+                    .OrderBy(p => p.EnfermeiroRequerente.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (order == "data")
+            {
+                pedidosList = await pedidoTrocas
+                    .OrderBy(p => p.Data)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+                pedidosList = await pedidoTrocas
+                   .OrderBy(p => p.HorarioTrabalhoAntigo.HoraInicio)
+                   .Skip(PAGE_SIZE * (page - 1))
+                   .Take(PAGE_SIZE)
+                   .ToListAsync();
+            }
+
+            return View(
+                new PedidosTrocasListViewModel
+                {
+                    PedidosTrocas = pedidosList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        Totaltems = numPedidos,
+                        Order = order
+                    },
+                    CurrentName = name,
+                }
+            );
+
+
+            //var servicoDomicilioDbContext = _context.Troca.Include(t => t.EnfermeiroRequerente).Include(t => t.EnfermeiroEscolhido).Include(t => t.HorarioTrabalhoAntigo).Include(t => t.HorarioTrabalhoNovo);
+            //return View(await servicoDomicilioDbContext.ToListAsync());
         }
 
         // GET: PedidoTrocas/Details/5
@@ -48,6 +112,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: PedidoTrocas/Create
+        //[Authorize(Policy = "OnlyAdminAccess")]
         public IActionResult Create()
         {
             ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Nome");
@@ -62,6 +127,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Create([Bind("TrocaId,Justificação,EnfermeirosId,EnfermeirosEId,Data,HorarioTrabalhoId,HorarioTrabalhoAntigoId,Aprovar")] Troca troca)
         {
             if (ModelState.IsValid)
@@ -78,6 +144,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: PedidoTrocas/Edit/5
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,6 +169,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Edit(int id, [Bind("TrocaId,Justificação,EnfermeirosId,EnfermeirosEId,Data,HorarioTrabalhoId,HorarioTrabalhoAntigoId,Aprovar")] Troca troca)
         {
             if (id != troca.TrocaId)
@@ -137,6 +205,7 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: PedidoTrocas/Delete/5
+        //[Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,6 +230,7 @@ namespace PI_ES2_Grupo8.Controllers
         // POST: PedidoTrocas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //[Authorize(Policy = "OnlyAdminAccess")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var troca = await _context.Troca.FindAsync(id);

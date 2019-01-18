@@ -4,51 +4,51 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Eliminação de um pedido</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tens a Certeza queres apagar este item?</h3>
 <div>
-    <h4>Troca</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Justificação)
+           Justificação
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Justificação)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnfermeiroRequerente)
+            Enfermeiro Requerente
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EnfermeiroRequerente.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnfermeiroEscolhido)
+            Enfermeiro Escolhido
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EnfermeiroEscolhido.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Data)
+            Data
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HorarioTrabalhoNovo)
+           Hora a trocar
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HorarioTrabalhoNovo.HorarioTrabalhoId)
+            @Html.DisplayFor(model => model.HorarioTrabalhoNovo.HoraInicio)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HorarioTrabalhoAntigo)
+            Hora Actual
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HorarioTrabalhoAntigo.HorarioTrabalhoId)
+            @Html.DisplayFor(model => model.HorarioTrabalhoAntigo.HoraInicio)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Aprovar)
+            Aprovação
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Aprovar)
@@ -58,6 +58,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="TrocaId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn btn-default">Voltar</a>
     </form>
 </div>

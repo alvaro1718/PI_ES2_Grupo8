@@ -4,9 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Criar um Novo Pedido de Troca</h2>
 
-<h4>Troca</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,11 +18,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="EnfermeirosId" class="control-label"></label>
-                <select asp-for="EnfermeirosId" class ="form-control" asp-items="ViewBag.EnfermeirosId"></select>
+                <select asp-for="EnfermeirosId" class="form-control" asp-items="ViewBag.EnfermeirosId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EnfermeirosEId" class="control-label"></label>
-                <select asp-for="EnfermeirosEId" class="form-control" asp-items="ViewBag.EnfermeirosEId" ></select>
+                <select asp-for="EnfermeirosEId" class="form-control" asp-items="ViewBag.EnfermeirosEId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Data" class="control-label"></label>
@@ -32,27 +31,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="HorarioTrabalhoId" class="control-label"></label>
-                <select asp-for="HorarioTrabalhoId" class ="form-control" asp-items="ViewBag.HorarioTrabalhoId"></select>
+                <select asp-for="HorarioTrabalhoId" class="form-control" asp-items="ViewBag.HorarioTrabalhoId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="HorarioTrabalhoAntigoId" class="control-label"></label>
-                <select asp-for="HorarioTrabalhoAntigoId" class ="form-control" asp-items="ViewBag.HorarioTrabalhoAntigoId"></select>
+                <select asp-for="HorarioTrabalhoAntigoId" class="form-control" asp-items="ViewBag.HorarioTrabalhoAntigoId"></select>
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Aprovar" /> @Html.DisplayNameFor(model => model.Aprovar)
-                    </label>
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Aprovar" /> @Html.DisplayNameFor(model => model.Aprovar)
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            }
+                <div class="form-group">
+                    <input type="submit" value="Criar" class="btn btn-default" />
+                </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" value="Voltar" class="btn btn-default">Voltar a lista</a>
 </div>
 

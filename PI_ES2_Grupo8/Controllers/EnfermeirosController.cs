@@ -13,7 +13,7 @@ namespace PI_ES2_Grupo8.Controllers
     [Authorize]
     public class EnfermeirosController : Controller
     {
-        private const int PAGE_SIZE = 4;
+        private const int PAGE_SIZE = 3;
 
         private readonly ServicoDomicilioDbContext _context;
 

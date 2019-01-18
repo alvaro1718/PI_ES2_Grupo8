@@ -1,60 +1,89 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.HorarioTrabalho>
+﻿<!--model IEnumerable<PI_ES2_Grupo8.Models.HorarioTrabalho>-->
+@model HorarioTrabalhoListViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Horarios de Trabalho";
 }
 
-<h2>Gerar Horários</h2>
+<h2>Horarios de Trabalho</h2>
 
-<p>
-    <a asp-action="Create">Gerar Novo</a>
-</p>
+<form asp-action="Index">
+    <div >
+          <input asp-for="CurrentName" class="form-label" />
+
+          <input type="submit" value="Pesquisar" class="btn btn-default" />
+
+    </div>
+
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a asp-action="Create" class="btn btn-default">Gerar Novo</a>
+            }
+        </th>
+        <th>
+            <br />
+        </th>
+
+        <th>
+            <a asp-action="VisualizarTroca" asp-route-id="HorarioTrabalhoId" class="btn btn-default">Ver a troca</a>
+        </th>
+    </tr>
+</table>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Data)
+                Data
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HoraInicio)
+                Hora Inicio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HoraFim)
+                Hora Fim
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Enfermeiros)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Troca)
+                Trocou
             </th>
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoraFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiros.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Troca)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Eliminar</a> |
-                <a asp-action="VisualizarTroca" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Ver a troca</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Horarios)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoraInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoraFim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enfermeiros.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Troca)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.HorarioTrabalhoId" class="btn btn-default">Eliminar</a> |
+
+                </td>
+            </tr>
+
+        }
     </tbody>
 </table>
+<div page-model="Model.Pagination"> </div>

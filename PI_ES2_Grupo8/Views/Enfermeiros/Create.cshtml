@@ -4,9 +4,11 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Criar um novo Enfermeiro</h2>
+<div>
+    <div class="text-danger" font-size="20px"> @ViewBag.Message</div>
+</div>
 
-<h4>Enfermeiros</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -41,9 +43,6 @@
                 <a asp-action="Index" class="btn btn-default">Voltar a lista</a>
             </div>
 
-            <div>
-                <div class="text-danger"> @ViewBag.Message</div>
-            </div>
         </form>
     </div>
 </div>

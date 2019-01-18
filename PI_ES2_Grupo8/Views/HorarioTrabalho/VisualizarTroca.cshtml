@@ -1,78 +1,71 @@
-﻿
+﻿<!--model HorarioTrabalho-->
 @{
     ViewData["Title"] = "VisualizarTroca";
 }
-
 <h2>Visualização da Troca</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Trocas Id
-            </th>
-
-            <th>
-                Nome
-            </th>
-
-            <th>
-                Antigo
-            </th>
-
-            <th>
-                Horario Trabalho Novo
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in ViewData["VisualizarTroca"] as IList<Troca>)
-        {
+@if (ViewBag.Message == "Não existe trocas efetuadas")
+{
+    <div>
+        <div class="text-danger"> @ViewBag.Message</div>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
+                <th>
+                    Trocas Id
+                </th>
+                <th>
+                    Nome
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrocaId)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
-                </td>
-                <!--
-                <td>
-                    Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
-                </td>
-                -->
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
-                </td>
+                <th>
+                    Horario Novo
+                </th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["VisualizarTroca"] as IList<Troca>)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrocaId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
+                    </td>
+                </tr>
 
 
-            <tr>
+                <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrocaId)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.Nome)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
-                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrocaId)
+                    </td>
 
-            </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.Nome)
+                    </td>
 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
+                    </td>
 
-        }
+                </tr>
 
 
-    </tbody>
-</table>
+            }
 
 
-
+        </tbody>
+    </table>
+}
+<!--<div page-model="Model.Pagination"> </div>-->
