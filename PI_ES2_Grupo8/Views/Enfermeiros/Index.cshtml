@@ -8,13 +8,12 @@
 <h2>@ViewData["Title"]</h2>
 
 <div>
-    <div >
+    <div style="width:1000px;">
         
         <form asp-action="Index">
             <div class="form-group" >
-                <table class="table">
-                    <thead>
-                        <tr>
+                
+                        <div style="float:left">
                                 @if (User.IsInRole("Administrator"))
                                 {
                                 
@@ -23,18 +22,17 @@
                                     </p>
                                 
                                 }
-                                <th>
-                                    <input asp-for="CurrentName" class="form-label" />
-                                    
-                                    <input type="submit" value="Pesquisar" class="btn btn-default" />
-                                    
-                                </th>
-
-                        <tr>
-                    </thead>
-                </table>
+                        </div>
+                        
             </div>
             
+            <div style="float:right">
+
+                <input asp-for="CurrentName" class="form-label" />
+
+                <input type="submit" value="Pesquisar" class="btn btn-default" />
+
+            </div>
         </form>
     </div>
 </div>

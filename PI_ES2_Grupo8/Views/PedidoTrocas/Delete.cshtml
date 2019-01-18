@@ -57,7 +57,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="TrocaId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Tem a certeza que pretende Apagar?')"/> |
         <a asp-action="Index" class="btn btn-default">Voltar</a>
     </form>
 </div>

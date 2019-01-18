@@ -11,7 +11,7 @@ namespace PI_ES2_Grupo8.Data
 
     public class SeedData
     {
-        public static Boolean populate = true;
+        public static Boolean populate = false;
         
         private const string ROLE_ADMINISTRATOR = "Administrator";
         private const string ROLE_MEDICO = "Medico";

@@ -45,7 +45,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="HorarioTrabalhoId" />
-        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <input type="submit" value="Eliminar" class="btn btn-default" onclick="return confirm('Tem a certeza que pretende Apagar?')"/> |
         <a asp-action="Index" class="btn btn-default" >Voltar a lista</a>
     </form>
 </div>
