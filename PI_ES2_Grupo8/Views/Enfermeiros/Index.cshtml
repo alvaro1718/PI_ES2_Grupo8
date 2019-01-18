@@ -1,0 +1,74 @@
+﻿<!-- model IEnumerable<PI_ES2_Grupo8.Models.Enfermeiros> -->
+@model EnfermeirosListViewModel
+
+@{
+    ViewData["Title"] = "Lista dos Enfermeiros";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <div >
+        
+        <form asp-action="Index">
+            <div class="form-group" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                                @if (User.IsInRole("Administrator"))
+                                {
+                                
+                                    <p>
+                                        <a asp-action="Create" class="btn btn-default">Criar Novo</a>
+                                    </p>
+                                
+                                }
+                                <th>
+                                    <input asp-for="CurrentName" class="form-label" />
+                                    
+                                    <input type="submit" value="Pesquisar" class="btn btn-default" />
+                                    
+                                </th>
+
+                        <tr>
+                    </thead>
+                </table>
+            </div>
+            
+        </form>
+    </div>
+</div>
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Especialização
+                </th>
+               
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Enfermeiro)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Especialização.Nome)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.EnfermeirosId" class="btn btn-default">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+        <div page-model="@Model.Pagination"> </div>

@@ -47,8 +47,9 @@ namespace PI_ES2_Grupo8.Infrastructure
             {
                 var link = new TagBuilder("a");
 
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = p });
-                link.AddCssClass("btn");
+                //link.Attributes["href"] = urlHelper.Action(PageAction, new { page = p });
+ link.Attributes["href"] = urlHelper.Action(PageAction, new { page = p, order = PageModel.Order });                
+link.AddCssClass("btn");
 
                 if (p == PageModel.CurrentPage)
                 {

@@ -55,7 +55,7 @@ namespace PI_ES2_Grupo8.Controllers
                     {
                         CurrentPage = page,
                         PageSize = PAGE_SIZE,
-                        TotalItems = numUtentes
+                        Totaltems = numUtentes
                     },
                     CurrentName = nome
                 }

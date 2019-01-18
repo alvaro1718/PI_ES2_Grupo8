@@ -11,11 +11,12 @@ namespace PI_ES2_Grupo8.Data
 
     public class SeedData
     {
-        public static Boolean populate = false;
+        public static Boolean populate = true;
         
         private const string ROLE_ADMINISTRATOR = "Administrator";
         private const string ROLE_MEDICO = "Medico";
         private const string ROLE_UTENTE = "Utente";
+private const string ROLE_ENFERMEIRO = "Enfermeiro";
         internal static void Populate(ServicoDomicilioDbContext db)
         {
             if (populate ==true)
@@ -25,6 +26,13 @@ namespace PI_ES2_Grupo8.Data
                 seedTratamento(db);
                 seedReceita(db);
                 SeedReceitaTratamento(db);
+
+		SeedEspecialização(db);
+            SeedEnfermeiros(db);
+            //SeedEnfermeiroRequerente(db);
+            //SeedEnfermeiroEscolhido(db);
+            //SeedTroca(db);
+            SeedHorarioTrabalho(db);
             }
         }
 
@@ -44,6 +52,7 @@ namespace PI_ES2_Grupo8.Data
             MakeSureRoleExistsAsync(roleManager, ROLE_ADMINISTRATOR);
             MakeSureRoleExistsAsync(roleManager, ROLE_MEDICO);
             MakeSureRoleExistsAsync(roleManager, ROLE_UTENTE);
+MakeSureRoleExistsAsync(roleManager, ROLE_ENFERMEIRO);
             IdentityUser admin = await userManager.FindByNameAsync(ADMIN_USER);
             if (admin == null)
             {
@@ -63,9 +72,18 @@ namespace PI_ES2_Grupo8.Data
             const string MEDICO_PASSWORD = "sECREDO$123";
             const string UTENTE_USER = "pedro12@gmail.com";
             const string UTENTE_PASSWORD = "sECREDO$123";
+const string ENFERMEIRO_USER = "paulo@gmail.com";
+            const string ENFERMEIRO_PASSWORD = "sECREDO$123";
+
+            const string ENFERMEIRO_USER1 = "alvaro555@gmail.com";
+            const string ENFERMEIRO_PASSWORD1 = "aLVARO$124";
+
+            const string ENFERMEIRO_USER2 = "maria24@gmail.com";
+            const string ENFERMEIRO_PASSWORD2 = "mARIA$125";
             IdentityUser medico = await userManager.FindByNameAsync(MEDICO_USER);
             IdentityUser utente = await userManager.FindByNameAsync(UTENTE_USER);
-            if (medico == null)
+              IdentityUser enfermeiro = await userManager.FindByNameAsync(ENFERMEIRO_USER);
+if (medico == null)
             {
                 medico = new IdentityUser { UserName = MEDICO_USER };
                 await userManager.CreateAsync(medico, MEDICO_PASSWORD);
@@ -85,6 +103,23 @@ namespace PI_ES2_Grupo8.Data
             if (!await userManager.IsInRoleAsync(utente, ROLE_UTENTE))
             {
                 await userManager.AddToRoleAsync(utente, ROLE_UTENTE);
+            }
+
+if (enfermeiro == null)
+            {
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD);
+
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER1 };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD1);
+
+                enfermeiro = new IdentityUser { UserName = ENFERMEIRO_USER2 };
+                await userManager.CreateAsync(enfermeiro, ENFERMEIRO_PASSWORD2);
+            }
+
+            if (!await userManager.IsInRoleAsync(enfermeiro, ROLE_ENFERMEIRO))
+            {
+                await userManager.AddToRoleAsync(enfermeiro, ROLE_ENFERMEIRO);
             }
         }
         public static int nreceita =0;
@@ -222,6 +257,142 @@ namespace PI_ES2_Grupo8.Data
 
             db.SaveChanges();
         }
+
+
+ private static HorarioTrabalho HorarioTrabalhoIfDoesNotExist(ServicoDomicilioDbContext db, DateTime data, string horaInicio, 
+            string horaFim, Enfermeiros enfermeiro)
+        {
+            HorarioTrabalho horarioTrabalho = new HorarioTrabalho();
+            if(horarioTrabalho == null)
+            {
+                db.HorarioTrabalho.Add(new HorarioTrabalho
+                {
+                    Data = data,
+                    HoraInicio = horaInicio,
+                    HoraFim = horaFim,
+                    EnfermeirosId = enfermeiro.EnfermeirosId
+                });
+                db.SaveChanges();
+            }
+            return horarioTrabalho;
+
+        }
+
+        private static void SeedHorarioTrabalho(ServicoDomicilioDbContext db)
+        {
+            DateTime data = DateTime.Today;
+            Enfermeiros enfermeiro1 = db.Enfermeiros.SingleOrDefault(b => b.Nome == "Paulo");
+            HorarioTrabalhoIfDoesNotExist(db, data, "8h:00", "18h:00", enfermeiro1);
+
+
+
+        }
+
+
+        private static Enfermeiros CreateEnfermeirosIfDoesNotExist(ServicoDomicilioDbContext db, string nome, string telefone, string email, string morada, Especialização especialização)
+        {
+            Enfermeiros enfermeiros  = db.Enfermeiros.SingleOrDefault(b => b.Nome == nome);
+
+            if (enfermeiros == null)
+            {
+                    db.Enfermeiros.Add(new Enfermeiros { Nome = nome, Telefone = telefone, Email = email, Morada = morada,
+                    EspecializaçãoId = especialização.EspecializaçãoId });
+                db.SaveChanges();
+            }
+
+            return enfermeiros;
+
+        }
+
+        private static void SeedEnfermeiros(ServicoDomicilioDbContext db)
+        {
+            Especialização especialização = GetEspecializaçãoCreatingIfNeed(db, "Pediatria");
+            CreateEnfermeirosIfDoesNotExist(db, "Paulo Gomes De Almeida", "927405851", "paulo@gmail.com", "Rua Mota joao", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Alvaro Silva Dos Santos", "922076352", "alvaro555@gmail.com", "Rua da Liberdade", especialização);
+
+            especialização = GetEspecializaçãoCreatingIfNeed(db, "Enfermagem de Saúde Mental e Psquiatria");
+            CreateEnfermeirosIfDoesNotExist(db, "João Paulo Marques", "921402734", "joao@gmail.com", "Rua Madre de Deus", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Maria Dos Anjos Pereira", "921876398", "maria24@gmail.com", "Rua da Boa Esperança", especialização);
+
+            especialização = GetEspecializaçãoCreatingIfNeed(db, "Pediatria");
+            CreateEnfermeirosIfDoesNotExist(db, "Manuel Monte Negro De Melo", "934570452", "melo@gmail.com", "Rua Evaristo Da Silva", especialização);
+            CreateEnfermeirosIfDoesNotExist(db, "Joana Barreto Rita", "921876352", "joana10@gmail.com", "Rua da Neves e Ceita", especialização);
+            
+            db.SaveChanges();
+
+
+        }
+
+        private static Especialização GetEspecializaçãoCreatingIfNeed(ServicoDomicilioDbContext db, string nome)
+        {
+            Especialização especialização = db.Especialização.SingleOrDefault(a => a.Nome == nome);
+
+            if (especialização == null)
+            {
+                especialização = new Especialização { Nome = nome };
+                db.Add(especialização);
+                db.SaveChanges();
+            }
+
+            return especialização;
+        }
+
+        
+
+
+        private static void SeedEspecialização(ServicoDomicilioDbContext db)
+        {
+            if (db.Especialização.Any()) return;
+
+            db.Especialização.AddRange(
+                new Especialização { Nome = "Pediatria" },
+                new Especialização { Nome = "Enfermagem de Saúde Materna e obstetrícia" },
+                new Especialização { Nome = "Psquiatria" }   
+            );
+
+            db.SaveChanges();
+        }
+       
+
+        /*private static Troca GetTrocaCreatingIfNeed(ServicoDomicilioDbContext db, string justificação, EnfermeiroRequerente,
+            EnfermeiroEscolhido enfermeiroEscolhido, DateTime data, HorarioTrabalho horarioTrabalho)
+        {
+            Troca troca = db.Troca.SingleOrDefault(b => b.Justificação == justificação);
+
+            if (troca == null)
+            {
+                db.Troca.Add(new Troca
+                {
+                    Justificação = justificação,
+                    //EnfermeiroRequerenteId = enfermeiroRequerente.EnfermeiroRequerenteId,
+                    //EnfermeiroEscolhidoId = enfermeiroEscolhido.EnfermeiroEscolhidoId,
+                    Data = data,
+                    //HorarioServicoDomicilioId = horarioTrabalho.HorarioTrabalhoId
+                });
+                //db.SaveChanges();
+            }
+            return troca;
+        }
+
+        /*private static void SeedTroca(ServicoDomicilioDbContext db)
+        {
+            DateTime dataTroca;
+            HorarioTrabalho horarioTrabalho = new HorarioTrabalho();
+            DateTime data = DateTime.Now;
+            dataTroca = data;
+
+                //data.ToString("dd MM YYYY");
+
+        
+            Enfermeiros enfermeiro1 = db.Enfermeiros.SingleOrDefault(b => b.Nome == "Paulo");
+            Enfermeiros enfermeiro2 = db.Enfermeiros.SingleOrDefault(b => b.Nome == "João");
+            EnfermeiroRequerente enfermeiroRequerente = CreateEnfermeiroRequerenteIfDoesNotExist(db,enfermeiro1);
+            EnfermeiroEscolhido enfermeiroEscolhido = CreateEnfermeiroEscolhidoIfDoesNotExist(db,enfermeiro2);
+            GetTrocaCreatingIfNeed(db, "Doente", enfermeiroRequerente, enfermeiroEscolhido, dataTroca, horarioTrabalho);
+           
+
+
+        }*/
         
     }
 }

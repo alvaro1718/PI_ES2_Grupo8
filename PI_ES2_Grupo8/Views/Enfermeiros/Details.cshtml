@@ -1,0 +1,47 @@
+﻿@model PI_ES2_Grupo8.Models.Enfermeiros
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalhes dos Enfermeiros</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Nome
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            Telefone
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+        <dt>
+            Email
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            Morada
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Morada)
+        </dd>
+        <dt>
+            Especialização
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Especialização.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EnfermeirosId" class="btn btn-default">Editar</a> |
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>

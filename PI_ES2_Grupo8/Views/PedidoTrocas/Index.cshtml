@@ -1,0 +1,76 @@
+﻿<!--model IEnumerable<PI_ES2_Grupo8.Models.Troca>-->
+@model PedidosTrocasListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Pedidos de Trocas</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-default ">Criar Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Justificação
+            </th>
+            <th>
+                Enfermeiro Requerente
+            </th>
+            <th>
+                Enfermeiro Escolhido
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Hora Actual
+            </th>
+            <th>
+                Hora a trocar
+            </th>
+
+            <th>
+                Aprovar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PedidosTrocas)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Justificação)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroRequerente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroEscolhido.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorarioTrabalhoAntigo.HoraInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorarioTrabalhoNovo.HoraInicio)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Aprovar)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TrocaId" class="btn btn-default" >Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.TrocaId" class="btn btn-default">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.TrocaId" class="btn btn-default" >Eliminar</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div page-model="Model.Pagination"> </div>
