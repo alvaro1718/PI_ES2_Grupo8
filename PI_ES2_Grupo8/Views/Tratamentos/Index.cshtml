@@ -1,47 +1,55 @@
-﻿@model IEnumerable<PI_ES2_Grupo8.Models.Tratamento>
-
+﻿@model TratamentosListViewModel
 @{
-    ViewData["Title"] = "Lista Tratamento";
+    ViewData["Title"] = "Lista Tratamentos";
 }
 
-<h2>Lista Tratamento</h2>
 
-<p>
-    <a asp-action="Create">Criar Tratamento</a>
-</p>
+<h4>Lista Tratamentos</h4>
+<div style="width:1100px">
+<div class="form-group" style="width:300px; float:left; margin-top:15px">
+    <a asp-action="Create"><input type="button" value="Criar Novo" class="btn btn-default" /></a>
+</div>
+<!--<p><a asp-action="Create">Criar novo</a></p>-->
+<div style="width:700px; float:right">
+
+
+    <div class="panel-body" style="width: 350px; float:right;">
+        <form asp-action="Index">
+            <div class="form-group" style="width: 200px; height: 35px; overflow: hidden; display: inline-block; float:left">
+                <!--  <label asp-for="CurrentName" class="control-label">""</label>-->
+                <input asp-for="CurrentName" class="form-control" placeholder="Nome" />
+            </div>
+            <div class="form-group" style="float:right; width: 100px; height: 35px;">
+                <input type="submit" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Discricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enfermeiros)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.utente)
+                <p>Tratamentos</p>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiros.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.utente.UtenteId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TratamentoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TratamentoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TratamentoId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Tratamentos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipodeTratamento)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TratamentoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.TratamentoId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TratamentoId">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div page-model="@Model.Pagination"> </div>

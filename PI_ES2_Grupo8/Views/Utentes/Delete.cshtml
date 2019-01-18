@@ -4,11 +4,9 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que pretende apagar este Utente?</h3>
 <div>
-    <h4>Utente</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,6 +14,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            <p>Nº Utente Saúde</p>
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.N_Utente_Saude)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Morada)
@@ -36,16 +40,41 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Problemas)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Problemas)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="UtenteId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <style>
+        #myDiv {
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+
+    <div>
+        <button type="button" class="btn btn-warning" onclick="myFunction()">Quero Apagar</button>
+        <a asp-action="Index" class="btn btn-default">Lista Utente</a>
+    </div>
+
+    <div id="myDiv">
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="UtenteId" />
+            <input type="submit" value="Apagar" class="btn btn-danger" onclick="return confirm('Tem a certeza que pretende Apagar?') " />
+        </form>
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDiv");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+
+
 </div>

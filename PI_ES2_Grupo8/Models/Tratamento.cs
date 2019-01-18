@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,23 +9,10 @@ namespace PI_ES2_Grupo8.Models
     public class Tratamento
     {
 
-        
-
-        //public int ServicoId { get; set; }
-        //public int MaterialId { get; set;}
-        public String Discricao { get; set;}
         public int TratamentoId { get; set; }
+        [Required(ErrorMessage = "Por favor introduza o tratamento")]
+        public String TipodeTratamento { get; set; }
 
-        public Enfermeiros Enfermeiros { get; set; }
-        public int EnfermeirosId { get; set; }
-
-        public Utente utente { get; set; }
-        public int UtenteId { get; set; }
-
-        //public ICollection<Utente> Utentes { get; set; }
-        public ICollection<Servicos> Servicos { get; set; }
-        
-
-
+        public ICollection<ReceitarTratamento> receitarTratamentos { get; set; }
     }
 }

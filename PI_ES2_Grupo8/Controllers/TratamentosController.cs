@@ -12,17 +12,53 @@ namespace PI_ES2_Grupo8.Controllers
     public class TratamentosController : Controller
     {
         private readonly ServicoDomicilioDbContext _context;
-
+        private const int PAGE_SIZE = 4;
         public TratamentosController(ServicoDomicilioDbContext context)
         {
             _context = context;
         }
 
         // GET: Tratamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(TratamentosListViewModel model = null, int page = 1)
         {
-            var servicoDomicilioDbContext = _context.Tratamento.Include(t => t.Enfermeiros).Include(t => t.utente);
-            return View(await servicoDomicilioDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var tratamentos = _context.Tratamento
+                .Where(p => nome == null || p.TipodeTratamento.Contains(nome));
+
+            int numMedicos = await tratamentos.CountAsync();
+
+            if (page > (numMedicos / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var TratamentosList = await tratamentos
+                    .OrderBy(p => p.TipodeTratamento)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new TratamentosListViewModel
+                {
+                    Tratamentos = TratamentosList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numMedicos
+                    },
+                    CurrentName = nome
+                }
+            );
+            //  return View(await _context.Tratamento.ToListAsync());
         }
 
         // GET: Tratamentos/Details/5
@@ -34,8 +70,6 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var tratamento = await _context.Tratamento
-                .Include(t => t.Enfermeiros)
-                .Include(t => t.utente)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
@@ -48,8 +82,6 @@ namespace PI_ES2_Grupo8.Controllers
         // GET: Tratamentos/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email");
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId");
             return View();
         }
 
@@ -58,19 +90,26 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Discricao,TratamentoId,EnfermeirosId,UtenteId")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                verificarTratamento = _context.Tratamento.SingleOrDefault(p => p.TipodeTratamento == tratamento.TipodeTratamento);
+                //  if (tratamento.TipodeTratamento==_context.Tratamento.(p =>p.TipodeTratamento.Contains(tratamento.TipodeTratamento)) ) { }
+                if (verificarTratamento == null)
+                {
+                    _context.Add(tratamento);
+                    await _context.SaveChangesAsync();
+                    return View("TratamentoCriado", tratamento);//RedirectToAction(nameof(Index));
+                }
+                else {
+                         ViewBag.Message = "Tratamento já existente.";
+                    return View("Create");
+                }
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
-
+        public static String TratamentoSelecionado;
         // GET: Tratamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -80,49 +119,62 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var tratamento = await _context.Tratamento.FindAsync(id);
+            TratamentoSelecionado = tratamento.TipodeTratamento;
             if (tratamento == null)
             {
                 return NotFound();
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
-
+        Tratamento verificarTratamento2,verificarTratamento;
         // POST: Tratamentos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Discricao,TratamentoId,EnfermeirosId,UtenteId")] Tratamento tratamento)
+            
+        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,TipodeTratamento")] Tratamento tratamento)
         {
-            if (id != tratamento.TratamentoId)
+            verificarTratamento = _context.Tratamento.SingleOrDefault(p => p.TipodeTratamento == tratamento.TipodeTratamento);
+           // verificarTratamento2 = await _context.Tratamento.SingleOrDefaultAsync(p => p.TratamentoId == tratamento.TratamentoId);
+          /*  if (id != tratamento.TratamentoId)
             {
                 return NotFound();
-            }
+            }*/
+            
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tratamento);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TratamentoExists(tratamento.TratamentoId))
+                // if (verificarTratamento2.TipodeTratamento==tratamento.TipodeTratamento)
+                if (tratamento.TipodeTratamento == TratamentoSelecionado) {
+                    ViewBag.Message = "editarOP";
+                    return View("TratamentoCriado", tratamento);
+                } if(verificarTratamento==null) 
+                  {
+                    try
                     {
-                        return NotFound();
+                        _context.Update(tratamento);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!TratamentoExists(tratamento.TratamentoId))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    ViewBag.Message = "editarOP";
+                     return View("TratamentoCriado", tratamento);
                 }
-                return RedirectToAction(nameof(Index));
+                else {
+                    ViewBag.Message = "Tratamento já existente.";
+                    return View("Edit");
+                }
             }
-            ViewData["EnfermeirosId"] = new SelectList(_context.Enfermeiros, "EnfermeirosId", "Email", tratamento.EnfermeirosId);
-            ViewData["UtenteId"] = new SelectList(_context.Utente, "UtenteId", "UtenteId", tratamento.UtenteId);
             return View(tratamento);
         }
 
@@ -135,8 +187,6 @@ namespace PI_ES2_Grupo8.Controllers
             }
 
             var tratamento = await _context.Tratamento
-                .Include(t => t.Enfermeiros)
-                .Include(t => t.utente)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
@@ -151,10 +201,13 @@ namespace PI_ES2_Grupo8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             var tratamento = await _context.Tratamento.FindAsync(id);
+          //  var tratamento1 = await _context.Tratamento.FindAsync(id);
+            
             _context.Tratamento.Remove(tratamento);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+             await _context.SaveChangesAsync();
+            return View("TratamentoApagado",tratamento);//RedirectToAction(nameof(Index));
         }
 
         private bool TratamentoExists(int id)

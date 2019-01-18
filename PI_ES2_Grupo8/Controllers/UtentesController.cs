@@ -11,6 +11,7 @@ namespace PI_ES2_Grupo8.Controllers
 {
     public class UtentesController : Controller
     {
+        private const int PAGE_SIZE = 4;
         private readonly ServicoDomicilioDbContext _context;
 
         public UtentesController(ServicoDomicilioDbContext context)
@@ -19,9 +20,48 @@ namespace PI_ES2_Grupo8.Controllers
         }
 
         // GET: Utentes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(UtentesListViewModel model = null, int page = 1)
         {
-            return View(await _context.Utente.ToListAsync());
+
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentName;
+                //page = 1;
+            }
+
+            var utentes = _context.Utente
+                .Where(p =>nome == null || p.Nome.Contains(nome));
+
+            int numUtentes = await utentes.CountAsync();
+
+            if (page > (numUtentes / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var UtentesList = await utentes
+                    .OrderBy(p => p.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+
+            return View(
+                new UtentesListViewModel
+                {
+                    Utentes = UtentesList,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numUtentes
+                    },
+                    CurrentName = nome
+                }
+            );
+
+            //return View(await _context.Utente.ToListAsync());
         }
 
         // GET: Utentes/Details/5
@@ -53,13 +93,25 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UtenteId,Nome,Morada,Telefone,Email,Description")] Utente utente)
+        public async Task<IActionResult> Create([Bind("UtenteId,Nome,N_Utente_Saude,Morada,Telefone,Email,Problemas")] Utente utente)
         {
+           
             if (ModelState.IsValid)
             {
-                _context.Add(utente);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                Utente verificarUtente = _context.Utente.SingleOrDefault(p => p.N_Utente_Saude == utente.N_Utente_Saude);
+
+                if (verificarUtente == null)
+                {
+                    _context.Add(utente);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message = "UtenteCriado";
+                    return View("Details", utente);//return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Message = "Utente já existente.";
+                    return View("Create");
+                }
             }
             return View(utente);
         }
@@ -85,7 +137,7 @@ namespace PI_ES2_Grupo8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,Morada,Telefone,Email,Description")] Utente utente)
+        public async Task<IActionResult> Edit(int id, [Bind("UtenteId,Nome,N_Utente_Saude,Morada,Telefone,Email,Problemas")] Utente utente)
         {
             if (id != utente.UtenteId)
             {
@@ -143,7 +195,11 @@ namespace PI_ES2_Grupo8.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [ActionName("Confirmar")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Medico.ToListAsync());
+        }
         private bool UtenteExists(int id)
         {
             return _context.Utente.Any(e => e.UtenteId == id);

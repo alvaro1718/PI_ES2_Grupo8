@@ -17,6 +17,5 @@ namespace PI_ES2_Grupo8.Models
         public ICollection <Utente> Utente { get; set; }
 
         public ICollection<Tratamento> Tratamentos { get; set; }
-        public IEnumerable<Troca> Troca { get; internal set; }
     }
 }

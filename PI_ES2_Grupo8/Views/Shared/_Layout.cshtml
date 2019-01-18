@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PI_ES2_Grupo8</title>
+    <title>@ViewData["Title"] Serviço ao Domicílio</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,13 +26,53 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PI_ES2_Grupo8</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Serviço ao Domicílio</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li>
+                        <a asp-area="" asp-controller="Receitas" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Receitas</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="Receitas" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Receita</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="Receitas" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista das Receita</a>
+                            <div class="dropdown-divider"></div>
+                            <!--  <a href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Medicos" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Medico</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="Medicos" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Medico</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="Medicos" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista de Medicos</a>
+                            <div class="dropdown-divider"></div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Utentes" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utente</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="Utentes" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Utente</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="Utentes" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista de Utentes</a>
+                            <div class="dropdown-divider"></div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Tratamentos" asp-action="Index" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tratamento</a>
+                        <div class="dropdown-menu" style="background-color:  #080808;">
+                            <a asp-area="" asp-controller="Tratamentos" asp-action="Create" style="text-decoration: none;  color: #ffffff;">Criar Tratamento</a>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="" asp-controller="Tratamentos" asp-action="Index" style="text-decoration: none; color: #ffffff;">Lista do Tratamentos</a>
+                            <div class="dropdown-divider"></div>
+                            <!--  <a href="#">Something else here</a>-->
+                        </div>
+                    </li>
+
+                    <!--<li><a asp-area="" asp-controller="ReceitarTratamentos" asp-action="Index">Receita/Tratamento</a></li>-->
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -45,7 +85,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - PI_ES2_Grupo8</p>
+            <p>&copy; 2018 - Serviço ao Domicílio</p>
         </footer>
     </div>
 
